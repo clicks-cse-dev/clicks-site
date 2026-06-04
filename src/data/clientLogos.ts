@@ -2,7 +2,7 @@
  * Client logos for TrustBand (PRD §7.3). Assets require publication consent.
  */
 import type { ImageMetadata } from 'astro';
-import bedouinAuthority from '../assets/clients/client-bedouin-authority.png';
+import israeliCouncilVolunteering from '../assets/clients/client-israeli-council-volunteering.png';
 import galileeBusinessHome from '../assets/clients/client-galilee-business-home.jpg';
 import eshkolGalilMizrahi from '../assets/clients/client-eshkol-galil-mizrahi.png';
 import civix from '../assets/clients/client-civix.png';
@@ -19,12 +19,13 @@ export type ClientLogo = {
 
 export const clientLogos: ClientLogo[] = [
   {
-    id: 'bedouin-authority',
-    src: bedouinAuthority,
+    id: 'israeli-council-volunteering',
+    src: israeliCouncilVolunteering,
     alt: {
-      he: 'הרשות לפיתוח והתיישבות הבדואים בנגב',
-      en: 'Authority for Development and Settlement of the Bedouin in the Negev',
+      he: 'המועצה הישראלית להתנדבות',
+      en: 'The Israeli Council for Volunteering',
     },
+    wide: true,
   },
   {
     id: 'galilee-business-home',
