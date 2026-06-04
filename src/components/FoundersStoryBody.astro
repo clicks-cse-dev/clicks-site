@@ -1,0 +1,56 @@
+---
+import { FOUNDERS_STORY_EMPHASIS } from '../data/founders';
+import type { Locale } from '../i18n';
+
+interface Props {
+  locale: Locale;
+  paragraphs: readonly string[];
+  class?: string;
+}
+
+const { locale, paragraphs, class: proseClass = '' } = Astro.props;
+const emphasis = FOUNDERS_STORY_EMPHASIS[locale];
+---
+
+<div class="founders-story">
+  {
+    paragraphs.map((paragraph) => (
+      <p
+        class:list={[
+          'founders-story__p',
+          proseClass,
+          paragraph === emphasis && 'founders-story__p--emphasis',
+        ]}
+      >
+        {paragraph === emphasis ? <strong>{paragraph}</strong> : paragraph}
+      </p>
+    ))
+  }
+</div>
+
+<style>
+  .founders-story {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .founders-story__p {
+    margin: 0;
+    font-size: var(--text-md);
+    line-height: 1.8;
+    color: var(--color-text);
+    text-wrap: pretty;
+  }
+
+  .founders-story__p--emphasis {
+    margin-block: var(--space-5);
+  }
+
+  .founders-story__p--emphasis strong {
+    font-weight: var(--font-weight-bold);
+    font-size: var(--text-xl);
+    line-height: 1.4;
+    color: var(--color-text);
+  }
+</style>

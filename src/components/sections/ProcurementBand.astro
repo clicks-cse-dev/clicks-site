@@ -1,0 +1,354 @@
+---
+/**
+ * Trust & procurement-readiness band (PRD §7 #11).
+ * Compliance & trust strip for any organization (incl. procurement-ready public sector):
+ * accessibility (תקן נגישות 5568), privacy, native RTL, certified monday.com partner,
+ * and licensed-dealer (עוסק מורשה) credentials — rendered as a small badge/pill row.
+ *
+ * Conventions: locale prop + inline bilingual content; tokens + logical properties only;
+ * scoped styles; inline theme-driven SVG (currentColor); tasteful scroll-reveal that
+ * respects prefers-reduced-motion. No nested cards, no side-stripe alerts, no gradient text.
+ */
+import type { Locale } from '../../i18n';
+import { localizedPath } from '../../i18n';
+import { VAT } from '../../config';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+
+const content = {
+  he: {
+    title: 'תשתית אמינה — לכל סוג ארגון',
+    lead:
+      'נגישות, פרטיות, עברית-first ושותפות monday.com מוסמכת — חלק מהתשתית מההתחלה, לא תוספת אחרי. מתאים לציבורי, אזרחי, מפעלים והייטק.',
+    // Each badge: heading + short reassurance line. linkLabel/linkPath optional.
+    badges: [
+      {
+        key: 'accessibility',
+        title: 'נגישות — תקן ישראלי 5568',
+        body: 'תואם WCAG 2.1 AA והתקן הישראלי לנגישות אתרים, עם הצהרת נגישות ייעודית.',
+        linkLabel: 'הצהרת נגישות',
+        linkPath: '/accessibility',
+      },
+      {
+        key: 'privacy',
+        title: 'פרטיות והגנת מידע',
+        body: 'מדיניות פרטיות ברורה ושמירה על נתוני הארגון, הלקוחות והמשתמשים לאורך כל המערכת.',
+        linkLabel: 'מדיניות פרטיות',
+        linkPath: '/privacy',
+      },
+      {
+        key: 'rtl',
+        title: 'עברית-first, RTL מקורי',
+        body: 'הממשק נבנה מהיסוד מימין-לשמאל — לא תרגום מאולתר על תבנית לועזית.',
+        linkLabel: null,
+        linkPath: null,
+      },
+      {
+        key: 'partner',
+        title: 'שותף monday.com מוסמך',
+        body: 'שותפים מוסמכים לבנייה ותחזוקה של מערכות הפעלה על monday.com.',
+        linkLabel: null,
+        linkPath: null,
+      },
+      {
+        key: 'dealer',
+        title: 'עוסק מורשה',
+        body: `עוסק מורשה בישראל. ע.מ ${VAT}.`,
+        linkLabel: null,
+        linkPath: null,
+      },
+    ],
+  },
+  en: {
+    title: 'A trustworthy foundation — for any organization',
+    lead:
+      'Accessibility, privacy, Hebrew-first RTL and certified monday.com partnership — built in from the start, not bolted on later. For public, civic, manufacturing and high-tech teams.',
+    badges: [
+      {
+        key: 'accessibility',
+        title: 'Accessibility — Israeli Std. 5568',
+        body: 'Conforms to WCAG 2.1 AA and the Israeli web-accessibility standard, with a dedicated accessibility statement.',
+        linkLabel: 'Accessibility statement',
+        linkPath: '/accessibility',
+      },
+      {
+        key: 'privacy',
+        title: 'Privacy & data protection',
+        body: 'A clear privacy policy and safeguarding of organizational, customer and user data across the whole system.',
+        linkLabel: 'Privacy policy',
+        linkPath: '/privacy',
+      },
+      {
+        key: 'rtl',
+        title: 'Hebrew-first, native RTL',
+        body: 'The interface is built right-to-left from the ground up — not a makeshift translation over an LTR template.',
+        linkLabel: null,
+        linkPath: null,
+      },
+      {
+        key: 'partner',
+        title: 'Certified monday.com partner',
+        body: 'Certified partners for building and maintaining operating ecosystems on monday.com.',
+        linkLabel: null,
+        linkPath: null,
+      },
+      {
+        key: 'dealer',
+        title: 'Licensed dealer',
+        body: `Licensed dealer in Israel. VAT ID ${VAT}.`,
+        linkLabel: null,
+        linkPath: null,
+      },
+    ],
+  },
+} as const;
+
+const t = content[locale];
+
+// Theme-driven inline SVG icons (currentColor), keyed to each badge.
+const icons: Record<string, string> = {
+  // Accessibility — universal-access figure
+  accessibility:
+    '<circle cx="12" cy="4.5" r="1.8" fill="currentColor" stroke="none"/><path d="M4.5 8.2c2.4 1 5 1.5 7.5 1.5s5.1-.5 7.5-1.5"/><path d="M12 9.7v6.3M12 16l-2.8 5.2M12 16l2.8 5.2"/>',
+  // Privacy — shield with check
+  privacy:
+    '<path d="M12 3l7 2.6v5.2c0 4.6-3 8.1-7 10-4-1.9-7-5.4-7-10V5.6L12 3Z"/><path d="M9 11.6l2.1 2.1L15.2 9.6"/>',
+  // RTL — text alignment with arrow flowing right-to-left
+  rtl:
+    '<line x1="20" y1="6" x2="6" y2="6"/><line x1="20" y1="12" x2="9" y2="12"/><line x1="20" y1="18" x2="6" y2="18"/><path d="M8 9.5L4.5 12 8 14.5"/>',
+  // Partner — monday-style three pills / handshake of nodes
+  partner:
+    '<rect x="3" y="9" width="5" height="6" rx="2.5"/><rect x="9.5" y="9" width="5" height="6" rx="2.5"/><rect x="16" y="9" width="5" height="6" rx="2.5"/>',
+  // Dealer — verified credential badge
+  dealer:
+    '<path d="M12 3l2.1 1.5 2.6-.2 .8 2.5 2.1 1.5-.8 2.5.8 2.5-2.1 1.5-.8 2.5-2.6-.2L12 21l-2.1-1.5-2.6.2-.8-2.5L4.4 16l.8-2.5L4.4 11l2.1-1.5.8-2.5 2.6.2L12 3Z"/><path d="M9.3 12l1.9 1.9 3.5-3.7"/>',
+};
+---
+
+<section class="section procurement" aria-labelledby="procurement-title">
+  <div class="container">
+    <header class="procurement__head" data-reveal>
+      <h2 id="procurement-title">{t.title}</h2>
+      <p class="procurement__lead">{t.lead}</p>
+    </header>
+
+    <ul class="procurement__row" role="list">
+      {
+        t.badges.map((badge, i) => (
+          <li class="badge" data-reveal style={`--reveal-delay:${i * 60}ms`}>
+            <span class="badge__icon" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                set:html={icons[badge.key]}
+              />
+            </span>
+            <div class="badge__body">
+              <h3 class="badge__title">{badge.title}</h3>
+              <p class="badge__text">{badge.body}</p>
+              {badge.linkLabel && badge.linkPath && (
+                <a class="badge__link" href={localizedPath(badge.linkPath, locale)}>
+                  {badge.linkLabel}
+                  <svg
+                    class="badge__chevron"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M9 6l6 6-6 6" />
+                  </svg>
+                </a>
+              )}
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .procurement {
+    overflow: clip;
+  }
+
+  .procurement__head {
+    max-width: var(--panel-max-wide);
+    margin-block-end: var(--space-8);
+  }
+
+  .procurement__head h2 {
+    font-size: var(--text-3xl);
+    margin-block: var(--space-3) var(--space-4);
+  }
+
+  .procurement__lead {
+    font-size: var(--text-md);
+    line-height: var(--line-height-relaxed);
+    color: var(--color-text-secondary);
+  }
+
+  /* ---- Badge / pill row ---- */
+  .procurement__row {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: var(--space-4);
+  }
+
+  .badge {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-4);
+    padding: var(--space-5);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xs);
+    transition:
+      transform var(--transition),
+      box-shadow var(--transition),
+      border-color var(--transition);
+  }
+
+  .badge:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+    border-color: var(--color-border-strong);
+  }
+
+  .badge__icon {
+    flex: none;
+    inline-size: 44px;
+    block-size: 44px;
+    border-radius: var(--radius-md);
+    display: grid;
+    place-items: center;
+    color: var(--color-accent);
+    background: var(--color-accent-muted);
+  }
+
+  .badge__icon svg {
+    inline-size: 24px;
+    block-size: 24px;
+  }
+
+  .badge__title {
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-semibold);
+    margin-block-end: var(--space-2);
+  }
+
+  .badge__text {
+    font-size: var(--text-sm);
+    line-height: var(--line-height-snug);
+    color: var(--color-text-secondary);
+  }
+
+  .badge__link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    margin-block-start: var(--space-3);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-accent);
+  }
+
+  .badge__link:hover {
+    color: var(--color-accent-hover);
+  }
+
+  .badge__chevron {
+    inline-size: 14px;
+    block-size: 14px;
+    /* Mirror the chevron for RTL so it always points "forward". */
+    transform: scaleX(1);
+  }
+
+  :global([dir='rtl']) .badge__chevron {
+    transform: scaleX(-1);
+  }
+
+  .badge__link:hover .badge__chevron {
+    transform: translateX(2px);
+  }
+
+  :global([dir='rtl']) .badge__link:hover .badge__chevron {
+    transform: scaleX(-1) translateX(2px);
+  }
+
+  /* ---- Scroll reveal (tasteful, reduced-motion safe) ---- */
+  [data-reveal] {
+    transform: translateY(16px);
+    transition: transform 0.5s var(--ease-out);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  [data-reveal].is-revealed {
+    transform: none;
+  }
+
+  @media (max-width: 640px) {
+    .procurement__head h2 {
+      font-size: var(--text-2xl);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal] {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    .badge,
+    .badge__chevron {
+      transition: none;
+    }
+    .badge:hover {
+      transform: none;
+    }
+    .badge__link:hover .badge__chevron {
+      transform: none;
+    }
+    :global([dir='rtl']) .badge__link:hover .badge__chevron {
+      transform: scaleX(-1);
+    }
+  }
+</style>
+
+<script>
+  // Progressive enhancement: reveal on scroll. No-op when reduced motion is preferred.
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const items = document.querySelectorAll<HTMLElement>('.procurement [data-reveal]');
+
+  if (prefersReduced || !('IntersectionObserver' in window)) {
+    items.forEach((el) => el.classList.add('is-revealed'));
+  } else {
+    const observer = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-revealed');
+            obs.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -10% 0px' },
+    );
+    items.forEach((el) => observer.observe(el));
+  }
+</script>

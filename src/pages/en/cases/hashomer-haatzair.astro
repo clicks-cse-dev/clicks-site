@@ -1,0 +1,6 @@
+---
+import { localizedPath } from '../../../i18n';
+import { FEATURED_BLOG_SLUG } from '../../../data/blogPosts';
+
+return Astro.redirect(localizedPath(`/cases/${FEATURED_BLOG_SLUG}`, 'en'), 301);
+---

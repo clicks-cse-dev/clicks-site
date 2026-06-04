@@ -1,0 +1,20 @@
+---
+/**
+ * Editorial section label (Brij-style) — use sparingly instead of repeated .eyebrow.
+ * PRD competitor pattern; Impeccable distill: max ~4–5 per long page.
+ */
+interface Props {
+  /** e.g. "01" or "07" */
+  index: string;
+  label: string;
+}
+const { index, label } = Astro.props;
+---
+
+<p class="section-kicker">
+  <span class="section-kicker__ bracket" aria-hidden="true">[</span>
+  <span class="section-kicker__index">{index}</span>
+  <span class="section-kicker__sep" aria-hidden="true"> / </span>
+  <span class="section-kicker__label">{label}</span>
+  <span class="section-kicker__bracket" aria-hidden="true">]</span>
+</p>

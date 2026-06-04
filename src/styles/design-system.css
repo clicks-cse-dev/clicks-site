@@ -1,0 +1,390 @@
+/**
+ * Clicks Strategic Ecosystems — umbrella brand tokens.
+ * Ported from MondayCMS/frontend/src/styles/design-system.css and re-anchored to the
+ * COMPANY blue->violet signature gradient (#4316E0 -> #7B5BF0).
+ * PRD §5. Used sparingly (~12-18% of chrome). No gradient text, no nested cards,
+ * no side-stripe alerts, no purple-hero cliche (DESIGN.md bans).
+ */
+:root {
+  /* ---- Type families (PRD §5: Figtree everywhere + Noto Sans Hebrew RTL fallback) ---- */
+  --font-sans: 'Figtree', 'Noto Sans Hebrew', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Figtree', 'Noto Sans Hebrew', var(--font-sans);
+
+  /* ---- Violet-tinted neutral surfaces ---- */
+  --color-bg: #f2f0f8;
+  --color-bg-mesh:
+    radial-gradient(ellipse 85% 55% at 0% 0%, rgba(67, 22, 224, 0.14), transparent 52%),
+    radial-gradient(ellipse 55% 45% at 100% 8%, rgba(232, 93, 76, 0.09), transparent 48%),
+    linear-gradient(168deg, #f2f0f8 0%, #f7f5fb 46%, #eeecf6 100%);
+
+  --color-surface: #faf9fd;
+  --color-surface-raised: #fefeff;
+  --color-surface-muted: #f3f1f9;
+  --color-surface-subtle: #e9e6f2;
+
+  --color-border: rgba(36, 28, 58, 0.1);
+  --color-border-strong: rgba(36, 28, 58, 0.16);
+  --color-divider: rgba(36, 28, 58, 0.07);
+
+  /* ---- Ink ---- */
+  --color-text: #1a1528;
+  --color-text-secondary: #4a445c;
+  --color-text-muted: #6b647d;
+  --color-text-faint: #9a94a8;
+
+  /* ---- Accent (#5246d9 family) ---- */
+  --color-accent: #5246d9;
+  --color-accent-hover: #4316e0;
+  --color-accent-light: #7b5bf0;
+  --color-accent-soft: rgba(82, 70, 217, 0.14);
+  --color-accent-muted: rgba(82, 70, 217, 0.07);
+
+  /* ---- Signature brand gradient stops: indigo #4316E0 -> electric violet #7B5BF0 ---- */
+  --color-brand-indigo: #4316e0;
+  --color-brand-violet: #7b5bf0;
+  --color-brand-deep: #3411b0;
+  --color-brand-node: #6366f1;
+  --color-brand-line: #8b85f0;
+  --color-brand-pale: #c4b5fd;
+
+  /* ---- Spark (coral, very sparing: single highlight / live-data dot) ---- */
+  --color-spark: #e85d4c;
+  --color-brand-spark: #e85d4c;
+
+  /* ---- Per-product accent nods (umbrella stays blue->violet) ---- */
+  --color-product-cms: #5246d9;
+  --color-product-gis: #3d8b7e;
+
+  --color-action: #5246d9;
+  --color-action-hover: #4316e0;
+
+  /* ---- Semantic ---- */
+  --color-success: #059669;
+  --color-success-soft: #d1fae5;
+  --color-success-border: #6ee7b7;
+
+  --color-warning: #d97706;
+  --color-warning-soft: #fef3c7;
+  --color-warning-border: #fcd34d;
+
+  --color-danger: #e11d48;
+  --color-danger-soft: #ffe4e6;
+  --color-danger-hover: #be123c;
+
+  --color-overlay: rgba(26, 21, 40, 0.44);
+  --color-overlay-light: rgba(254, 254, 255, 0.92);
+
+  /* ---- Signature gradient (CTAs, marks): linear-gradient(165deg, light -> deep) ---- */
+  --gradient-primary: linear-gradient(165deg, var(--color-brand-violet) 0%, var(--color-brand-indigo) 100%);
+  --gradient-soft: linear-gradient(165deg, rgba(123, 91, 240, 0.12) 0%, rgba(67, 22, 224, 0.12) 100%);
+
+  /* ---- Shadows ---- */
+  --shadow-xs: 0 1px 2px rgba(26, 21, 40, 0.06);
+  --shadow-sm: 0 2px 10px rgba(26, 21, 40, 0.08), 0 1px 2px rgba(26, 21, 40, 0.04);
+  --shadow-md: 0 12px 32px rgba(26, 21, 40, 0.11), 0 2px 8px rgba(26, 21, 40, 0.05);
+  --shadow-lg: 0 24px 48px rgba(26, 21, 40, 0.14);
+  --shadow-accent: 0 12px 30px rgba(67, 22, 224, 0.28);
+
+  /* ---- Radii (16-22px raised cards) ---- */
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-xl: 22px;
+  --radius-full: 9999px;
+
+  /* ---- Motion ---- */
+  --transition: 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 200ms;
+
+  /* ---- Focus ring ---- */
+  --focus-ring: 0 0 0 3px rgba(82, 70, 217, 0.34);
+
+  /* ---- Layers ---- */
+  --z-header: 800;
+  --z-overlay: 900;
+  --z-modal: 1000;
+  --z-toast: 1100;
+
+  /* ---- Spacing scale ---- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 40px;
+  --space-8: 56px;
+  --space-9: 80px;
+  --space-10: 120px;
+
+  /* ---- Type scale (~1.2 ratio) ---- */
+  --text-xs: 0.6875rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.9375rem;
+  --text-md: 1.125rem;
+  --text-lg: 1.3125rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 1.75rem;
+  --text-3xl: 2.25rem;
+  --text-4xl: 3rem;
+  --text-5xl: 3.75rem;
+
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+
+  --line-height-tight: 1.15;
+  --line-height-snug: 1.35;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.65;
+
+  /* ---- Layout widths ---- */
+  --content-max: 1200px;
+  --content-narrow: 720px;
+  --panel-max-narrow: 26rem;
+  --panel-max-medium: 36rem;
+  --panel-max-wide: 44rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition: 0.01ms;
+    --duration-fast: 0.01ms;
+    --duration-normal: 0.01ms;
+  }
+}
+
+/* ============================================================
+   Global reset / base
+   ============================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--line-height-normal);
+  color: var(--color-text);
+  background: var(--color-bg);
+  background-image: var(--color-bg-mesh);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  margin: 0;
+  color: var(--color-text);
+}
+
+h1, h2, h3 {
+  text-wrap: balance;
+}
+
+.section p,
+.legal__block p {
+  text-wrap: pretty;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+a:hover {
+  color: var(--color-accent-hover);
+}
+
+img,
+svg,
+video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: var(--radius-sm);
+}
+
+/* ============================================================
+   RTL-friendly logical-property helpers (PRD §9)
+   Layouts MUST use logical properties so HE (rtl) and EN (ltr) mirror automatically.
+   ============================================================ */
+
+/* Centered content well */
+.container {
+  width: 100%;
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding-inline: var(--space-5);
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding-inline: var(--space-4);
+  }
+}
+
+/* Vertical section rhythm */
+.section {
+  padding-block: var(--space-9);
+}
+
+/* First band after hero: tighter vertical rhythm */
+.hero + .section,
+.hero + * .section {
+  padding-block-start: var(--space-8);
+}
+
+/* Skip-to-content link (a11y, PRD §10) */
+.skip-link {
+  position: absolute;
+  inset-inline-start: var(--space-4);
+  inset-block-start: -200%;
+  z-index: var(--z-toast);
+  background: var(--color-surface-raised);
+  color: var(--color-text);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+}
+
+.skip-link:focus {
+  inset-block-start: var(--space-4);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Signature gradient CTA pill */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--text-base);
+  line-height: 1;
+  padding-block: var(--space-3);
+  padding-inline: var(--space-5);
+  border: 1px solid transparent;
+  border-radius: var(--radius-full);
+  transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+  white-space: nowrap;
+}
+
+.btn-primary {
+  color: #fff;
+  background: var(--gradient-primary);
+  box-shadow: var(--shadow-accent);
+}
+
+.btn-primary:hover {
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  color: var(--color-accent);
+  background: var(--color-surface-raised);
+  border-color: var(--color-border-strong);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-secondary:hover {
+  background: var(--color-surface-muted);
+}
+
+/* Raised card surface (never nest cards — DESIGN.md ban) */
+.card {
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-6);
+}
+
+/* Eyebrow — use on ≤3 sections per page (Impeccable distill) */
+.eyebrow {
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+/* Hero tag: sentence case, not repeated section grammar */
+.hero__tag {
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-muted);
+  letter-spacing: 0.01em;
+  text-transform: none;
+}
+
+/* Editorial section kicker — Brij-style, max ~4 per page */
+.section-kicker {
+  margin: 0 0 var(--space-3);
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+}
+.section-kicker__index {
+  color: var(--color-accent);
+}
+.section-kicker__label {
+  color: var(--color-text-muted);
+}
+.section-kicker__bracket,
+.section-kicker__sep {
+  color: var(--color-text-faint);
+  font-weight: var(--font-weight-normal);
+}

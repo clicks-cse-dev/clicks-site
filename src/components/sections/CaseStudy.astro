@@ -1,0 +1,238 @@
+---
+/**
+ * CaseStudy section (PRD §7 #8, §4 "Beat" #2).
+ * Featured case study — story, services/products. Data from blogPosts.ts.
+ */
+import type { Locale } from '../../i18n';
+import { localizedPath } from '../../i18n';
+import { getFeaturedBlogPost, getBlogPostLocale, FEATURED_BLOG_SLUG } from '../../data/blogPosts';
+import { getCaseStudyOfferLists } from '../../data/caseStudyOffers';
+import CaseStudyOfferLines from '../blog/CaseStudyOfferLines.astro';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+
+const post = getFeaturedBlogPost();
+const t = getBlogPostLocale(post, locale);
+const offers = getCaseStudyOfferLists(post, locale);
+
+const ui = {
+  he: {
+    eyebrow: 'סיפור לקוח',
+    ctaLabel: 'לקריאת הסיפור המלא',
+  },
+  en: {
+    eyebrow: 'Client story',
+    ctaLabel: 'Read the full story',
+  },
+} as const;
+
+const labels = ui[locale];
+const caseHref = localizedPath(`/cases/${FEATURED_BLOG_SLUG}`, locale);
+---
+
+<section class="section casestudy" aria-labelledby="casestudy-title">
+  <div class="container">
+    <p class="eyebrow">{labels.eyebrow}</p>
+
+    <div class="casestudy__panel card" data-reveal>
+      <header class="casestudy__head">
+        <div class="casestudy__client">
+          <span class="casestudy__mark" aria-hidden="true">
+            <svg viewBox="0 0 48 48" width="48" height="48" role="img" aria-hidden="true">
+              <circle cx="24" cy="24" r="20" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.35" />
+              <circle cx="24" cy="24" r="6" fill="currentColor" />
+              <circle cx="24" cy="4.5" r="3.2" fill="currentColor" />
+              <circle cx="41" cy="33.5" r="3.2" fill="currentColor" />
+              <circle cx="7" cy="33.5" r="3.2" fill="currentColor" />
+              <path
+                d="M24 8 L24 18 M37.5 31.5 L29 26.5 M10.5 31.5 L19 26.5"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                opacity="0.7"
+              />
+            </svg>
+          </span>
+          <div class="casestudy__id">
+            <p class="casestudy__name">{t.sectorLabel}</p>
+            <p class="casestudy__project">{t.project}</p>
+          </div>
+        </div>
+      </header>
+
+      <div class="casestudy__divider" role="presentation"></div>
+
+      <div class="casestudy__body">
+        <h2 id="casestudy-title" class="casestudy__title">{t.h1}</h2>
+        <p class="casestudy__intro">{t.lead}</p>
+        <CaseStudyOfferLines locale={locale} {...offers} variant="inline" />
+      </div>
+
+      <div class="casestudy__divider" role="presentation"></div>
+
+      <footer class="casestudy__foot">
+        <a class="btn btn-secondary" href={caseHref}>
+          {labels.ctaLabel}
+          <span class="casestudy__ctaarrow" aria-hidden="true">
+            <svg viewBox="0 0 20 14" width="20" height="14" role="img" aria-hidden="true">
+              <path
+                d="M2 7 H15 M11 2 L16 7 L11 12"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </span>
+        </a>
+      </footer>
+    </div>
+  </div>
+</section>
+
+<style>
+  .casestudy .eyebrow {
+    margin-block-end: var(--space-4);
+  }
+
+  .casestudy__panel {
+    padding: var(--space-7);
+    overflow: hidden;
+  }
+
+  .casestudy__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+
+  .casestudy__client {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .casestudy__mark {
+    flex: none;
+    display: grid;
+    place-items: center;
+    inline-size: 56px;
+    block-size: 56px;
+    border-radius: var(--radius-lg);
+    background: var(--gradient-soft);
+    color: var(--color-accent);
+  }
+
+  .casestudy__id {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .casestudy__name {
+    font-family: var(--font-display);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--text-lg);
+    color: var(--color-text);
+  }
+
+  .casestudy__project {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .casestudy__divider {
+    block-size: 1px;
+    background: var(--color-divider);
+    margin-block: var(--space-6);
+  }
+
+  .casestudy__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    max-width: 42rem;
+  }
+
+  .casestudy__title {
+    font-size: var(--text-2xl);
+    line-height: var(--line-height-snug);
+    text-align: start;
+  }
+
+  @media (min-width: 880px) {
+    .casestudy__title {
+      font-size: var(--text-3xl);
+    }
+  }
+
+  .casestudy__intro {
+    margin: 0;
+    font-size: var(--text-md);
+    line-height: var(--line-height-relaxed);
+    color: var(--color-text-secondary);
+    text-align: start;
+  }
+
+  .casestudy__foot {
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .casestudy__ctaarrow {
+    display: inline-flex;
+  }
+
+  :global([dir='rtl']) .casestudy__ctaarrow svg {
+    transform: scaleX(-1);
+  }
+
+  [data-reveal] {
+    transform: translateY(16px);
+    transition: transform 0.5s var(--ease-out);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  [data-reveal].is-revealed {
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal] {
+      transform: none;
+      transition: none;
+    }
+  }
+
+  .btn-secondary:hover {
+    transform: translateY(-1px);
+  }
+</style>
+
+<script>
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const targets = document.querySelectorAll('.casestudy [data-reveal]');
+
+  if (reduce || !('IntersectionObserver' in window)) {
+    targets.forEach((el) => el.classList.add('is-revealed'));
+  } else {
+    const io = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-revealed');
+            obs.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.18 },
+    );
+    targets.forEach((el) => io.observe(el));
+  }
+</script>

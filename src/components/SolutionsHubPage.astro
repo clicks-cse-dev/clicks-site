@@ -1,0 +1,131 @@
+---
+import { BOOKING_URL } from '../config';
+import {
+  HUB_PRODUCTS,
+  HUB_SERVICES,
+  HUB_SECTOR_SLUGS,
+  SOLUTIONS_HUB_COPY,
+} from '../data/solutionsHub';
+import { SECTOR_PAGE_DATA } from '../data/sectorPages';
+import { localizedPath, type Locale } from '../i18n';
+import ProductCardLogo from './product-logos/ProductCardLogo.astro';
+import './product-logos/ProductLockup.css';
+import SectorMark from './sector/SectorMark.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = SOLUTIONS_HUB_COPY[locale];
+const homeHref = localizedPath('/', locale);
+
+const sectors = HUB_SECTOR_SLUGS.map((slug) => SECTOR_PAGE_DATA.find((s) => s.slug === slug)).filter(
+  (s): s is (typeof SECTOR_PAGE_DATA)[number] => Boolean(s),
+);
+---
+
+<article class="inner-page solutions-hub">
+  <header class="solutions-hub__hero section">
+    <div class="container">
+      <p class="inner-hero__eyebrow">{t.eyebrow}</p>
+      <h1 class="solutions-hub__title">{t.h1}</h1>
+      <p class="solutions-hub__lead">{t.lead}</p>
+    </div>
+  </header>
+
+  <div class="container solutions-hub__body">
+    <section class="solutions-hub__lane" aria-labelledby="hub-products-title">
+      <header class="solutions-hub__lane-head">
+        <h2 id="hub-products-title" class="solutions-hub__lane-title">{t.productsTitle}</h2>
+        <p class="solutions-hub__lane-lead">{t.productsLead}</p>
+      </header>
+      <ul class="solutions-hub__grid solutions-hub__grid--products" role="list">
+        {
+          HUB_PRODUCTS.map((offer) => (
+            <li>
+              <a class="solutions-hub__offer card" href={localizedPath(offer.href, locale)}>
+                <div class="solutions-hub__offer-logo">
+                  <ProductCardLogo product={offer.key} label={offer.label[locale]} variant="card" />
+                </div>
+                <p class="solutions-hub__offer-desc">{offer.desc[locale]}</p>
+                <span class="solutions-hub__offer-cta">
+                  {t.explore}
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M3 8h9" />
+                    <path d="M8 4l4 4-4 4" />
+                  </svg>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="solutions-hub__lane" aria-labelledby="hub-services-title">
+      <header class="solutions-hub__lane-head">
+        <h2 id="hub-services-title" class="solutions-hub__lane-title">{t.servicesTitle}</h2>
+        <p class="solutions-hub__lane-lead">{t.servicesLead}</p>
+      </header>
+      <ul class="solutions-hub__grid solutions-hub__grid--services" role="list">
+        {
+          HUB_SERVICES.map((offer) => (
+            <li>
+              <a class="solutions-hub__offer card" href={localizedPath(offer.href, locale)}>
+                <div class="solutions-hub__offer-logo">
+                  <ProductCardLogo product={offer.key} label={offer.label[locale]} variant="card" />
+                </div>
+                <p class="solutions-hub__offer-desc">{offer.desc[locale]}</p>
+                <span class="solutions-hub__offer-cta">
+                  {t.explore}
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M3 8h9" />
+                    <path d="M8 4l4 4-4 4" />
+                  </svg>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="solutions-hub__lane" aria-labelledby="hub-sectors-title">
+      <header class="solutions-hub__lane-head">
+        <h2 id="hub-sectors-title" class="solutions-hub__lane-title">{t.sectorsTitle}</h2>
+        <p class="solutions-hub__lane-lead">{t.sectorsLead}</p>
+      </header>
+      <ul class="solutions-hub__grid solutions-hub__grid--sectors" role="list">
+        {
+          sectors.map((sector) => (
+            <li>
+              <a class="solutions-hub__sector card" href={localizedPath(`/sectors/${sector.slug}`, locale)}>
+                <span class="solutions-hub__sector-icon" aria-hidden="true">
+                  <SectorMark icon={sector.icon} class="solutions-hub__sector-mark" />
+                </span>
+                <h3 class="solutions-hub__sector-name">{sector.titles[locale]}</h3>
+                <p class="solutions-hub__sector-desc">{sector.descriptions[locale]}</p>
+                <span class="solutions-hub__sector-cta">
+                  {t.sectorCta}
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M3 8h9" />
+                    <path d="M8 4l4 4-4 4" />
+                  </svg>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <div class="inner-cta-band solutions-hub__cta">
+      <p class="inner-cta-band__text">{t.phaseNote}</p>
+      <div class="inner-cta-band__actions">
+        <a class="btn btn-primary" href={BOOKING_URL}>{t.cta}</a>
+        <a class="btn btn-secondary" href={homeHref}>{t.home}</a>
+      </div>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,132 @@
+---
+import ProductCardLogo from '../product-logos/ProductCardLogo.astro';
+import '../product-logos/ProductLockup.css';
+import type { Locale } from '../../i18n';
+import type { OfferLink } from '../../data/caseStudyOffers';
+
+interface Props {
+  locale: Locale;
+  services: OfferLink[];
+  products: OfferLink[];
+  variant?: 'panel' | 'inline';
+}
+
+const { locale, services, products, variant = 'panel' } = Astro.props;
+
+const copy =
+  locale === 'he'
+    ? { products: 'מוצרים', services: 'פיתוחים מותאמים' }
+    : { products: 'Products', services: 'Custom developments' };
+
+const lanes = [
+  { title: copy.products, items: products },
+  { title: copy.services, items: services },
+].filter((lane) => lane.items.length > 0);
+
+if (lanes.length === 0) return null;
+---
+
+<div class:list={['case-offers', variant === 'inline' && 'case-offers--inline']}>
+  {
+    lanes.map((lane) => (
+      <div class="case-offers__lane">
+        <p class="case-offers__title">{lane.title}</p>
+        <ul class="case-offers__grid" role="list">
+          {
+            lane.items.map((item) => (
+              <li>
+                <a class="case-offers__chip" href={item.href} title={item.name}>
+                  <ProductCardLogo product={item.product} label={item.name} variant="hub" />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .case-offers {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .case-offers__lane {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-2);
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+    background: color-mix(in srgb, var(--color-surface-muted) 65%, transparent);
+  }
+
+  .case-offers__title {
+    margin: 0;
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-secondary);
+    text-align: start;
+  }
+
+  .case-offers__grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    align-items: stretch;
+    justify-content: flex-start;
+  }
+
+  .case-offers__grid > li {
+    flex: 0 0 auto;
+    max-width: 100%;
+  }
+
+  .case-offers__chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-block-size: 2.75rem;
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-muted);
+    text-decoration: none;
+    transition:
+      background var(--transition),
+      box-shadow var(--transition);
+  }
+
+  .case-offers__chip :global(.product-lockup) {
+    flex-wrap: nowrap;
+    max-width: 100%;
+  }
+
+  .case-offers__chip:hover {
+    background: var(--color-surface-raised);
+    box-shadow: var(--shadow-xs);
+  }
+
+  .case-offers__chip:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+  }
+
+  .case-offers--panel {
+    padding: var(--space-4);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+
+  .case-offers--inline .case-offers__chip {
+    min-block-size: 2.5rem;
+    padding: var(--space-2) var(--space-3);
+    background: var(--color-surface-muted);
+  }
+</style>

@@ -1,0 +1,190 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CaseStudyOfferLines from './blog/CaseStudyOfferLines.astro';
+import { localizedPath, type Locale } from '../i18n';
+import { getCaseStudyPosts, getBlogPostLocale } from '../data/blogPosts';
+import { getCaseStudyOfferLists } from '../data/caseStudyOffers';
+import '../styles/inner-pages.css';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+const t =
+  locale === 'he'
+    ? {
+        title: 'סיפורי לקוח',
+        description: 'סיפורי לקוח מפרויקטים — אתגר, מה הוקם, וקישור למוצרי Clicks.',
+        eyebrow: 'סיפורי לקוח',
+        h1: 'מה בנינו בשטח — ואיך זה מתחבר למוצרים שלנו',
+        lead: 'סיפורים מפרויקטים: אתגר, מה הוקם, ואילו שירותים ומוצרים של Clicks ליוו את הפרויקט.',
+        read: 'לקריאת הסיפור',
+      }
+    : {
+        title: 'Client stories',
+        description: 'Client stories from projects — challenge, what we built, and links to Clicks products.',
+        eyebrow: 'Client stories',
+        h1: 'What we built in the field — and how it maps to our products',
+        lead: 'Stories from projects: the challenge, what was delivered, and which Clicks product implemented each part.',
+        read: 'Read the story',
+      };
+
+const posts = getCaseStudyPosts();
+---
+
+<Layout locale={locale} title={t.title} description={t.description}>
+  <article class="inner-page cases-index">
+    <header class="inner-hero cases-index__hero">
+      <div class="container cases-index__hero-inner">
+        <p class="inner-hero__eyebrow">{t.eyebrow}</p>
+        <h1 class="cases-index__title">{t.h1}</h1>
+        <p class="cases-index__lead">{t.lead}</p>
+      </div>
+    </header>
+
+    <div class="container cases-index__body">
+      <ul class="cases-index__list" role="list">
+        {
+          posts.map((post) => {
+            const copy = getBlogPostLocale(post, locale);
+            const offers = getCaseStudyOfferLists(post, locale);
+            const caseHref = localizedPath(`/cases/${post.slug}`, locale);
+
+            return (
+              <li class="cases-index__card">
+                <div class="cases-index__card-head">
+                  <p class="cases-index__meta">
+                    <span class="cases-index__sector">{copy.sectorLabel}</span>
+                    <span aria-hidden="true">·</span>
+                    <span>{copy.project}</span>
+                  </p>
+                  <h2 class="cases-index__h2">
+                    <a href={caseHref}>{copy.h1}</a>
+                  </h2>
+                  <p class="cases-index__summary">{copy.lead}</p>
+                </div>
+
+                <CaseStudyOfferLines locale={locale} {...offers} variant="inline" />
+
+                <a class="btn btn-secondary cases-index__cta" href={caseHref}>
+                  {t.read}
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </div>
+  </article>
+</Layout>
+
+<style>
+  .cases-index__hero-inner {
+    max-width: 42rem;
+  }
+
+  .cases-index__title {
+    margin: 0 0 var(--space-4);
+    font-size: clamp(var(--text-2xl), 4.5vw, var(--text-4xl));
+    font-weight: var(--font-weight-bold);
+    letter-spacing: -0.035em;
+    line-height: 1.12;
+    text-wrap: balance;
+  }
+
+  .cases-index__lead {
+    margin: 0;
+    max-width: 38rem;
+    font-size: var(--text-lg);
+    line-height: var(--line-height-relaxed);
+    color: var(--color-text-secondary);
+    text-wrap: pretty;
+  }
+
+  .cases-index__body {
+    padding-block: var(--space-8) var(--space-9);
+  }
+
+  .cases-index__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-5);
+    max-width: 52rem;
+    margin-inline: auto;
+  }
+
+  .cases-index__card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    padding: var(--space-6);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .cases-index__card-head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    flex: 1;
+  }
+
+  .cases-index__meta {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    align-items: center;
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+  }
+
+  .cases-index__sector {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-accent);
+  }
+
+  .cases-index__h2 {
+    margin: 0;
+    font-size: var(--text-xl);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-snug);
+    text-wrap: balance;
+  }
+
+  .cases-index__h2 a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .cases-index__h2 a:hover {
+    color: var(--color-accent);
+  }
+
+  .cases-index__summary {
+    margin: 0;
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
+    text-align: start;
+    text-wrap: pretty;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .cases-index__card :global(.case-offers) {
+    width: 100%;
+  }
+
+  .cases-index__cta {
+    align-self: flex-start;
+    margin-block-start: auto;
+  }
+</style>

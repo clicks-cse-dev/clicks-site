@@ -1,0 +1,150 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { localizedPath, type Locale } from '../i18n';
+import { BOOKING_URL, WHATSAPP } from '../config';
+import type { PhaseTwoEntry } from '../data/phaseTwoPages';
+
+interface Props {
+  locale: Locale;
+  entry: PhaseTwoEntry;
+}
+
+const { locale, entry } = Astro.props;
+const pageTitle = entry.titles[locale];
+const pageDescription = entry.descriptions[locale];
+const solutionsHref = localizedPath('/solutions', locale);
+const homeHref = localizedPath('/', locale);
+
+const content = {
+  he: {
+    eyebrow: entry.kind === 'product' ? 'מוצר' : entry.kind === 'sector' ? 'מגזר' : 'פתרון',
+    badge: 'דף מפורט בדרך',
+    lead: 'אנחנו מרחיבים את הדף הזה עם תוכן מלא, דוגמאות ממערכות חיות וקישורים למוצרים קשורים. עד אז אפשר לקבוע שיחה, לעיין במפת הפתרונות או לחזור לדף הבית.',
+    comingTitle: 'מה יופיע בדף המלא',
+    coming: [
+      'תיאור מפורט של הפתרון והקהל המתאים',
+      'דוגמאות תהליכים ומסכים מ-monday.com',
+      'קישורים למוצרים משלימים באקוסיסטם',
+    ],
+    meanwhileTitle: 'בינתיים',
+    solutions: 'מפת הפתרונות',
+    contact: 'צרו קשר',
+    home: 'דף הבית',
+    book: 'לקביעת שיחת ייעוץ',
+    ctaTitle: 'רוצים לדבר על זה עכשיו?',
+    ctaText: 'נשמח לשמוע על הארגון שלכם ולהראות מערכת רלוונטית בשיחה קצרה.',
+  },
+  en: {
+    eyebrow: entry.kind === 'product' ? 'Product' : entry.kind === 'sector' ? 'Sector' : 'Solution',
+    badge: 'Full page on the way',
+    lead: 'We are expanding this page with full copy, live-system examples and links to related products. Until then, book a call, browse the solutions hub, or return to the homepage.',
+    comingTitle: 'What the full page will include',
+    coming: [
+      'A clear description of the solution and who it fits',
+      'Process examples and monday.com screens',
+      'Links to complementary products in the ecosystem',
+    ],
+    meanwhileTitle: 'In the meantime',
+    solutions: 'Solutions hub',
+    contact: 'Contact',
+    home: 'Homepage',
+    book: 'Book a discovery call',
+    ctaTitle: 'Want to talk about this now?',
+    ctaText: 'Tell us about your organization and we will show a relevant live system on a short call.',
+  },
+} as const;
+const t = content[locale];
+---
+
+<Layout locale={locale} title={pageTitle} description={pageDescription}>
+  <article class="inner-page phase-two">
+    <header class="inner-hero">
+      <div class="container inner-hero__grid">
+        <div class="inner-hero__copy">
+          <p class="inner-hero__eyebrow">{t.eyebrow}</p>
+          <p class="phase-two__badge">{t.badge}</p>
+          <h1 class="page__title">{pageTitle}</h1>
+          <p class="inner-hero__lead">{pageDescription}</p>
+          <p class="phase-two__note">{t.lead}</p>
+          <div class="inner-hero__actions">
+            <a class="btn btn-primary" href={BOOKING_URL}>{t.book}</a>
+            <a class="btn btn-secondary" href={solutionsHref}>{t.solutions}</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="container inner-body">
+      <section class="inner-section" aria-labelledby="coming-title">
+        <header class="inner-section__head">
+          <h2 id="coming-title" class="inner-section__title">{t.comingTitle}</h2>
+        </header>
+        <div class="detail-panel">
+          <ul class="detail-list" role="list">
+            {t.coming.map((line) => (
+              <li class="detail-list__item">
+                <p>{line}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section class="inner-section" aria-labelledby="meanwhile-title">
+        <header class="inner-section__head">
+          <h2 id="meanwhile-title" class="inner-section__title">{t.meanwhileTitle}</h2>
+        </header>
+        <ul class="phase-two__links" role="list">
+          <li><a href={solutionsHref}>{t.solutions}</a></li>
+          <li>
+            <a href={WHATSAPP} target="_blank" rel="noopener noreferrer">{t.contact}</a>
+          </li>
+          <li><a href={homeHref}>{t.home}</a></li>
+        </ul>
+      </section>
+
+      <div class="inner-cta-band">
+        <h2 class="inner-cta-band__title">{t.ctaTitle}</h2>
+        <p class="inner-cta-band__text">{t.ctaText}</p>
+        <div class="inner-cta-band__actions">
+          <a class="btn btn-primary" href={BOOKING_URL}>{t.book}</a>
+        </div>
+      </div>
+    </div>
+  </article>
+</Layout>
+
+<style>
+  .phase-two__badge {
+    display: inline-block;
+    margin: 0 0 var(--space-4);
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-secondary);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+  }
+
+  .phase-two__note {
+    margin: var(--space-4) 0 0;
+    max-width: 42rem;
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
+  }
+
+  .phase-two__links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4) var(--space-6);
+  }
+
+  .phase-two__links a {
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--text-md);
+  }
+</style>

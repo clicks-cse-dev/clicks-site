@@ -1,0 +1,80 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { EMAIL_SAPIR, VAT, DOMAIN } from '../config';
+
+const locale = 'he' as const;
+
+const t = {
+  title: 'מדיניות פרטיות',
+  description: 'מדיניות פרטיות לאתר clickcse.com — קליקס מערכות הפעלה אסטרטגיות.',
+  h1: 'מדיניות פרטיות',
+  updated: 'עודכן לאחרונה: יוני 2026',
+  sections: [
+    {
+      h: 'מי אנחנו',
+      p: `האתר ${DOMAIN} מופעל על ידי קליקס — מערכות הפעלה אסטרטגיות (עוסק מורשה ${VAT}).`,
+    },
+    {
+      h: 'איזה מידע נאסף',
+      p: 'כשאתם שולחים פנייה דרך האתר, הפרטים נשלחים אלינו בדוא"ל — המידע אינו נשמר בשרת האתר.',
+    },
+    {
+      h: 'שימוש במידע',
+      p: 'נשתמש בפרטים שתשלחו רק כדי להשיב לפנייה, לתאם שיחה או לספק שירות מקצועי — ולא למכור לצד שלישי.',
+    },
+    {
+      h: 'זכויותיכם',
+      p: 'ניתן לבקש גישה, תיקון או מחיקה של פרטים אישיים שמסרתם — בפנייה לכתובת המייל למטה.',
+    },
+    {
+      h: 'יצירת קשר',
+      p: 'לשאלות בנושא פרטיות:',
+    },
+  ],
+} as const;
+---
+
+<Layout locale={locale} title={t.title} description={t.description}>
+  <article class="section page legal">
+    <div class="container page__narrow">
+      <h1 class="page__title">{t.h1}</h1>
+      <p class="legal__meta">{t.updated}</p>
+      {t.sections.map((s) => (
+        <section class="legal__block">
+          <h2>{s.h}</h2>
+          <p>{s.p}</p>
+        </section>
+      ))}
+      <p><a href={`mailto:${EMAIL_SAPIR}`}>{EMAIL_SAPIR}</a></p>
+    </div>
+  </article>
+</Layout>
+
+<style>
+  .page__narrow {
+    max-width: var(--content-narrow, 720px);
+  }
+  .page__title {
+    margin: 0 0 var(--space-3);
+    font-size: var(--text-3xl);
+    font-weight: var(--font-weight-bold);
+  }
+  .legal__meta {
+    margin: 0 0 var(--space-8);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+  .legal__block {
+    margin-block-end: var(--space-6);
+  }
+  .legal__block h2 {
+    margin: 0 0 var(--space-3);
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-semibold);
+  }
+  .legal__block p {
+    margin: 0;
+    color: var(--color-text-secondary);
+    line-height: 1.65;
+  }
+</style>

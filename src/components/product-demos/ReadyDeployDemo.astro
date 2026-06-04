@@ -1,0 +1,844 @@
+---
+import type { Locale } from '../../i18n';
+import '../../styles/product-demos.css';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+const caseGroups4 = [
+  { id: 'intake', color: '#579bfc' },
+  { id: 'review', color: '#ffcb00' },
+  { id: 'approval', color: '#e85d4c' },
+  { id: 'done', color: '#00c875' },
+] as const;
+
+const t = {
+  he: {
+    livePrefix: 'מציג:',
+    window: 'monday.com',
+    tabs: [
+      { id: 'crm360', label: 'CRM 360' },
+      { id: 'cases', label: 'ניהול תיקים' },
+      { id: 'onboarding', label: 'אונבורדינג + SLA' },
+      { id: 'dashboard', label: 'דשבורד מנהלים' },
+    ],
+    crm360: {
+      caption: 'מסע לקוח/תושב מקצה לקצה — ערוצים, לוח CRM ומדידה במקום אחד.',
+      window: 'CRM Connections',
+      board: 'פניות תושבים · CRM 360',
+      badge: 'לוח CRM',
+      channels: ['WhatsApp', 'Messenger', 'אימייל'],
+      threads: {
+        WhatsApp: 'פניית תושב · רח׳ הזית — בטיפול',
+        Messenger: 'ליד מקמפיין · דף פייסבוק',
+        'אימייל': 'פנייה@example.org — חדש',
+      },
+      linked: 'מקושר ללוח CRM · סנכרון פעיל',
+      cols: { task: 'משימה', source: 'מקור', status: 'סטטוס', owner: 'אחראי' },
+      rows: [
+        {
+          id: '1',
+          task: 'תלונת תאורה — שכונה ג׳',
+          source: 'WhatsApp',
+          status: 'pending',
+          statusLabel: 'חדש',
+          owner: 'יוסי',
+          detail: 'נקלט מ-WhatsApp. ממתין לשיוך לעירייה.',
+          sla: '48 שעות',
+        },
+        {
+          id: '2',
+          task: 'בקשת היתר — רח׳ הזית 9',
+          source: 'טופס אתר',
+          status: 'progress',
+          statusLabel: 'בטיפול',
+          owner: 'דנה',
+          detail: 'בטיפול מחלקת רישוי. מסמכים אושרו.',
+          sla: '3 ימים',
+        },
+        {
+          id: '3',
+          task: 'רישוי עסק — מאפייה',
+          source: 'מרכז שירות',
+          status: 'done',
+          statusLabel: 'נסגר',
+          owner: 'סיגל',
+          detail: 'נסגר בזמן. מענה נשלח לבעלים.',
+          sla: 'בזמן',
+        },
+      ],
+      pick: 'בחרו שורה בלוח CRM',
+      fields: { owner: 'אחראי', source: 'מקור', sla: 'יעד טיפול' },
+      defaultRowId: '2',
+    },
+    cases: {
+      caption: 'תיק עם SLA, מסמכים והרשאות — הכול על פריט אחד ב-monday.',
+      board: 'תיקים · רישוי ועסקים',
+      badge: 'ניהול תיקים',
+      groups: [
+        { id: 'intake', label: 'קליטה' },
+        { id: 'review', label: 'בדיקה' },
+        { id: 'approval', label: 'אישור' },
+        { id: 'done', label: 'מענה' },
+      ],
+      items: [
+        {
+          id: 'c1',
+          group: 'intake',
+          name: 'תיק #2840 · ארנונה',
+          owner: 'גבי',
+          date: 'היום',
+          detail: 'נפתח אוטומטית מהטופס.',
+          sla: '5 ימים',
+          docs: '1 קובץ',
+        },
+        {
+          id: 'c2',
+          group: 'review',
+          name: 'תיק #2847 · רישוי עסק',
+          owner: 'מחלקת רישוי',
+          date: 'אתמול',
+          detail: 'ממתין לאישור מחלקה. 3 מסמכים מצורפים.',
+          sla: '28 שעות נותרו',
+          docs: '3 קבצים',
+        },
+        {
+          id: 'c3',
+          group: 'approval',
+          name: 'תיק #2831 · היתר בנייה',
+          owner: 'מנהל אגף',
+          date: 'לפני 2 ימים',
+          detail: 'ממתין לאישור סופי.',
+          sla: 'חריגה קלה',
+          docs: '5 קבצים',
+        },
+      ],
+      pick: 'בחרו תיק מהלוח',
+      fields: { owner: 'אחראי', sla: 'SLA', docs: 'מסמכים' },
+      fileList: ['טופס בקשה.pdf', 'תשריט.dwg', 'אישור בעלים.pdf'],
+      defaultItemId: 'c2',
+    },
+    onboarding: {
+      caption: 'תבניות קליטה, מדדי שירות ודשבורד עומסים — בשבועות, לא בחודשים.',
+      board: 'קליטה ו-SLA · שירות',
+      badge: 'טבלה ראשית',
+      newItem: '+ פריט חדש',
+      filter: 'סינון',
+      cols: { task: 'משימה', source: 'מקור', status: 'סטטוס', sla: 'SLA', owner: 'אחראי' },
+      rows: [
+        {
+          id: 'o1',
+          task: 'פניית תושב · רח׳ הזית',
+          source: 'טופס אתר',
+          status: 'progress',
+          statusLabel: 'בטיפול',
+          sla: 'בזמן',
+          owner: 'דנה',
+          ownerInit: 'ד',
+        },
+        {
+          id: 'o2',
+          task: 'בקשת הרשאה · לוח CRM',
+          source: 'WhatsApp',
+          status: 'pending',
+          statusLabel: 'חדש',
+          sla: '48 שע׳',
+          owner: 'יוסי',
+          ownerInit: 'י',
+        },
+        {
+          id: 'o3',
+          task: 'מענה שנשלח · #1988',
+          source: 'מרכז שירות',
+          status: 'done',
+          statusLabel: 'נסגר',
+          sla: 'בזמן',
+          owner: 'סיגל',
+          ownerInit: 'ס',
+        },
+      ],
+      pick: 'לחצו על שורה — ערוצי קליטה ומדדי SLA מתעדכנים.',
+    },
+    dashboard: {
+      caption: 'תמונת מצב שבועית: פתוחות, חריגות ועמידה ביעדים.',
+      board: 'דשבורד מנהלים · שירות',
+      badge: 'Dashboard',
+      widgets: [
+        { value: '128', label: 'פתוחות', color: '#579bfc' },
+        { value: '11', label: 'חריגות SLA', color: '#e85d4c' },
+        { value: '96%', label: 'עמידה ביעד', color: '#00c875' },
+        { value: '42', label: 'נסגרו השבוע', color: '#784bd1' },
+      ],
+      chartTitle: 'נפח פניות לפי שבוע',
+      weeks: [
+        { label: 'שב׳ 1', h: 48 },
+        { label: 'שב׳ 2', h: 72 },
+        { label: 'שב׳ 3', h: 36 },
+        { label: 'שב׳ 4', h: 88 },
+      ],
+    },
+  },
+  en: {
+    livePrefix: 'Showing:',
+    window: 'monday.com',
+    tabs: [
+      { id: 'crm360', label: 'CRM 360' },
+      { id: 'cases', label: 'Case management' },
+      { id: 'onboarding', label: 'Onboarding + SLA' },
+      { id: 'dashboard', label: 'Executive dashboard' },
+    ],
+    crm360: {
+      caption: 'End-to-end journey — channels, CRM board and metrics in one place.',
+      window: 'CRM Connections',
+      board: 'Resident requests · CRM 360',
+      badge: 'CRM board',
+      channels: ['WhatsApp', 'Messenger', 'Email'],
+      threads: {
+        WhatsApp: 'Resident request · Olive St — In progress',
+        Messenger: 'Campaign lead · Facebook page',
+        Email: 'request@example.org — New',
+      },
+      linked: 'Linked to CRM board · Sync on',
+      cols: { task: 'Item', source: 'Source', status: 'Status', owner: 'Owner' },
+      rows: [
+        {
+          id: '1',
+          task: 'Street lighting complaint',
+          source: 'WhatsApp',
+          status: 'pending',
+          statusLabel: 'New',
+          owner: 'Yossi',
+          detail: 'Captured from WhatsApp. Awaiting assignment.',
+          sla: '48 hours',
+        },
+        {
+          id: '2',
+          task: 'Permit request — 9 Olive St',
+          source: 'Web form',
+          status: 'progress',
+          statusLabel: 'In progress',
+          owner: 'Dana',
+          detail: 'Licensing team engaged. Documents approved.',
+          sla: '3 days',
+        },
+        {
+          id: '3',
+          task: 'Business license — bakery',
+          source: 'Service center',
+          status: 'done',
+          statusLabel: 'Closed',
+          owner: 'Sigal',
+          detail: 'Closed on time. Response sent to owner.',
+          sla: 'On time',
+        },
+      ],
+      pick: 'Select a row on the CRM board',
+      fields: { owner: 'Owner', source: 'Source', sla: 'Target' },
+      defaultRowId: '2',
+    },
+    cases: {
+      caption: 'Case file with SLA, documents and permissions on one monday item.',
+      board: 'Cases · Licensing & business',
+      badge: 'Case management',
+      groups: [
+        { id: 'intake', label: 'Intake' },
+        { id: 'review', label: 'Review' },
+        { id: 'approval', label: 'Approval' },
+        { id: 'done', label: 'Response' },
+      ],
+      items: [
+        {
+          id: 'c1',
+          group: 'intake',
+          name: 'Case #2840 · Property tax',
+          owner: 'Gabi',
+          date: 'Today',
+          detail: 'Auto-created from the public form.',
+          sla: '5 days',
+          docs: '1 file',
+        },
+        {
+          id: 'c2',
+          group: 'review',
+          name: 'Case #2847 · Business license',
+          owner: 'Licensing unit',
+          date: 'Yesterday',
+          detail: 'Awaiting department approval. 3 attachments.',
+          sla: '28 hours left',
+          docs: '3 files',
+        },
+        {
+          id: 'c3',
+          group: 'approval',
+          name: 'Case #2831 · Building permit',
+          owner: 'Division head',
+          date: '2 days ago',
+          detail: 'Waiting for final sign-off.',
+          sla: 'Slight breach',
+          docs: '5 files',
+        },
+      ],
+      pick: 'Pick a case from the board',
+      fields: { owner: 'Owner', sla: 'SLA', docs: 'Documents' },
+      fileList: ['application.pdf', 'site-plan.dwg', 'owner-consent.pdf'],
+      defaultItemId: 'c2',
+    },
+    onboarding: {
+      caption: 'Intake templates, service metrics and load dashboard in weeks.',
+      board: 'Intake & SLA · Service',
+      badge: 'Main table',
+      newItem: '+ New item',
+      filter: 'Filter',
+      cols: { task: 'Item', source: 'Source', status: 'Status', sla: 'SLA', owner: 'Owner' },
+      rows: [
+        {
+          id: 'o1',
+          task: 'Resident request · Olive St',
+          source: 'Web form',
+          status: 'progress',
+          statusLabel: 'In progress',
+          sla: 'On time',
+          owner: 'Dana',
+          ownerInit: 'D',
+        },
+        {
+          id: 'o2',
+          task: 'Access request · CRM board',
+          source: 'WhatsApp',
+          status: 'pending',
+          statusLabel: 'New',
+          sla: '48h',
+          owner: 'Yossi',
+          ownerInit: 'Y',
+        },
+        {
+          id: 'o3',
+          task: 'Response sent · #1988',
+          source: 'Service center',
+          status: 'done',
+          statusLabel: 'Closed',
+          sla: 'On time',
+          owner: 'Sigal',
+          ownerInit: 'S',
+        },
+      ],
+      pick: 'Click a row — intake channels and SLA metrics update.',
+    },
+    dashboard: {
+      caption: 'Weekly snapshot: open volume, exceptions and target adherence.',
+      board: 'Executive dashboard · Service',
+      badge: 'Dashboard',
+      widgets: [
+        { value: '128', label: 'Open', color: '#579bfc' },
+        { value: '11', label: 'SLA breaches', color: '#e85d4c' },
+        { value: '96%', label: 'On target', color: '#00c875' },
+        { value: '42', label: 'Closed this week', color: '#784bd1' },
+      ],
+      chartTitle: 'Request volume by week',
+      weeks: [
+        { label: 'Wk 1', h: 48 },
+        { label: 'Wk 2', h: 72 },
+        { label: 'Wk 3', h: 36 },
+        { label: 'Wk 4', h: 88 },
+      ],
+    },
+  },
+} as const;
+
+const c = t[locale];
+
+const groupColors4 = Object.fromEntries(
+  caseGroups4.map((g) => [g.id, g.color]),
+) as Record<string, string>;
+
+function findItem<T extends { id: string }>(items: readonly T[], id: string) {
+  return items.find((item) => item.id === id) ?? items[0];
+}
+
+const crmDefault = findItem(c.crm360.rows, c.crm360.defaultRowId);
+const crmDefaultChannel = c.crm360.channels[0];
+const crmDefaultThread = c.crm360.threads[crmDefaultChannel as keyof typeof c.crm360.threads];
+const caseDefault = findItem(c.cases.items, c.cases.defaultItemId);
+---
+
+<div
+  class="product-demo product-brand--ready"
+  data-product-demo
+  data-demo-kind="ready"
+  data-live-prefix={c.livePrefix}
+>
+  <p class="product-demo__live" data-demo-live aria-live="polite">
+    {c.livePrefix} {c.crm360.caption}
+  </p>
+
+  <div class="product-demo__tabs" role="tablist" aria-label={locale === 'he' ? 'חבילות Ready-to-deploy' : 'Ready-to-deploy packs'}>
+    {
+      c.tabs.map((tab, i) => (
+        <button
+          type="button"
+          class="product-demo__tab"
+          role="tab"
+          data-demo-tab={tab.id}
+          aria-selected={i === 0 ? 'true' : 'false'}
+          tabindex={i === 0 ? 0 : -1}
+        >
+          {tab.label}
+        </button>
+      ))
+    }
+  </div>
+
+  <!-- CRM 360 · CRM Connections board -->
+  <div
+    class="product-demo__panel"
+    role="tabpanel"
+    data-demo-panel="crm360"
+    data-demo-caption={c.crm360.caption}
+  >
+    <div class="product-demo__frame product-brand--crm">
+      <div class="product-demo__chrome">
+        <span class="product-demo__dot product-demo__dot--a" />
+        <span class="product-demo__dot product-demo__dot--b" />
+        <span class="product-demo__dot product-demo__dot--c" />
+        <span class="product-demo__window-title">{c.crm360.window}</span>
+      </div>
+      <div class="product-demo__body crm-board-mock" data-ready-crm-board>
+        <header class="crm-board-mock__head">
+          <h3 class="crm-board-mock__title">{c.crm360.board}</h3>
+          <span class="crm-board-mock__badge">{c.crm360.badge}</span>
+        </header>
+        <div class="crm-board-mock__workspace">
+          <div class="product-demo__tabs product-demo__tabs--inner" role="tablist">
+            {
+              c.crm360.channels.map((ch, i) => (
+                <button
+                  type="button"
+                  class="product-demo__tab"
+                  role="tab"
+                  data-ready-crm-channel={ch}
+                  data-ready-crm-thread={c.crm360.threads[ch as keyof typeof c.crm360.threads]}
+                  aria-selected={i === 0 ? 'true' : 'false'}
+                >
+                  {ch}
+                </button>
+              ))
+            }
+          </div>
+          <p class="crm-board-mock__thread" data-ready-crm-thread>{crmDefaultThread}</p>
+          <p class="crm-board-mock__linked">
+            <span class="crm-board-mock__sync-dot" aria-hidden="true" />
+            {c.crm360.linked}
+          </p>
+          <div class="crm-board-mock__layout">
+            <div class="crm-board-mock__table">
+              <div class="mini-board__row mini-board__row--head crm-board-mock__row">
+                <span>{c.crm360.cols.task}</span>
+                <span>{c.crm360.cols.source}</span>
+                <span>{c.crm360.cols.status}</span>
+                <span>{c.crm360.cols.owner}</span>
+              </div>
+              {
+                c.crm360.rows.map((row) => (
+                  <button
+                    type="button"
+                    class:list={[
+                      'mini-board__row',
+                      'mini-board__row--click',
+                      'crm-board-mock__row',
+                      row.id === c.crm360.defaultRowId && 'is-selected',
+                    ]}
+                    data-ready-crm-row
+                    data-task={row.task}
+                    data-source={row.source}
+                    data-owner={row.owner}
+                    data-detail={row.detail}
+                    data-sla={row.sla}
+                  >
+                    <span>{row.task}</span>
+                    <span>{row.source}</span>
+                    <span>
+                      <span class:list={['mini-status', `mini-status--${row.status}`]}>
+                        {row.statusLabel}
+                      </span>
+                    </span>
+                    <span>{row.owner}</span>
+                  </button>
+                ))
+              }
+            </div>
+            <aside class="crm-board-mock__detail">
+              <p class="crm-board-mock__detail-title" data-ready-crm-title>
+                {crmDefault?.task ?? c.crm360.pick}
+              </p>
+              <p class="crm-board-mock__detail-text" data-ready-crm-detail>
+                {crmDefault?.detail ?? c.crm360.pick}
+              </p>
+              <div class="cms-mock__row">
+                <span class="cms-mock__row-label">{c.crm360.fields.owner}</span>
+                <span data-ready-crm-owner>{crmDefault?.owner}</span>
+              </div>
+              <div class="cms-mock__row">
+                <span class="cms-mock__row-label">{c.crm360.fields.source}</span>
+                <span data-ready-crm-source>{crmDefault?.source}</span>
+              </div>
+              <div class="cms-mock__row">
+                <span class="cms-mock__row-label">{c.crm360.fields.sla}</span>
+                <span data-ready-crm-sla>{crmDefault?.sla}</span>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="product-demo__caption">{c.crm360.caption}</p>
+  </div>
+
+  <!-- Case management · Kanban + files -->
+  <div
+    class="product-demo__panel"
+    role="tabpanel"
+    data-demo-panel="cases"
+    data-demo-caption={c.cases.caption}
+    hidden
+  >
+    <div class="product-demo__frame">
+      <div class="product-demo__chrome">
+        <span class="product-demo__dot product-demo__dot--a" />
+        <span class="product-demo__dot product-demo__dot--b" />
+        <span class="product-demo__dot product-demo__dot--c" />
+        <span class="product-demo__window-title">{c.window}</span>
+      </div>
+      <div class="product-demo__body fg-monday-mock" data-ready-monday="cases">
+        <header class="fg-monday-mock__head">
+          <h3 class="fg-monday-mock__board-title">{c.cases.board}</h3>
+          <span class="fg-monday-mock__badge">{c.cases.badge}</span>
+        </header>
+        <div class="fg-monday-mock__layout">
+          <div class="fg-monday-mock__groups">
+            {
+              c.cases.groups.map((group) => (
+                <section class="fg-monday-mock__group">
+                  <h4 class="fg-monday-mock__group-label">
+                    <span
+                      class="fg-monday-mock__group-dot"
+                      style={`background: ${groupColors4[group.id]}`}
+                    />
+                    {group.label}
+                  </h4>
+                  <ul class="fg-monday-mock__items" role="list">
+                    {
+                      c.cases.items
+                        .filter((item) => item.group === group.id)
+                        .map((item) => (
+                          <li>
+                            <button
+                              type="button"
+                              class:list={[
+                                'fg-monday-mock__item',
+                                item.id === c.cases.defaultItemId && 'is-active',
+                              ]}
+                              data-ready-monday-item
+                              data-id={item.id}
+                              data-name={item.name}
+                              data-detail={item.detail}
+                              data-owner={item.owner}
+                              data-date={item.date}
+                              data-sla={item.sla}
+                              data-docs={item.docs}
+                              data-show-files={item.id === c.cases.defaultItemId ? 'true' : 'false'}
+                            >
+                              <span class="fg-monday-mock__item-name">{item.name}</span>
+                              <span class="fg-monday-mock__item-meta">
+                                {item.owner} · {item.date}
+                              </span>
+                            </button>
+                          </li>
+                        ))
+                    }
+                  </ul>
+                </section>
+              ))
+            }
+          </div>
+          <aside class="fg-monday-mock__detail fg-monday-mock__detail--wide">
+            <p class="fg-monday-mock__detail-title" data-ready-monday-title>
+              {caseDefault?.name ?? c.cases.pick}
+            </p>
+            <p class="fg-monday-mock__detail-text" data-ready-monday-detail>
+              {caseDefault?.detail ?? c.cases.pick}
+            </p>
+            <dl class="fg-monday-mock__detail-fields">
+              <div>
+                <dt>{c.cases.fields.owner}</dt>
+                <dd data-ready-monday-owner>{caseDefault?.owner}</dd>
+              </div>
+              <div>
+                <dt>{c.cases.fields.sla}</dt>
+                <dd data-ready-monday-sla>{caseDefault?.sla}</dd>
+              </div>
+              <div>
+                <dt>{c.cases.fields.docs}</dt>
+                <dd data-ready-monday-docs>{caseDefault?.docs}</dd>
+              </div>
+            </dl>
+            <ul class="mndy-file-chips" data-ready-monday-files>
+              {c.cases.fileList.map((file) => (
+                <li>{file}</li>
+              ))}
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </div>
+    <p class="product-demo__caption">{c.cases.caption}</p>
+  </div>
+
+  <!-- Onboarding · Main table -->
+  <div
+    class="product-demo__panel"
+    role="tabpanel"
+    data-demo-panel="onboarding"
+    data-demo-caption={c.onboarding.caption}
+    hidden
+  >
+    <div class="product-demo__frame">
+      <div class="product-demo__chrome">
+        <span class="product-demo__dot product-demo__dot--a" />
+        <span class="product-demo__dot product-demo__dot--b" />
+        <span class="product-demo__dot product-demo__dot--c" />
+        <span class="product-demo__window-title">{c.window}</span>
+      </div>
+      <div class="product-demo__body fg-monday-mock" data-ready-table>
+        <header class="fg-monday-mock__head">
+          <h3 class="fg-monday-mock__board-title">{c.onboarding.board}</h3>
+          <span class="fg-monday-mock__badge">{c.onboarding.badge}</span>
+        </header>
+        <div class="mndy-workspace">
+          <div class="mndy-toolbar">
+            <button type="button" class="mndy-toolbar__primary">{c.onboarding.newItem}</button>
+            <button type="button" class="mndy-toolbar__ghost">{c.onboarding.filter}</button>
+          </div>
+          <div class="mndy-table" role="table">
+            <div class="mndy-table__row mndy-table__row--head" role="row">
+              <span role="columnheader">{c.onboarding.cols.task}</span>
+              <span role="columnheader">{c.onboarding.cols.source}</span>
+              <span role="columnheader">{c.onboarding.cols.status}</span>
+              <span role="columnheader">{c.onboarding.cols.sla}</span>
+              <span role="columnheader">{c.onboarding.cols.owner}</span>
+            </div>
+            {
+              c.onboarding.rows.map((row, i) => (
+                <button
+                  type="button"
+                  class:list={['mndy-table__row', 'mndy-table__row--data', i === 0 && 'is-selected']}
+                  role="row"
+                  data-ready-table-row
+                  data-task={row.task}
+                  data-source={row.source}
+                  data-sla={row.sla}
+                >
+                  <span class="mndy-table__task" role="cell">{row.task}</span>
+                  <span role="cell">{row.source}</span>
+                  <span role="cell">
+                    <span class:list={['mndy-pill', `mndy-pill--${row.status}`]}>{row.statusLabel}</span>
+                  </span>
+                  <span role="cell">
+                    <span class="mndy-pill mndy-pill--sla">{row.sla}</span>
+                  </span>
+                  <span class="mndy-table__owner" role="cell">
+                    <span class="mndy-avatar" aria-hidden="true">{row.ownerInit}</span>
+                    {row.owner}
+                  </span>
+                </button>
+              ))
+            }
+          </div>
+          <div class="mndy-table-kpis">
+            <div class="mndy-table-kpis__card">
+              <span class="mndy-table-kpis__value">94%</span>
+              <span class="mndy-table-kpis__label">{locale === 'he' ? 'עמידה ב-SLA' : 'SLA met'}</span>
+            </div>
+            <div class="mndy-table-kpis__card">
+              <span class="mndy-table-kpis__value">51</span>
+              <span class="mndy-table-kpis__label">{locale === 'he' ? 'פתוחות השבוע' : 'Open this week'}</span>
+            </div>
+            <div class="mndy-table-kpis__card">
+              <span class="mndy-table-kpis__value">1.8</span>
+              <span class="mndy-table-kpis__label">{locale === 'he' ? 'ימים ממוצע' : 'Avg days'}</span>
+            </div>
+          </div>
+          <p class="mndy-table__hint" data-ready-table-hint>{c.onboarding.pick}</p>
+        </div>
+      </div>
+    </div>
+    <p class="product-demo__caption">{c.onboarding.caption}</p>
+  </div>
+
+  <!-- Dashboard · Widgets -->
+  <div
+    class="product-demo__panel"
+    role="tabpanel"
+    data-demo-panel="dashboard"
+    data-demo-caption={c.dashboard.caption}
+    hidden
+  >
+    <div class="product-demo__frame">
+      <div class="product-demo__chrome">
+        <span class="product-demo__dot product-demo__dot--a" />
+        <span class="product-demo__dot product-demo__dot--b" />
+        <span class="product-demo__dot product-demo__dot--c" />
+        <span class="product-demo__window-title">{c.window}</span>
+      </div>
+      <div class="product-demo__body fg-monday-mock">
+        <header class="fg-monday-mock__head">
+          <h3 class="fg-monday-mock__board-title">{c.dashboard.board}</h3>
+          <span class="fg-monday-mock__badge">{c.dashboard.badge}</span>
+        </header>
+        <div class="mndy-workspace mndy-dash">
+          <div class="mndy-dash__widgets">
+            {
+              c.dashboard.widgets.map((w) => (
+                <div class="mndy-dash__widget">
+                  <span class="mndy-dash__widget-bar" style={`background: ${w.color}`} />
+                  <p class="mndy-dash__widget-value">{w.value}</p>
+                  <p class="mndy-dash__widget-label">{w.label}</p>
+                </div>
+              ))
+            }
+          </div>
+          <section class="mndy-dash__chart">
+            <h4 class="mndy-dash__chart-title">{c.dashboard.chartTitle}</h4>
+            <div class="mndy-dash__bars" aria-hidden="true">
+              {
+                c.dashboard.weeks.map((w) => (
+                  <div class="mndy-dash__bar-wrap">
+                    <div class="mndy-dash__bar" style={`--h: ${w.h}`} />
+                    <span>{w.label}</span>
+                  </div>
+                ))
+              }
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+    <p class="product-demo__caption">{c.dashboard.caption}</p>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-product-demo][data-demo-kind="ready"]').forEach((root) => {
+    const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-demo-tab]'));
+    const panels = Array.from(root.querySelectorAll<HTMLElement>('[data-demo-panel]'));
+    const live = root.querySelector<HTMLElement>('[data-demo-live]');
+
+    const selectTab = (id: string) => {
+      tabs.forEach((tab) => {
+        const on = tab.dataset.demoTab === id;
+        tab.setAttribute('aria-selected', on ? 'true' : 'false');
+        tab.tabIndex = on ? 0 : -1;
+      });
+      panels.forEach((panel) => {
+        const on = panel.dataset.demoPanel === id;
+        panel.hidden = !on;
+        if (on && live) {
+          const cap = panel.dataset.demoCaption ?? '';
+          live.textContent = `${root.dataset.livePrefix ?? ''} ${cap}`;
+        }
+      });
+    };
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => selectTab(tab.dataset.demoTab!));
+      tab.addEventListener('keydown', (e) => {
+        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+        e.preventDefault();
+        const rtl = document.documentElement.dir === 'rtl';
+        const fwd = rtl ? e.key === 'ArrowLeft' : e.key === 'ArrowRight';
+        const next = (i + (fwd ? 1 : -1) + tabs.length) % tabs.length;
+        tabs[next].focus();
+        selectTab(tabs[next].dataset.demoTab!);
+      });
+    });
+
+    root.querySelectorAll<HTMLElement>('[data-ready-crm-board]').forEach((box) => {
+      const thread = box.querySelector<HTMLElement>('[data-ready-crm-thread]');
+      box.querySelectorAll<HTMLButtonElement>('[data-ready-crm-channel]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          box.querySelectorAll('[data-ready-crm-channel]').forEach((b) => {
+            b.setAttribute('aria-selected', 'false');
+          });
+          btn.setAttribute('aria-selected', 'true');
+          if (thread) thread.textContent = btn.dataset.readyCrmThread ?? '';
+        });
+      });
+
+      const title = box.querySelector<HTMLElement>('[data-ready-crm-title]');
+      const detail = box.querySelector<HTMLElement>('[data-ready-crm-detail]');
+      const owner = box.querySelector<HTMLElement>('[data-ready-crm-owner]');
+      const source = box.querySelector<HTMLElement>('[data-ready-crm-source]');
+      const sla = box.querySelector<HTMLElement>('[data-ready-crm-sla]');
+
+      const selectRow = (btn: HTMLButtonElement) => {
+        box.querySelectorAll('[data-ready-crm-row]').forEach((r) => r.classList.remove('is-selected'));
+        btn.classList.add('is-selected');
+        if (title) title.textContent = btn.dataset.task ?? '';
+        if (detail) detail.textContent = btn.dataset.detail ?? '';
+        if (owner) owner.textContent = btn.dataset.owner ?? '';
+        if (source) source.textContent = btn.dataset.source ?? '';
+        if (sla) sla.textContent = btn.dataset.sla ?? '';
+      };
+
+      box.querySelectorAll<HTMLButtonElement>('[data-ready-crm-row]').forEach((btn) => {
+        btn.addEventListener('click', () => selectRow(btn));
+      });
+      const selected = box.querySelector<HTMLButtonElement>('[data-ready-crm-row].is-selected');
+      if (selected) selectRow(selected);
+    });
+
+    root.querySelectorAll<HTMLElement>('[data-ready-monday]').forEach((box) => {
+      const title = box.querySelector<HTMLElement>('[data-ready-monday-title]');
+      const detail = box.querySelector<HTMLElement>('[data-ready-monday-detail]');
+      const owner = box.querySelector<HTMLElement>('[data-ready-monday-owner]');
+      const source = box.querySelector<HTMLElement>('[data-ready-monday-source]');
+      const sla = box.querySelector<HTMLElement>('[data-ready-monday-sla]');
+      const docs = box.querySelector<HTMLElement>('[data-ready-monday-docs]');
+      const files = box.querySelector<HTMLElement>('[data-ready-monday-files]');
+
+      const activate = (btn: HTMLButtonElement) => {
+        box.querySelectorAll('[data-ready-monday-item]').forEach((b) => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+        if (title) title.textContent = btn.dataset.name ?? '';
+        if (detail) detail.textContent = btn.dataset.detail ?? '';
+        if (owner) owner.textContent = btn.dataset.owner ?? '';
+        if (source) source.textContent = btn.dataset.source ?? '';
+        if (sla) sla.textContent = btn.dataset.sla ?? '';
+        if (docs) docs.textContent = btn.dataset.docs ?? '';
+        if (files) files.hidden = btn.dataset.showFiles !== 'true';
+      };
+
+      box.querySelectorAll<HTMLButtonElement>('[data-ready-monday-item]').forEach((btn) => {
+        btn.addEventListener('click', () => activate(btn));
+      });
+      const active = box.querySelector<HTMLButtonElement>('[data-ready-monday-item].is-active');
+      if (active) activate(active);
+    });
+
+    root.querySelectorAll<HTMLElement>('[data-ready-table]').forEach((box) => {
+      const hint = box.querySelector<HTMLElement>('[data-ready-table-hint]');
+      const baseHint = hint?.textContent ?? '';
+      box.querySelectorAll<HTMLButtonElement>('[data-ready-table-row]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          box.querySelectorAll('[data-ready-table-row]').forEach((r) => r.classList.remove('is-selected'));
+          btn.classList.add('is-selected');
+          if (hint) {
+            hint.textContent = `${baseHint} · ${btn.dataset.task ?? ''} (${btn.dataset.source ?? ''})`;
+          }
+        });
+      });
+    });
+  });
+</script>

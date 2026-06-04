@@ -1,0 +1,300 @@
+---
+/**
+ * TrustBand section (PRD §7.3) — sits high on the page right under the Hero.
+ * Client-logo wall (grayscale → color on hover) + quantified stats row.
+ */
+import { Image } from 'astro:assets';
+import type { Locale } from '../../i18n';
+import { clientLogos } from '../../data/clientLogos';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+
+const content = {
+  he: {
+    title: 'מסוגלים ללוות כל מגזר, ולהתאים את עצמנו למציאות המשתנה',
+    intro:
+      'חברת ייעוץ שעובדת עם כל סוג ארגון: ציבורי, אזרחי, תעשייה או הייטק. בונים מערכת שמתעדכנת יחד איתכם כשהצרכים, הרגולציה והטכנולוגיה משתנים.',
+    logosLabel: 'בין לקוחותינו',
+    statsLabel: 'התוצאות שלנו במספרים',
+    stats: [
+      { value: '+120', label: 'תהליכים שעברו אוטומציה', sub: 'בלוחות monday.com חיים' },
+      { value: '+9,000', label: 'שעות עבודה שנחסכו בשנה', sub: 'ברחבי הארגונים שלנו' },
+      { value: '99.2%', label: 'עמידה ביעדי SLA', sub: 'לתמיכה ותחזוקה ב‑Clicks TSM' },
+      { value: '+750K', label: 'תושבים ומוטבים מקבלים שירות', sub: 'דרך המערכות שבנינו' },
+    ],
+  },
+  en: {
+    title: 'Every sector. A reality that keeps shifting. We adapt.',
+    intro:
+      'A consulting firm that works with any organization: public, civic, manufacturing or high-tech. We build systems that evolve with you as needs, regulation and technology change.',
+    logosLabel: 'Among our clients',
+    statsLabel: 'Our outcomes in numbers',
+    stats: [
+      { value: '120+', label: 'Processes automated', sub: 'on live monday.com boards' },
+      { value: '9,000+', label: 'Staff hours saved per year', sub: 'across the organizations we serve' },
+      { value: '99.2%', label: 'SLA targets met', sub: 'for support & maintenance via Clicks TSM' },
+      { value: '750K+', label: 'Residents & beneficiaries served', sub: 'through the systems we built' },
+    ],
+  },
+} as const;
+
+const t = content[locale];
+---
+
+<section class="section trustband" aria-labelledby="trustband-title">
+  <div class="container">
+    <header class="trustband__head">
+      <h2 id="trustband-title">{t.title}</h2>
+      <p class="trustband__intro">{t.intro}</p>
+    </header>
+
+    <h3 class="trustband__sublabel">{t.logosLabel}</h3>
+    <ul class="logowall" role="list">
+      {clientLogos.map((logo) => (
+        <li
+          class:list={['logowall__item', 'reveal', logo.wide && 'logowall__item--wide']}
+          data-client={logo.id}
+        >
+          <figure class="logowall__tile">
+            <Image
+              class="logowall__img"
+              src={logo.src}
+              alt={logo.alt[locale]}
+              widths={[200, 320, 480]}
+              sizes="(min-width: 900px) 180px, 42vw"
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+        </li>
+      ))}
+    </ul>
+
+    <h3 class="trustband__sublabel trustband__sublabel--stats">{t.statsLabel}</h3>
+    <dl class="stats">
+      {t.stats.map((stat) => (
+        <div class="stats__item reveal">
+          <dt class="stats__value">{stat.value}</dt>
+          <dd class="stats__body">
+            <span class="stats__label">{stat.label}</span>
+            <span class="stats__sub">{stat.sub}</span>
+          </dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</section>
+
+<style>
+  .trustband {
+    background: var(--color-surface);
+    border-block: 1px solid var(--color-divider);
+  }
+
+  .trustband__head {
+    max-width: var(--content-narrow);
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .trustband__head h2 {
+    font-size: var(--text-3xl);
+    margin-block-start: var(--space-3);
+  }
+
+  .trustband__intro {
+    margin-block-start: var(--space-4);
+    color: var(--color-text-secondary);
+    font-size: var(--text-md);
+    line-height: var(--line-height-relaxed);
+  }
+
+  .trustband__sublabel {
+    margin-block: var(--space-8) var(--space-5);
+    text-align: center;
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  /* ---- Logo wall ---- */
+  .logowall {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
+
+  @media (min-width: 600px) {
+    .logowall {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (min-width: 900px) {
+    .logowall {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+
+  .logowall__item {
+    margin: 0;
+  }
+
+  .logowall__tile {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 96px;
+    padding: var(--space-4) var(--space-3);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xs);
+    filter: grayscale(1);
+    opacity: 0.88;
+    transition:
+      filter var(--transition),
+      opacity var(--transition),
+      transform var(--transition),
+      box-shadow var(--transition);
+  }
+
+  @media (max-width: 599px) {
+    .logowall__item--wide {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .logowall__img {
+    display: block;
+    inline-size: auto;
+    block-size: auto;
+    max-inline-size: 100%;
+    max-block-size: 3.25rem;
+    object-fit: contain;
+    object-position: center;
+  }
+
+  .logowall__item--wide .logowall__img {
+    max-block-size: 2.5rem;
+    max-inline-size: min(100%, 14rem);
+  }
+
+  .logowall__item:hover .logowall__tile,
+  .logowall__tile:focus-within {
+    filter: grayscale(0);
+    opacity: 1;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* ---- Stats row ---- */
+  .stats {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+
+  @media (min-width: 760px) {
+    .stats {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .stats__item {
+    padding: var(--space-6) var(--space-5);
+    border-block-start: 1px solid var(--color-divider);
+    text-align: center;
+  }
+
+  .stats__item:first-child {
+    border-block-start: none;
+  }
+
+  @media (min-width: 760px) {
+    .stats__item {
+      border-block-start: none;
+      border-inline-start: 1px solid var(--color-divider);
+      text-align: start;
+    }
+
+    .stats__item:first-child {
+      border-inline-start: none;
+    }
+  }
+
+  .stats__value {
+    font-family: var(--font-display);
+    font-size: var(--text-4xl);
+    font-weight: var(--font-weight-extrabold);
+    line-height: var(--line-height-tight);
+    color: var(--color-accent);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stats__body {
+    margin-block-start: var(--space-3);
+    margin-inline: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .stats__label {
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+  }
+
+  .stats__sub {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    line-height: var(--line-height-snug);
+  }
+
+  .reveal {
+    transform: translateY(12px);
+    animation: trustband-reveal 0.5s var(--ease-out) forwards;
+    animation-timeline: view();
+    animation-range: entry 0% cover 22%;
+  }
+
+  @keyframes trustband-reveal {
+    to {
+      transform: none;
+    }
+  }
+
+  @supports not (animation-timeline: view()) {
+    .reveal {
+      transform: none;
+      animation: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      transform: none;
+      animation: none;
+    }
+
+    .logowall__item:hover .logowall__tile {
+      transform: none;
+    }
+  }
+</style>

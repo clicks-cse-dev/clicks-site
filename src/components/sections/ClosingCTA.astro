@@ -1,0 +1,110 @@
+---
+/**
+ * Closing segmented CTA (PRD §7 #12).
+ * Primary: BOOKING_URL · Secondary: demo / case study · WhatsApp + booking.
+ */
+import type { Locale } from '../../i18n';
+import { localizedPath } from '../../i18n';
+import { BOOKING_URL, WHATSAPP } from '../../config';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+
+const content = {
+  he: {
+    title: 'בואו נבין את האתגר — ונראה איך monday.com יכול לרוץ אצלכם',
+    lead: 'שיחת ייעוץ קצרה, ללא התחייבות. נבין יחד את התהליכים, נציג מערכת חיה ונמליץ על מסלול הטמעה.',
+    primary: 'לקביעת שיחת ייעוץ',
+    primaryAria: 'לקביעת שיחת ייעוץ ביומן Google',
+    secondaryDemo: 'לראות הדגמה',
+    secondaryCase: 'לקרוא סיפור לקוח',
+    whatsappContact: 'השארת פנייה בוואטסאפ',
+    bookMeeting: 'קביעת פגישה',
+  },
+  en: {
+    title: 'Let’s understand your challenge — and show how monday.com can run for you',
+    lead: 'A short, no-obligation discovery call. We’ll map your processes, show a live system and recommend a rollout path.',
+    primary: 'Book a discovery call',
+    primaryAria: 'Book a discovery call on Google Calendar',
+    secondaryDemo: 'See a demo',
+    secondaryCase: 'Read a client story',
+    whatsappContact: 'Message us on WhatsApp',
+    bookMeeting: 'Schedule a meeting',
+  },
+} as const;
+
+const t = content[locale];
+const caseHref = localizedPath('/cases/crm-360-service-year', locale);
+---
+
+<section class="section closing" aria-labelledby="closing-title">
+  <div class="container">
+    <div class="closing__panel card">
+      <h2 id="closing-title" class="closing__title">{t.title}</h2>
+      <p class="closing__lead">{t.lead}</p>
+
+      <div class="closing__actions">
+        <a class="btn btn-primary closing__primary" href={BOOKING_URL} aria-label={t.primaryAria}>
+          {t.primary}
+        </a>
+        <a class="btn btn-secondary" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
+          {t.secondaryDemo}
+        </a>
+        <a class="btn btn-secondary" href={caseHref}>{t.secondaryCase}</a>
+      </div>
+
+      <div class="closing__divider" role="presentation"></div>
+
+      <div class="closing__actions closing__actions--contact">
+        <a class="btn btn-secondary" href={WHATSAPP} target="_blank" rel="noopener noreferrer">
+          {t.whatsappContact}
+        </a>
+        <a class="btn btn-secondary" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
+          {t.bookMeeting}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .closing__panel {
+    padding: var(--space-8) var(--space-7);
+    background: var(--gradient-soft);
+    border: 1px solid var(--color-border);
+  }
+  .closing__title {
+    margin: 0 0 var(--space-4);
+    font-size: clamp(var(--text-2xl), 4vw, var(--text-3xl));
+    font-weight: var(--font-weight-bold);
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+    max-width: 32ch;
+  }
+  .closing__lead {
+    margin: 0 0 var(--space-7);
+    color: var(--color-text-secondary);
+    font-size: var(--text-lg);
+    line-height: 1.55;
+    max-width: 48ch;
+  }
+  .closing__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    align-items: center;
+  }
+  .closing__primary {
+    flex-shrink: 0;
+  }
+  .closing__actions--contact {
+    margin-block-start: 0;
+  }
+  .closing__divider {
+    block-size: 1px;
+    background: var(--color-divider);
+    margin-block: var(--space-7);
+  }
+</style>

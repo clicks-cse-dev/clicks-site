@@ -1,0 +1,32 @@
+---
+/**
+ * Product wordmark for homepage / hub cards — one component per product key.
+ */
+import type { OfferKey } from './types';
+import MondayCmsLogo from './MondayCmsLogo.astro';
+import MondayGisLogo from './MondayGisLogo.astro';
+import FlowGramLogo from './FlowGramLogo.astro';
+import TsmLogo from './TsmLogo.astro';
+import CrmLogo from './CrmLogo.astro';
+import ClicksSolutionsLogo from './ClicksSolutionsLogo.astro';
+import ReadyLogo from './ReadyLogo.astro';
+
+interface Props {
+  product: OfferKey;
+  label: string;
+  variant?: 'card' | 'hub' | 'sector';
+}
+
+const { product, label, variant = 'card' } = Astro.props;
+---
+
+{
+  product === 'flowgram' && <FlowGramLogo variant={variant} decorative />
+}
+{product === 'tsm' && <TsmLogo variant={variant} decorative />}
+{product === 'cms' && <MondayCmsLogo variant={variant} decorative />}
+{product === 'gis' && <MondayGisLogo variant={variant} decorative />}
+{product === 'crm' && <CrmLogo variant={variant} decorative />}
+{product === 'solutions' && <ClicksSolutionsLogo variant={variant} decorative />}
+{product === 'ready' && <ReadyLogo variant={variant} decorative />}
+<span class="visually-hidden">{label}</span>

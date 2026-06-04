@@ -1,0 +1,13 @@
+---
+import ProductDetailPage from '../../components/ProductDetailPage.astro';
+import { getProductPage, getServiceOffers } from '../../data/productPages';
+
+export function getStaticPaths() {
+  return getServiceOffers().map((offer) => ({ params: { slug: offer.slug } }));
+}
+
+const locale = 'he' as const;
+const product = getProductPage(Astro.params.slug!)!;
+---
+
+<ProductDetailPage locale={locale} product={product} />

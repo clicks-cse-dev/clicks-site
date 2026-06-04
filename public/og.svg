@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f2f0f8"/>
+      <stop offset="0.5" stop-color="#f7f5fb"/>
+      <stop offset="1" stop-color="#eeecf6"/>
+    </linearGradient>
+    <linearGradient id="mark" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#7B5BF0"/>
+      <stop offset="1" stop-color="#4316E0"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.15" cy="0.1" r="0.55">
+      <stop stop-color="#4316E0" stop-opacity="0.14"/>
+      <stop offset="1" stop-color="#4316E0" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <g transform="translate(220 165)">
+    <path d="M28 76V32.5c0-6.6 5.4-12 12-12h22.4l-12.8 20.4H52.5L76 76H28Z" fill="url(#mark)"/>
+    <circle cx="26" cy="44" r="4.2" fill="#fefeff" stroke="#8b85f0" stroke-width="1.2"/>
+    <circle cx="31.6" cy="36.4" r="4.2" fill="#fefeff" stroke="#8b85f0" stroke-width="1.2"/>
+    <circle cx="37.2" cy="28.8" r="4.2" fill="#fefeff" stroke="#8b85f0" stroke-width="1.2"/>
+    <text x="96" y="44" font-family="Figtree, sans-serif" font-size="44" font-weight="800" fill="#4316E0">Clicks</text>
+    <text x="96" y="72" font-family="Figtree, sans-serif" font-size="28" font-weight="600" fill="#4a445c">Strategic</text>
+    <text x="96" y="104" font-family="Figtree, sans-serif" font-size="28" font-weight="600" fill="#4a445c">Ecosystems</text>
+  </g>
+  <text x="220" y="320" font-family="Figtree, sans-serif" font-size="26" font-weight="500" fill="#6b647d">Strategic ecosystems on monday.com</text>
+</svg>

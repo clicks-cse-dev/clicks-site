@@ -1,0 +1,83 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { EMAIL_SAPIR, PHONE, PHONE_E164 } from '../../config';
+
+const locale = 'en' as const;
+
+const t = {
+  title: 'Accessibility statement',
+  description: 'Accessibility statement for the Clicks website — Israeli Standard 5568 and WCAG 2.1 AA.',
+  h1: 'Accessibility statement',
+  updated: 'Last updated: June 2026',
+  sections: [
+    {
+      h: 'Commitment',
+      p: 'Clicks Strategic Ecosystems is committed to making this website accessible to people with disabilities, in line with Israeli Standard (SI 5568) based on WCAG 2.1 Level AA.',
+    },
+    {
+      h: 'What we implement',
+      p: 'The site is Hebrew-first with native RTL, keyboard navigation, a skip-to-content link, color contrast via our design tokens, prefers-reduced-motion support, and semantic structure (headings, landmarks).',
+    },
+    {
+      h: 'Accessibility contact',
+      p: 'For issues, feedback or improvement requests, reach us at:',
+    },
+  ],
+} as const;
+---
+
+<Layout locale={locale} title={t.title} description={t.description}>
+  <article class="section page legal">
+    <div class="container page__narrow">
+      <h1 class="page__title">{t.h1}</h1>
+      <p class="legal__meta">{t.updated}</p>
+      {t.sections.map((s) => (
+        <section class="legal__block">
+          <h2>{s.h}</h2>
+          <p>{s.p}</p>
+        </section>
+      ))}
+      <ul class="legal__contact">
+        <li><a href={`mailto:${EMAIL_SAPIR}`}>{EMAIL_SAPIR}</a></li>
+        <li><a href={`tel:${PHONE_E164}`}>{PHONE}</a></li>
+      </ul>
+    </div>
+  </article>
+</Layout>
+
+<style>
+  .page__narrow {
+    max-width: var(--content-narrow, 720px);
+  }
+  .page__title {
+    margin: 0 0 var(--space-3);
+    font-size: var(--text-3xl);
+    font-weight: var(--font-weight-bold);
+  }
+  .legal__meta {
+    margin: 0 0 var(--space-8);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+  .legal__block {
+    margin-block-end: var(--space-6);
+  }
+  .legal__block h2 {
+    margin: 0 0 var(--space-3);
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-semibold);
+  }
+  .legal__block p {
+    margin: 0;
+    color: var(--color-text-secondary);
+    line-height: 1.65;
+  }
+  .legal__contact {
+    list-style: none;
+    margin: var(--space-6) 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+</style>

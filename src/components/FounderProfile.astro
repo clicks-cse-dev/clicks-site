@@ -1,0 +1,188 @@
+---
+import { Image } from 'astro:assets';
+import type { FounderData } from '../data/founders';
+import type { Locale } from '../i18n';
+
+interface Props {
+  locale: Locale;
+  founder: FounderData;
+  variant?: 'teaser' | 'page' | 'about';
+}
+
+const { locale, founder, variant = 'teaser' } = Astro.props;
+---
+
+<article class:list={['founder-profile', `founder-profile--${variant}`]}>
+  <div class="founder-profile__media">
+    <Image
+      src={founder.photo}
+      alt=""
+      class="founder-profile__photo"
+      width={280}
+      height={280}
+      widths={[140, 200, 280]}
+      loading="lazy"
+      decoding="async"
+    />
+  </div>
+  <div class="founder-profile__body">
+    <h3 class="founder-profile__name">{founder.name[locale]}</h3>
+    <p class="founder-profile__role">{founder.role[locale]}</p>
+    <p class="founder-profile__hero">{founder.hero[locale]}</p>
+    {variant !== 'about' && <p class="founder-profile__focus">{founder.focus[locale]}</p>}
+    <a
+      class="founder-profile__linkedin"
+      href={founder.linkedin}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      {founder.linkedinLabel[locale]}
+      <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" width="16" height="16">
+        <path
+          d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM5 13H3V6h2v7zM4 5a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm9 8H11V9.5c0-1.2-.4-2-1.5-2-1 0-1.4.7-1.4 2V13H6V6h2v1c.3-.5 1-1.2 2.2-1.2C12.5 5.8 13 7.5 13 9.5V13z"
+        />
+      </svg>
+    </a>
+  </div>
+</article>
+
+<style>
+  .founder-profile {
+    display: grid;
+    gap: var(--space-5);
+    align-items: start;
+    height: 100%;
+  }
+
+  .founder-profile--teaser {
+    padding: var(--space-6);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+  }
+
+  .founder-profile--page {
+    padding: var(--space-6);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+  }
+
+  .founder-profile--about {
+    padding: var(--space-5);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    gap: var(--space-4);
+  }
+
+  .founder-profile--about .founder-profile__photo {
+    width: 6.5rem;
+    height: 6.5rem;
+    box-shadow:
+      0 0 0 1px var(--color-border),
+      var(--shadow-sm);
+  }
+
+  .founder-profile--about .founder-profile__role {
+    margin-block-end: var(--space-3);
+  }
+
+  .founder-profile--about .founder-profile__hero {
+    font-size: var(--text-sm);
+    margin-block-end: 0;
+  }
+
+  @media (min-width: 640px) {
+    .founder-profile {
+      grid-template-columns: auto 1fr;
+      gap: var(--space-6);
+      align-items: stretch;
+    }
+  }
+
+  .founder-profile__body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+  }
+
+  .founder-profile__media {
+    justify-self: center;
+  }
+
+  @media (min-width: 640px) {
+    .founder-profile__media {
+      align-self: start;
+    }
+  }
+
+  .founder-profile__photo {
+    width: 7.5rem;
+    height: 7.5rem;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    border: 3px solid var(--color-surface-raised);
+    box-shadow:
+      0 0 0 1px var(--color-border),
+      var(--shadow-md);
+  }
+
+  .founder-profile--page .founder-profile__photo {
+    width: 8.5rem;
+    height: 8.5rem;
+  }
+
+  .founder-profile__name {
+    margin: 0 0 var(--space-1);
+    font-size: var(--text-xl);
+    font-weight: var(--font-weight-semibold);
+    text-wrap: balance;
+  }
+
+  .founder-profile__role {
+    margin: 0 0 var(--space-4);
+    color: var(--color-accent);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .founder-profile__hero {
+    margin: 0 0 var(--space-4);
+    color: var(--color-text);
+    font-size: var(--text-base);
+    line-height: var(--line-height-relaxed);
+    text-wrap: pretty;
+    max-width: 52ch;
+    flex: 1 1 auto;
+  }
+
+  .founder-profile__focus {
+    margin: 0 0 var(--space-4);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    line-height: 1.5;
+    min-height: 3em;
+  }
+
+  .founder-profile__linkedin {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-block-start: auto;
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+
+  .founder-profile__linkedin:hover {
+    color: var(--color-accent-hover);
+    text-decoration: underline;
+  }
+
+  .founder-profile__linkedin svg {
+    flex: none;
+    opacity: 0.85;
+  }
+</style>

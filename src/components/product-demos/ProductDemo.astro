@@ -1,0 +1,1227 @@
+---
+/**
+ * Interactive product demos — patterns from MondayCMS UiMock + MondayGIS docs.
+ */
+import type { Locale } from '../../i18n';
+import type { ProductLogoKey } from '../../data/productPages';
+import FlowGramDemo from './FlowGramDemo.astro';
+import GenericMiniDemo from './GenericMiniDemo.astro';
+import gisBoardMap from '../../assets/gis-board-map.png';
+import '../../styles/product-demos.css';
+
+interface Props {
+  locale: Locale;
+  logo: ProductLogoKey;
+}
+
+const { locale, logo } = Astro.props;
+
+const shell = {
+  he: { livePrefix: 'מציג:' },
+  en: { livePrefix: 'Showing:' },
+} as const;
+
+const cms = {
+  he: {
+    tabs: [
+      { id: 'dashboard', label: 'לוח בקרה' },
+      { id: 'scope', label: 'הרצת סנכרון' },
+      { id: 'progress', label: 'התקדמות' },
+    ],
+    dashboard: {
+      title: 'לוח סנכרון',
+      sub: 'קטלוג שירותים · Wix',
+      connected: 'מחובר',
+      collection: 'אוסף',
+      collectionVal: 'קטלוג שירותים',
+      lastSync: 'סנכרון אחרון',
+      lastSyncVal: 'היום, 14:32 · 48 שורות',
+      caption: 'מצב חיבור, אוסף וסנכרון אחרון — כמו במוצר החי.',
+    },
+    scope: {
+      title: 'הרצת סנכרון',
+      sub: 'בחרו היקף שורות ועמודות, ואז התחילו.',
+      rows: 'שורות',
+      allRows: 'כל השורות',
+      allRowsHint: 'כל הפריטים בלוח',
+      selectedRows: 'שורות נבחרות',
+      selectedRowsHint: 'בחירת פריטים מהלוח',
+      columns: 'עמודות',
+      allCols: 'כל העמודות במיפוי',
+      allColsHint: 'כל השדות במיפוי השמור',
+      syncNow: 'סנכרנו עכשיו',
+      caption: 'בחירת היקף לפני הרצה — כמו בלוח הבקרה במוצר.',
+    },
+    progress: {
+      title: 'התקדמות סנכרון',
+      syncing: 'מסנכרן…',
+      stats: '12 שורות סונכרנו · 48 בסך הכל',
+      cancel: 'ביטול סנכרון',
+      start: 'התחל הדגמה',
+      caption: 'מעקב אחרי משימת סנכרון פעילה.',
+    },
+  },
+  en: {
+    tabs: [
+      { id: 'dashboard', label: 'Dashboard' },
+      { id: 'scope', label: 'Run sync' },
+      { id: 'progress', label: 'Progress' },
+    ],
+    dashboard: {
+      title: 'Sync dashboard',
+      sub: 'Service catalog · Wix',
+      connected: 'Connected',
+      collection: 'Collection',
+      collectionVal: 'Service catalog',
+      lastSync: 'Last sync',
+      lastSyncVal: 'Today, 14:32 · 48 rows',
+      caption: 'Connection, collection and last sync — as in the live product.',
+    },
+    scope: {
+      title: 'Run sync',
+      sub: 'Pick row and column scope, then start.',
+      rows: 'Rows',
+      allRows: 'All rows',
+      allRowsHint: 'Every item on the board',
+      selectedRows: 'Selected rows',
+      selectedRowsHint: 'Pick items from the board',
+      columns: 'Columns',
+      allCols: 'All mapped columns',
+      allColsHint: 'Every field in your mapping',
+      syncNow: 'Sync now',
+      caption: 'Choose scope before running — same as the product dashboard.',
+    },
+    progress: {
+      title: 'Sync progress',
+      syncing: 'Syncing…',
+      stats: '12 synced · 48 total rows',
+      cancel: 'Cancel sync',
+      start: 'Run demo sync',
+      caption: 'Track an active sync job.',
+    },
+  },
+} as const;
+
+const gis = {
+  he: {
+    tabs: [
+      { id: 'board', label: 'תצוגת לוח' },
+      { id: 'integration', label: 'חיבור ArcGIS' },
+      { id: 'history', label: 'היסטוריית סנכרון' },
+    ],
+    board: {
+      title: 'Monday GIS · Board view',
+      counts: '4 נכסים · 3 עם גאומטריה · 4 Monday',
+      listTitle: 'נכסים בלוח',
+      searchPlaceholder: 'חיפוש לפי שם / מנהל…',
+      statusAll: 'כל הסטטוסים',
+      results: 'תוצאות',
+      parcel: 'מגרש',
+      designation: 'ייעוד',
+      manager: 'מנהל',
+      noGeo: 'אין מיקום גאוגרפי',
+      contactTitle: 'פרטי קשר',
+      phone: 'טלפון',
+      email: 'אימייל',
+      gisTitle: 'נתוני GIS',
+      geometry: 'גאומטריה',
+      geometryPolygon: 'פוליגון מ-ArcGIS',
+      geometryPoint: 'נקודה מ-ArcGIS',
+      mondayTitle: 'Monday CRM',
+      mondayLink: 'פתח פריט בלוח',
+      close: 'סגור',
+      mapAttribution: '© OpenStreetMap',
+      caption:
+        'תצוגת לוח Monday — רשימה, מפה ו-CRM באותו מסך. לחצו על פריט כדי לראות את הנתונים המשולבים.',
+      status: {
+        active: 'פעיל',
+        lead: 'ליד',
+        inactive: 'לא פעיל',
+      },
+      sites: [
+        {
+          id: 'a',
+          name: 'מתחם השירות — צומת B',
+          status: 'active',
+          parcel: '4521/12',
+          designation: 'תעשייה קלה',
+          manager: 'נועה לוי',
+          phone: '04-1234567',
+          email: 'noa@example.org',
+          hasGeo: true,
+          polygon: false,
+          pinTop: 42,
+          pinLeft: 58,
+        },
+        {
+          id: 'b',
+          name: 'מיזם אופק צפון',
+          status: 'lead',
+          parcel: '4521/8',
+          designation: 'מסחר ומלונאות',
+          manager: 'דן כהן',
+          phone: '04-7654321',
+          email: 'dan@example.org',
+          hasGeo: true,
+          polygon: false,
+          pinTop: 35,
+          pinLeft: 44,
+        },
+        {
+          id: 'c',
+          name: 'שדרת הפארק',
+          status: 'active',
+          parcel: '4502/3',
+          designation: 'מגורים + מסחר',
+          manager: 'מיכל רוזן',
+          phone: '04-9988776',
+          email: 'michal@example.org',
+          hasGeo: true,
+          polygon: true,
+          pinTop: 55,
+          pinLeft: 50,
+        },
+        {
+          id: 'd',
+          name: 'מתחם מערבי (ממתין GIS)',
+          status: 'inactive',
+          parcel: '—',
+          designation: '—',
+          manager: 'שרה אביטן',
+          phone: '04-1122334',
+          email: 'sara@example.org',
+          hasGeo: false,
+          polygon: false,
+          pinTop: 0,
+          pinLeft: 0,
+        },
+      ],
+    },
+    integration: {
+      title: 'סנכרון Monday ↔ ArcGIS',
+      step1Title: 'ArcGIS → Monday',
+      step1Detail: 'עדכון גאומטריה מ-ArcGIS ל-Monday',
+      step2Title: 'Monday → ArcGIS',
+      step2Detail: 'עדכון שדות CRM מ-Monday ל-ArcGIS',
+      arcgisTitle: 'חיבור ArcGIS',
+      arcgisHint: 'כתובת שכבת FeatureServer (שורש, ללא מספר שכבה)',
+      urlLabel: 'FeatureServer URL',
+      urlValue: 'https://services7.arcgis.com/…/FeatureServer',
+      connect: 'התחברות ל-ArcGIS',
+      connected: 'מחובר',
+      disconnect: 'התנתק',
+      autoTitle: 'סנכרון אוטומטי',
+      autoHint: 'סנכרון מתוזמן רץ ברקע לפי המרווח שבחרת',
+      autoToggle: 'הפעל סנכרון מתוזמן',
+      intervalLabel: 'מרווח (דקות)',
+      syncNow: 'סנכרן עכשיו',
+      syncing: 'מסנכרן…',
+      caption: 'חיבור FeatureServer, OAuth ל-Esri וסנכרון דו-כיווני — כמו במוצר החי.',
+    },
+    history: {
+      title: 'היסטוריית הרצות',
+      hint: 'כל שורה = הרצה אחת. המספרים = כמה פריטים עודכנו בכל כיוון.',
+      geo: 'גאומטריה · ArcGIS → Monday',
+      crm: 'CRM · Monday → ArcGIS',
+      manual: 'הפעלה ידנית',
+      auto: 'אוטומטי',
+      done: 'הושלם',
+      errors: 'שגיאות',
+      running: 'רץ…',
+      caption: 'מעקב אחרי הרצות — גאומטריה ו-CRM בשני הכיוונים.',
+      runs: [
+        { date: '4 ביוני, 14:32', trigger: 'manual', geo: 12, crm: 8, status: 'done' },
+        { date: '4 ביוני, 14:27', trigger: 'auto', geo: 0, crm: 3, status: 'done' },
+        { date: '4 ביוני, 14:22', trigger: 'auto', geo: 15, crm: 11, status: 'done' },
+        { date: '3 ביוני, 09:05', trigger: 'manual', geo: 42, crm: 38, status: 'done' },
+        { date: '2 ביוני, 11:18', trigger: 'auto', geo: 5, crm: 0, status: 'error' },
+      ],
+    },
+  },
+  en: {
+    tabs: [
+      { id: 'board', label: 'Board view' },
+      { id: 'integration', label: 'ArcGIS connection' },
+      { id: 'history', label: 'Sync history' },
+    ],
+    board: {
+      title: 'Monday GIS · Board view',
+      counts: '4 assets · 3 with geometry · 4 Monday',
+      listTitle: 'Board items',
+      searchPlaceholder: 'Search by name / manager…',
+      statusAll: 'All statuses',
+      results: 'results',
+      parcel: 'Parcel',
+      designation: 'Zoning',
+      manager: 'Manager',
+      noGeo: 'No geographic location',
+      contactTitle: 'Contact',
+      phone: 'Phone',
+      email: 'Email',
+      gisTitle: 'GIS data',
+      geometry: 'Geometry',
+      geometryPolygon: 'Polygon from ArcGIS',
+      geometryPoint: 'Point from ArcGIS',
+      mondayTitle: 'Monday CRM',
+      mondayLink: 'Open item on board',
+      close: 'Close',
+      mapAttribution: '© OpenStreetMap',
+      caption:
+        'Monday board view — list, map and CRM on one screen. Click an item to see combined data.',
+      status: {
+        active: 'Active',
+        lead: 'Lead',
+        inactive: 'Inactive',
+      },
+      sites: [
+        {
+          id: 'a',
+          name: 'Service campus — Junction B',
+          status: 'active',
+          parcel: '4521/12',
+          designation: 'Light industry',
+          manager: 'Noa Levi',
+          phone: '04-1234567',
+          email: 'noa@example.org',
+          hasGeo: true,
+          polygon: false,
+          pinTop: 42,
+          pinLeft: 58,
+        },
+        {
+          id: 'b',
+          name: 'Horizon North venture',
+          status: 'lead',
+          parcel: '4521/8',
+          designation: 'Retail & hospitality',
+          manager: 'Dan Cohen',
+          phone: '04-7654321',
+          email: 'dan@example.org',
+          hasGeo: true,
+          polygon: false,
+          pinTop: 35,
+          pinLeft: 44,
+        },
+        {
+          id: 'c',
+          name: 'Park Avenue block',
+          status: 'active',
+          parcel: '4502/3',
+          designation: 'Mixed use',
+          manager: 'Michal Rozen',
+          phone: '04-9988776',
+          email: 'michal@example.org',
+          hasGeo: true,
+          polygon: true,
+          pinTop: 55,
+          pinLeft: 50,
+        },
+        {
+          id: 'd',
+          name: 'West campus (GIS pending)',
+          status: 'inactive',
+          parcel: '—',
+          designation: '—',
+          manager: 'Sara Avitan',
+          phone: '04-1122334',
+          email: 'sara@example.org',
+          hasGeo: false,
+          polygon: false,
+          pinTop: 0,
+          pinLeft: 0,
+        },
+      ],
+    },
+    integration: {
+      title: 'Monday ↔ ArcGIS sync',
+      step1Title: 'ArcGIS → Monday',
+      step1Detail: 'Update geometry from ArcGIS to Monday',
+      step2Title: 'Monday → ArcGIS',
+      step2Detail: 'Push CRM fields from Monday to ArcGIS',
+      arcgisTitle: 'ArcGIS connection',
+      arcgisHint: 'FeatureServer root URL (no layer index)',
+      urlLabel: 'FeatureServer URL',
+      urlValue: 'https://services7.arcgis.com/…/FeatureServer',
+      connect: 'Connect to ArcGIS',
+      connected: 'Connected',
+      disconnect: 'Disconnect',
+      autoTitle: 'Automatic sync',
+      autoHint: 'Scheduled sync runs in the background on your interval',
+      autoToggle: 'Enable scheduled sync',
+      intervalLabel: 'Interval (minutes)',
+      syncNow: 'Sync now',
+      syncing: 'Syncing…',
+      caption: 'FeatureServer URL, Esri OAuth and bi-directional sync — as in the live product.',
+    },
+    history: {
+      title: 'Run history',
+      hint: 'Each row is one run. Counts show items updated per direction.',
+      geo: 'Geometry · ArcGIS → Monday',
+      crm: 'CRM · Monday → ArcGIS',
+      manual: 'Manual',
+      auto: 'Automatic',
+      done: 'Completed',
+      errors: 'Errors',
+      running: 'Running…',
+      caption: 'Track runs — geometry and CRM in both directions.',
+      runs: [
+        { date: 'Jun 4, 14:32', trigger: 'manual', geo: 12, crm: 8, status: 'done' },
+        { date: 'Jun 4, 14:27', trigger: 'auto', geo: 0, crm: 3, status: 'done' },
+        { date: 'Jun 4, 14:22', trigger: 'auto', geo: 15, crm: 11, status: 'done' },
+        { date: 'Jun 3, 09:05', trigger: 'manual', geo: 42, crm: 38, status: 'done' },
+        { date: 'Jun 2, 11:18', trigger: 'auto', geo: 5, crm: 0, status: 'error' },
+      ],
+    },
+  },
+} as const;
+
+const tShell = shell[locale];
+const tCms = cms[locale];
+const tGis = gis[locale];
+---
+
+<div
+  class:list={['product-demo', `product-brand--${logo}`]}
+  data-product-demo
+  data-demo-kind={logo}
+>
+  <p class="product-demo__live" data-demo-live aria-live="polite">
+    <span class="visually-hidden">{tShell.livePrefix}</span>
+  </p>
+
+  {
+    logo === 'cms' && (
+      <>
+        <div class="product-demo__tabs" role="tablist" aria-label="Monday CMS demo">
+          {tCms.tabs.map((tab, i) => (
+            <button
+              type="button"
+              class="product-demo__tab"
+              role="tab"
+              data-demo-tab={tab.id}
+              aria-selected={i === 0 ? 'true' : 'false'}
+              aria-controls={`cms-panel-${tab.id}`}
+              tabindex={i === 0 ? 0 : -1}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        <div
+          class="product-demo__panel"
+          id="cms-panel-dashboard"
+          role="tabpanel"
+          data-demo-panel="dashboard"
+          data-demo-caption={tCms.dashboard.caption}
+        >
+          <div class="product-demo__frame">
+            <div class="product-demo__chrome">
+              <span class="product-demo__dot product-demo__dot--a" />
+              <span class="product-demo__dot product-demo__dot--b" />
+              <span class="product-demo__dot product-demo__dot--c" />
+              <span class="product-demo__window-title">Clicks Monday CMS</span>
+            </div>
+            <div class="product-demo__body cms-mock">
+              <div class="cms-mock__dash-header">
+                <div>
+                  <p class="cms-mock__title">{tCms.dashboard.title}</p>
+                  <p class="cms-mock__sub">{tCms.dashboard.sub}</p>
+                </div>
+                <span class="cms-mock__badge">
+                  <span class="cms-mock__badge-dot" />
+                  {tCms.dashboard.connected}
+                </span>
+              </div>
+              <div class="cms-mock__row">
+                <span class="cms-mock__row-label">{tCms.dashboard.collection}</span>
+                <span>{tCms.dashboard.collectionVal}</span>
+              </div>
+              <div class="cms-mock__row">
+                <span class="cms-mock__row-label">{tCms.dashboard.lastSync}</span>
+                <span>{tCms.dashboard.lastSyncVal}</span>
+              </div>
+            </div>
+          </div>
+          <p class="product-demo__caption">{tCms.dashboard.caption}</p>
+        </div>
+
+        <div
+          class="product-demo__panel"
+          id="cms-panel-scope"
+          role="tabpanel"
+          data-demo-panel="scope"
+          data-demo-caption={tCms.scope.caption}
+          hidden
+        >
+          <div class="product-demo__frame">
+            <div class="product-demo__chrome">
+              <span class="product-demo__dot product-demo__dot--a" />
+              <span class="product-demo__dot product-demo__dot--b" />
+              <span class="product-demo__dot product-demo__dot--c" />
+              <span class="product-demo__window-title">Run sync</span>
+            </div>
+            <div class="product-demo__body cms-mock" data-cms-scope>
+              <p class="cms-mock__title">{tCms.scope.title}</p>
+              <p class="cms-mock__sub">{tCms.scope.sub}</p>
+              <div class="cms-mock__section">
+                <p class="cms-mock__section-label">{tCms.scope.rows}</p>
+                <button type="button" class="cms-mock__choice is-selected" data-cms-choice="rows-all">
+                  <span class="cms-mock__radio" />
+                  <span>
+                    <strong>{tCms.scope.allRows}</strong>
+                    <span class="cms-mock__hint">{tCms.scope.allRowsHint}</span>
+                  </span>
+                </button>
+                <button type="button" class="cms-mock__choice" data-cms-choice="rows-sel">
+                  <span class="cms-mock__radio" />
+                  <span>
+                    <strong>{tCms.scope.selectedRows}</strong>
+                    <span class="cms-mock__hint">{tCms.scope.selectedRowsHint}</span>
+                  </span>
+                </button>
+              </div>
+              <div class="cms-mock__section">
+                <p class="cms-mock__section-label">{tCms.scope.columns}</p>
+                <button type="button" class="cms-mock__choice is-selected" data-cms-choice="cols-all">
+                  <span class="cms-mock__radio" />
+                  <span>
+                    <strong>{tCms.scope.allCols}</strong>
+                    <span class="cms-mock__hint">{tCms.scope.allColsHint}</span>
+                  </span>
+                </button>
+              </div>
+              <button type="button" class="cms-mock__sync-btn" data-cms-go-progress>
+                {tCms.scope.syncNow}
+              </button>
+            </div>
+          </div>
+          <p class="product-demo__caption">{tCms.scope.caption}</p>
+        </div>
+
+        <div
+          class="product-demo__panel"
+          id="cms-panel-progress"
+          role="tabpanel"
+          data-demo-panel="progress"
+          data-demo-caption={tCms.progress.caption}
+          hidden
+        >
+          <div class="product-demo__frame">
+            <div class="product-demo__chrome">
+              <span class="product-demo__dot product-demo__dot--a" />
+              <span class="product-demo__dot product-demo__dot--b" />
+              <span class="product-demo__dot product-demo__dot--c" />
+              <span class="product-demo__window-title">Sync progress</span>
+            </div>
+            <div class="product-demo__body cms-mock" data-cms-progress>
+              <p class="cms-mock__title">{tCms.progress.title}</p>
+              <div class="cms-mock__progress-track">
+                <div class="cms-mock__progress-fill" data-cms-progress-fill />
+              </div>
+              <p class="cms-mock__sub" data-cms-progress-status>{tCms.progress.syncing}</p>
+              <p class="cms-mock__row">
+                <span data-cms-progress-stats>{tCms.progress.stats}</span>
+              </p>
+              <button type="button" class="cms-mock__sync-btn" data-cms-run-progress>
+                {tCms.progress.start}
+              </button>
+            </div>
+          </div>
+          <p class="product-demo__caption">{tCms.progress.caption}</p>
+        </div>
+      </>
+    )
+  }
+
+  {
+    logo === 'gis' && (
+      <>
+        <div class="product-demo__tabs" role="tablist" aria-label="Monday GIS demo">
+          {tGis.tabs.map((tab, i) => (
+            <button
+              type="button"
+              class="product-demo__tab"
+              role="tab"
+              data-demo-tab={tab.id}
+              aria-selected={i === 0 ? 'true' : 'false'}
+              aria-controls={`gis-panel-${tab.id}`}
+              tabindex={i === 0 ? 0 : -1}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        <div
+          class="product-demo__panel"
+          id="gis-panel-board"
+          role="tabpanel"
+          data-demo-panel="board"
+          data-demo-caption={tGis.board.caption}
+        >
+          <div class="product-demo__frame">
+            <div class="product-demo__chrome">
+              <span class="product-demo__dot product-demo__dot--a" />
+              <span class="product-demo__dot product-demo__dot--b" />
+              <span class="product-demo__dot product-demo__dot--c" />
+              <span class="product-demo__window-title">{tGis.board.title}</span>
+            </div>
+            <div
+              class="product-demo__body gis-board-mock"
+              data-gis-board
+              data-geometry-polygon={tGis.board.geometryPolygon}
+              data-geometry-point={tGis.board.geometryPoint}
+              data-status-active={tGis.board.status.active}
+              data-status-lead={tGis.board.status.lead}
+              data-status-inactive={tGis.board.status.inactive}
+            >
+              <header class="gis-board-mock__head">
+                <h3 class="gis-board-mock__title">Monday GIS</h3>
+                <span class="gis-board-mock__counts">{tGis.board.counts}</span>
+              </header>
+
+              <div class="gis-board-mock__layout">
+                <aside class="gis-board-mock__list">
+                  <div class="gis-board-mock__list-head">
+                    <p class="gis-board-mock__list-title">{tGis.board.listTitle}</p>
+                    <input
+                      type="search"
+                      class="gis-board-mock__search"
+                      placeholder={tGis.board.searchPlaceholder}
+                      data-gis-board-search
+                    />
+                    <select class="gis-board-mock__filter" data-gis-board-filter>
+                      <option value="all">{tGis.board.statusAll}</option>
+                      <option value="active">{tGis.board.status.active}</option>
+                      <option value="lead">{tGis.board.status.lead}</option>
+                      <option value="inactive">{tGis.board.status.inactive}</option>
+                    </select>
+                  </div>
+                  <p class="gis-board-mock__count" data-gis-board-count data-results-label={tGis.board.results}>
+                    {tGis.board.sites.length} {tGis.board.results}
+                  </p>
+                  <div class="gis-board-mock__items">
+                    {tGis.board.sites.map((site) => (
+                      <button
+                        type="button"
+                        class="gis-board-mock__item"
+                        data-gis-board-item
+                        data-id={site.id}
+                        data-name={site.name}
+                        data-status={site.status}
+                        data-parcel={site.parcel}
+                        data-designation={site.designation}
+                        data-manager={site.manager}
+                        data-phone={site.phone}
+                        data-email={site.email}
+                        data-has-geo={site.hasGeo ? 'true' : 'false'}
+                        data-polygon={site.polygon ? 'true' : 'false'}
+                      >
+                        <div class="gis-board-mock__item-head">
+                          <span class="gis-board-mock__item-name">{site.name}</span>
+                          <span class:list={['gis-board-mock__badge', `gis-board-mock__badge--${site.status}`]}>
+                            {tGis.board.status[site.status as keyof typeof tGis.board.status]}
+                          </span>
+                        </div>
+                        <div class="gis-board-mock__item-meta">
+                          <span>
+                            <span class="gis-board-mock__meta-label">{tGis.board.parcel}</span>
+                            {site.parcel}
+                          </span>
+                          <span>
+                            <span class="gis-board-mock__meta-label">{tGis.board.designation}</span>
+                            {site.designation}
+                          </span>
+                          <span>
+                            <span class="gis-board-mock__meta-label">{tGis.board.manager}</span>
+                            {site.manager}
+                          </span>
+                        </div>
+                        {!site.hasGeo && (
+                          <span class="gis-board-mock__no-geo">{tGis.board.noGeo}</span>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                </aside>
+
+                <div class="gis-board-mock__map">
+                  <div class="gis-board-mock__map-tiles">
+                    <img
+                      src={gisBoardMap.src}
+                      width={gisBoardMap.width}
+                      height={gisBoardMap.height}
+                      alt=""
+                      class="gis-board-mock__map-image"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <span class="gis-board-mock__attribution">{tGis.board.mapAttribution}</span>
+                  </div>
+                  {tGis.board.sites
+                    .filter((site) => site.hasGeo)
+                    .map((site) => (
+                      <button
+                        type="button"
+                        class:list={['gis-board-mock__pin', `gis-board-mock__pin--${site.status}`]}
+                        data-gis-board-pin={site.id}
+                        style={`top: ${site.pinTop}%; left: ${site.pinLeft}%;`}
+                        aria-label={site.name}
+                      />
+                    ))}
+
+                  <aside class="gis-board-mock__drawer" data-gis-board-drawer hidden>
+                    <header class="gis-board-mock__drawer-head">
+                      <div>
+                        <h4 data-gis-drawer-name />
+                        <span class="gis-board-mock__badge" data-gis-drawer-badge />
+                      </div>
+                      <button type="button" class="gis-board-mock__drawer-close" data-gis-board-close>
+                        ×
+                      </button>
+                    </header>
+                    <div class="gis-board-mock__drawer-body">
+                      <section>
+                        <h5>{tGis.board.contactTitle}</h5>
+                        <dl>
+                          <dt>{tGis.board.manager}</dt>
+                          <dd data-gis-drawer-manager />
+                          <dt>{tGis.board.phone}</dt>
+                          <dd data-gis-drawer-phone />
+                          <dt>{tGis.board.email}</dt>
+                          <dd data-gis-drawer-email />
+                        </dl>
+                      </section>
+                      <section>
+                        <h5>{tGis.board.gisTitle}</h5>
+                        <dl>
+                          <dt>{tGis.board.parcel}</dt>
+                          <dd data-gis-drawer-parcel />
+                          <dt>{tGis.board.designation}</dt>
+                          <dd data-gis-drawer-designation />
+                          <dt>{tGis.board.geometry}</dt>
+                          <dd data-gis-drawer-geometry />
+                        </dl>
+                      </section>
+                      <section>
+                        <h5>{tGis.board.mondayTitle}</h5>
+                        <p class="gis-board-mock__monday-link">{tGis.board.mondayLink} ↗</p>
+                      </section>
+                    </div>
+                  </aside>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="product-demo__caption">{tGis.board.caption}</p>
+        </div>
+
+        <div
+          class="product-demo__panel"
+          id="gis-panel-integration"
+          role="tabpanel"
+          data-demo-panel="integration"
+          data-demo-caption={tGis.integration.caption}
+          hidden
+        >
+          <div class="product-demo__frame">
+            <div class="product-demo__chrome">
+              <span class="product-demo__dot product-demo__dot--a" />
+              <span class="product-demo__dot product-demo__dot--b" />
+              <span class="product-demo__dot product-demo__dot--c" />
+              <span class="product-demo__window-title">Monday GIS · Sync</span>
+            </div>
+            <div class="product-demo__body gis-sync-mock" data-gis-sync>
+              <header class="gis-sync-mock__head">
+                <h3 class="gis-sync-mock__title">{tGis.integration.title}</h3>
+                <ol class="gis-sync-mock__steps">
+                  <li>
+                    <span class="gis-sync-mock__step-num">1</span>
+                    <span class="gis-sync-mock__step-body">
+                      <strong dir="ltr">{tGis.integration.step1Title}</strong>
+                      <span>{tGis.integration.step1Detail}</span>
+                    </span>
+                  </li>
+                  <li>
+                    <span class="gis-sync-mock__step-num">2</span>
+                    <span class="gis-sync-mock__step-body">
+                      <strong dir="ltr">{tGis.integration.step2Title}</strong>
+                      <span>{tGis.integration.step2Detail}</span>
+                    </span>
+                  </li>
+                </ol>
+              </header>
+
+              <div class="gis-sync-mock__grid">
+                <section class="gis-sync-mock__card">
+                  <h4>{tGis.integration.arcgisTitle}</h4>
+                  <p class="gis-sync-mock__hint">{tGis.integration.arcgisHint}</p>
+                  <label class="gis-sync-mock__field">
+                    <span>{tGis.integration.urlLabel}</span>
+                    <input type="url" readonly value={tGis.integration.urlValue} dir="ltr" />
+                  </label>
+                  <div class="gis-sync-mock__actions">
+                    <button type="button" class="btn btn-secondary" data-gis-connect>
+                      {tGis.integration.connect}
+                    </button>
+                    <span class="gis-sync-mock__connected" data-gis-connected hidden>
+                      {tGis.integration.connected}
+                    </span>
+                    <button type="button" class="gis-sync-mock__ghost" data-gis-disconnect hidden>
+                      {tGis.integration.disconnect}
+                    </button>
+                  </div>
+                </section>
+
+                <section class="gis-sync-mock__card">
+                  <h4>{tGis.integration.autoTitle}</h4>
+                  <p class="gis-sync-mock__hint">{tGis.integration.autoHint}</p>
+                  <label class="gis-sync-mock__toggle">
+                    <input type="checkbox" data-gis-auto disabled />
+                    <span class="gis-sync-mock__toggle-ui" aria-hidden="true" />
+                    <span>{tGis.integration.autoToggle}</span>
+                  </label>
+                  <label class="gis-sync-mock__field gis-sync-mock__field--narrow">
+                    <span>{tGis.integration.intervalLabel}</span>
+                    <input type="number" value="5" min="1" max="60" data-gis-interval disabled />
+                  </label>
+                </section>
+              </div>
+
+              <footer class="gis-sync-mock__foot">
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  data-gis-sync-run
+                  data-syncing-label={tGis.integration.syncing}
+                  disabled
+                >
+                  {tGis.integration.syncNow}
+                </button>
+              </footer>
+            </div>
+          </div>
+          <p class="product-demo__caption">{tGis.integration.caption}</p>
+        </div>
+
+        <div
+          class="product-demo__panel"
+          id="gis-panel-history"
+          role="tabpanel"
+          data-demo-panel="history"
+          data-demo-caption={tGis.history.caption}
+          hidden
+        >
+          <div class="product-demo__frame">
+            <div class="product-demo__chrome">
+              <span class="product-demo__dot product-demo__dot--a" />
+              <span class="product-demo__dot product-demo__dot--b" />
+              <span class="product-demo__dot product-demo__dot--c" />
+              <span class="product-demo__window-title">Monday GIS · History</span>
+            </div>
+            <div class="product-demo__body gis-sync-mock" data-gis-history>
+              <header class="gis-sync-mock__history-head">
+                <h3 class="gis-sync-mock__title">{tGis.history.title}</h3>
+                <p class="gis-sync-mock__hint">{tGis.history.hint}</p>
+              </header>
+
+              <div
+                class="gis-sync-mock__runs"
+                data-gis-history-list
+                data-manual-label={tGis.history.manual}
+                data-done-label={tGis.history.done}
+                data-running-label={tGis.history.running}
+              >
+                {tGis.history.runs.map((run) => (
+                  <article class="gis-sync-mock__run">
+                    <div class="gis-sync-mock__run-head">
+                      <div>
+                        <time>{run.date}</time>
+                        <span class="gis-sync-mock__run-trigger">
+                          {run.trigger === 'manual' ? tGis.history.manual : tGis.history.auto}
+                        </span>
+                      </div>
+                      <span
+                        class:list={[
+                          'gis-sync-mock__chip',
+                          run.status === 'error' && 'is-error',
+                        ]}
+                      >
+                        {run.status === 'error' ? tGis.history.errors : tGis.history.done}
+                      </span>
+                    </div>
+                    <ul class="gis-sync-mock__run-stats">
+                      <li>
+                        <span dir="ltr">{tGis.history.geo}</span>
+                        <strong>{run.geo}</strong>
+                      </li>
+                      <li>
+                        <span dir="ltr">{tGis.history.crm}</span>
+                        <strong>{run.crm}</strong>
+                      </li>
+                    </ul>
+                  </article>
+                ))}
+              </div>
+
+              <template data-gis-run-template>
+                <article class="gis-sync-mock__run is-new">
+                  <div class="gis-sync-mock__run-head">
+                    <div>
+                      <time data-gis-run-time />
+                      <span class="gis-sync-mock__run-trigger" data-gis-run-trigger />
+                    </div>
+                    <span class="gis-sync-mock__chip is-running" data-gis-run-chip />
+                  </div>
+                  <ul class="gis-sync-mock__run-stats">
+                    <li>
+                      <span dir="ltr">{tGis.history.geo}</span>
+                      <strong data-gis-run-geo>12</strong>
+                    </li>
+                    <li>
+                      <span dir="ltr">{tGis.history.crm}</span>
+                      <strong data-gis-run-crm>8</strong>
+                    </li>
+                  </ul>
+                </article>
+              </template>
+            </div>
+          </div>
+          <p class="product-demo__caption">{tGis.history.caption}</p>
+        </div>
+      </>
+    )
+  }
+
+  {logo === 'flowgram' && <FlowGramDemo locale={locale} />}
+
+  {
+    (logo === 'tsm' || logo === 'crm' || logo === 'solutions') && (
+      <GenericMiniDemo locale={locale} logo={logo} />
+    )
+  }
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-product-demo]').forEach((root) => {
+    const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-demo-tab]'));
+    const panels = Array.from(root.querySelectorAll<HTMLElement>('[data-demo-panel]'));
+    const live = root.querySelector<HTMLElement>('[data-demo-live]');
+
+    const selectTab = (id: string) => {
+      tabs.forEach((tab) => {
+        const on = tab.dataset.demoTab === id;
+        tab.setAttribute('aria-selected', on ? 'true' : 'false');
+        tab.tabIndex = on ? 0 : -1;
+      });
+      panels.forEach((panel) => {
+        const on = panel.dataset.demoPanel === id;
+        panel.hidden = !on;
+        if (on && live) {
+          const cap = panel.dataset.demoCaption ?? '';
+          live.textContent = cap;
+        }
+      });
+    };
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => selectTab(tab.dataset.demoTab!));
+      tab.addEventListener('keydown', (e) => {
+        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+        e.preventDefault();
+        const rtl = document.documentElement.dir === 'rtl';
+        const fwd = rtl ? e.key === 'ArrowLeft' : e.key === 'ArrowRight';
+        const next = (i + (fwd ? 1 : -1) + tabs.length) % tabs.length;
+        tabs[next].focus();
+        selectTab(tabs[next].dataset.demoTab!);
+      });
+    });
+
+    if (panels[0] && live) live.textContent = panels[0].dataset.demoCaption ?? '';
+
+    /* CMS: scope radios */
+    root.querySelectorAll<HTMLElement>('[data-cms-scope]').forEach((scope) => {
+      const groups = ['rows-all', 'rows-sel', 'cols-all'] as const;
+      scope.querySelectorAll<HTMLButtonElement>('[data-cms-choice]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const key = btn.dataset.cmsChoice;
+          if (key?.startsWith('rows')) {
+            scope
+              .querySelectorAll('[data-cms-choice^="rows"]')
+              .forEach((b) => b.classList.toggle('is-selected', b === btn));
+          }
+          if (key === 'cols-all') btn.classList.add('is-selected');
+        });
+      });
+      scope.querySelector<HTMLButtonElement>('[data-cms-go-progress]')?.addEventListener('click', () => {
+        selectTab('progress');
+        const run = root.querySelector<HTMLButtonElement>('[data-cms-run-progress]');
+        run?.click();
+      });
+    });
+
+    /* CMS: progress animation */
+    root.querySelectorAll<HTMLElement>('[data-cms-progress]').forEach((box) => {
+      const fill = box.querySelector<HTMLElement>('[data-cms-progress-fill]');
+      const status = box.querySelector<HTMLElement>('[data-cms-progress-status]');
+      const stats = box.querySelector<HTMLElement>('[data-cms-progress-stats]');
+      const runBtn = box.querySelector<HTMLButtonElement>('[data-cms-run-progress]');
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      const run = () => {
+        if (!fill) return;
+        fill.classList.remove('is-done');
+        fill.classList.add('is-running');
+        if (status) status.textContent = status.dataset.syncing ?? status.textContent;
+        window.setTimeout(() => {
+          fill.classList.remove('is-running');
+          fill.classList.add('is-done');
+          if (stats) stats.textContent = stats.dataset.done ?? stats.textContent;
+        }, reduceMotion ? 0 : 900);
+      };
+
+      runBtn?.addEventListener('click', run);
+    });
+
+    /* GIS: ArcGIS sync integration mock */
+    const syncBox = root.querySelector<HTMLElement>('[data-gis-sync]');
+    if (syncBox) {
+      const connectBtn = syncBox.querySelector<HTMLButtonElement>('[data-gis-connect]');
+      const connectedTag = syncBox.querySelector<HTMLElement>('[data-gis-connected]');
+      const disconnectBtn = syncBox.querySelector<HTMLButtonElement>('[data-gis-disconnect]');
+      const autoToggle = syncBox.querySelector<HTMLInputElement>('[data-gis-auto]');
+      const intervalInput = syncBox.querySelector<HTMLInputElement>('[data-gis-interval]');
+      const syncRunBtn = syncBox.querySelector<HTMLButtonElement>('[data-gis-sync-run]');
+      const historyList = root.querySelector<HTMLElement>('[data-gis-history-list]');
+      const runTemplate = root.querySelector<HTMLTemplateElement>('[data-gis-run-template]');
+      const syncingLabel = syncRunBtn?.dataset.syncingLabel;
+      const syncNowLabel = syncRunBtn?.textContent?.trim() ?? '';
+      const manualLabel = historyList?.dataset.manualLabel ?? '';
+      const doneLabel = historyList?.dataset.doneLabel ?? '';
+      const runningLabel = historyList?.dataset.runningLabel ?? '';
+
+      const setConnected = (on: boolean) => {
+        syncBox.classList.toggle('is-connected', on);
+        if (connectBtn) connectBtn.hidden = on;
+        if (connectedTag) connectedTag.hidden = !on;
+        if (disconnectBtn) disconnectBtn.hidden = !on;
+        if (autoToggle) autoToggle.disabled = !on;
+        if (intervalInput) intervalInput.disabled = !on || !autoToggle?.checked;
+        if (syncRunBtn) syncRunBtn.disabled = !on;
+      };
+
+      connectBtn?.addEventListener('click', () => setConnected(true));
+      disconnectBtn?.addEventListener('click', () => {
+        setConnected(false);
+        if (autoToggle) autoToggle.checked = false;
+        if (intervalInput) intervalInput.disabled = true;
+      });
+
+      autoToggle?.addEventListener('change', () => {
+        if (intervalInput) intervalInput.disabled = !autoToggle.checked;
+      });
+
+      syncRunBtn?.addEventListener('click', () => {
+        if (!syncRunBtn || syncRunBtn.disabled) return;
+        syncRunBtn.disabled = true;
+        if (syncingLabel) syncRunBtn.textContent = syncingLabel;
+
+        let newRun: HTMLElement | null = null;
+        if (historyList && runTemplate) {
+          newRun = runTemplate.content.firstElementChild?.cloneNode(true) as HTMLElement;
+          if (newRun) {
+            const time = newRun.querySelector('time');
+            const trigger = newRun.querySelector('[data-gis-run-trigger]');
+            const chip = newRun.querySelector('[data-gis-run-chip]');
+            const locale = document.documentElement.lang === 'en' ? 'en-US' : 'he-IL';
+            if (time) {
+              time.textContent = new Intl.DateTimeFormat(locale, {
+                day: 'numeric',
+                month: 'short',
+                hour: '2-digit',
+                minute: '2-digit',
+              }).format(new Date());
+            }
+            if (trigger) trigger.textContent = manualLabel;
+            if (chip) chip.textContent = runningLabel;
+            historyList.prepend(newRun);
+          }
+        }
+
+        window.setTimeout(() => {
+          const chip = newRun?.querySelector('[data-gis-run-chip]');
+          if (chip) {
+            chip.textContent = doneLabel;
+            chip.classList.remove('is-running');
+          }
+          newRun?.classList.remove('is-new');
+          syncRunBtn.disabled = false;
+          syncRunBtn.textContent = syncNowLabel;
+          selectTab('history');
+        }, 900);
+      });
+    }
+
+    /* GIS: board view — list + map + CRM drawer */
+    const boardBox = root.querySelector<HTMLElement>('[data-gis-board]');
+    if (boardBox) {
+      const drawer = boardBox.querySelector<HTMLElement>('[data-gis-board-drawer]');
+      const searchInput = boardBox.querySelector<HTMLInputElement>('[data-gis-board-search]');
+      const filterSelect = boardBox.querySelector<HTMLSelectElement>('[data-gis-board-filter]');
+      const countEl = boardBox.querySelector<HTMLElement>('[data-gis-board-count]');
+      const resultsLabel = countEl?.dataset.resultsLabel ?? '';
+      const items = Array.from(boardBox.querySelectorAll<HTMLButtonElement>('[data-gis-board-item]'));
+      const pins = Array.from(boardBox.querySelectorAll<HTMLButtonElement>('[data-gis-board-pin]'));
+      const statusLabels: Record<string, string> = {
+        active: boardBox.dataset.statusActive ?? '',
+        lead: boardBox.dataset.statusLead ?? '',
+        inactive: boardBox.dataset.statusInactive ?? '',
+      };
+      let selectedId: string | null = null;
+
+      const applyFilters = () => {
+        const q = (searchInput?.value ?? '').trim().toLowerCase();
+        const status = filterSelect?.value ?? 'all';
+        let visible = 0;
+        items.forEach((item) => {
+          const name = (item.dataset.name ?? '').toLowerCase();
+          const manager = (item.dataset.manager ?? '').toLowerCase();
+          const matchSearch = !q || name.includes(q) || manager.includes(q);
+          const matchStatus = status === 'all' || item.dataset.status === status;
+          const show = matchSearch && matchStatus;
+          item.hidden = !show;
+          if (show) visible += 1;
+        });
+        if (countEl) countEl.textContent = `${visible} ${resultsLabel}`;
+      };
+
+      const clearSelection = () => {
+        selectedId = null;
+        items.forEach((item) => item.classList.remove('is-selected'));
+        pins.forEach((pin) => pin.classList.remove('is-selected'));
+        if (drawer) drawer.hidden = true;
+      };
+
+      const fillDrawer = (item: HTMLButtonElement) => {
+        if (!drawer) return;
+        const status = item.dataset.status ?? 'active';
+        const setText = (sel: string, val: string) => {
+          const el = drawer.querySelector<HTMLElement>(sel);
+          if (el) el.textContent = val;
+        };
+        setText('[data-gis-drawer-name]', item.dataset.name ?? '');
+        const badge = drawer.querySelector<HTMLElement>('[data-gis-drawer-badge]');
+        if (badge) {
+          badge.textContent = statusLabels[status] ?? status;
+          badge.className = `gis-board-mock__badge gis-board-mock__badge--${status}`;
+        }
+        setText('[data-gis-drawer-manager]', item.dataset.manager ?? '');
+        setText('[data-gis-drawer-phone]', item.dataset.phone ?? '');
+        setText('[data-gis-drawer-email]', item.dataset.email ?? '');
+        setText('[data-gis-drawer-parcel]', item.dataset.parcel ?? '');
+        setText('[data-gis-drawer-designation]', item.dataset.designation ?? '');
+        const hasGeo = item.dataset.hasGeo === 'true';
+        const isPolygon = item.dataset.polygon === 'true';
+        setText(
+          '[data-gis-drawer-geometry]',
+          hasGeo
+            ? isPolygon
+              ? (boardBox.dataset.geometryPolygon ?? '')
+              : (boardBox.dataset.geometryPoint ?? '')
+            : '—',
+        );
+        drawer.hidden = false;
+      };
+
+      const selectItem = (id: string) => {
+        if (selectedId === id) {
+          clearSelection();
+          return;
+        }
+        selectedId = id;
+        const item = items.find((entry) => entry.dataset.id === id);
+        if (!item) return;
+        items.forEach((entry) => entry.classList.toggle('is-selected', entry.dataset.id === id));
+        pins.forEach((pin) => pin.classList.toggle('is-selected', pin.dataset.gisBoardPin === id));
+        fillDrawer(item);
+      };
+
+      items.forEach((item) => {
+        item.addEventListener('click', () => selectItem(item.dataset.id ?? ''));
+      });
+      pins.forEach((pin) => {
+        pin.addEventListener('click', () => selectItem(pin.dataset.gisBoardPin ?? ''));
+      });
+      boardBox.querySelector<HTMLButtonElement>('[data-gis-board-close]')?.addEventListener('click', clearSelection);
+      searchInput?.addEventListener('input', applyFilters);
+      filterSelect?.addEventListener('change', applyFilters);
+      selectItem('c');
+    }
+
+    /* FlowGram: Miro map cards */
+    root.querySelectorAll<HTMLElement>('[data-fg-miro]').forEach((box) => {
+      const detail = box.querySelector<HTMLElement>('[data-fg-miro-detail]');
+      box.querySelectorAll<HTMLButtonElement>('[data-fg-miro-card]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          box
+            .querySelectorAll('[data-fg-miro-card]')
+            .forEach((b) => b.classList.toggle('is-active', b === btn));
+          if (detail) detail.textContent = btn.dataset.fgMiroDetail ?? '';
+        });
+      });
+    });
+
+    /* FlowGram: monday test board items */
+    root.querySelectorAll<HTMLElement>('[data-fg-monday]').forEach((box) => {
+      const title = box.querySelector<HTMLElement>('[data-fg-monday-title]');
+      const detailText = box.querySelector<HTMLElement>('[data-fg-monday-detail-text]');
+      const owner = box.querySelector<HTMLElement>('[data-fg-monday-owner]');
+      const date = box.querySelector<HTMLElement>('[data-fg-monday-date]');
+      const step = box.querySelector<HTMLElement>('[data-fg-monday-step]');
+      box.querySelectorAll<HTMLButtonElement>('[data-fg-monday-item]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          box
+            .querySelectorAll('[data-fg-monday-item]')
+            .forEach((b) => b.classList.toggle('is-active', b === btn));
+          if (title) title.textContent = btn.dataset.fgMondayName ?? '';
+          if (detailText) detailText.textContent = btn.dataset.fgMondayDetail ?? '';
+          if (owner) owner.textContent = btn.dataset.fgMondayOwner ?? '';
+          if (date) date.textContent = btn.dataset.fgMondayDate ?? '';
+          if (step) step.textContent = btn.dataset.fgMondayStep ?? '';
+        });
+      });
+    });
+
+    /* TSM: row → ticket panel */
+    root.querySelectorAll<HTMLElement>('[data-tsm-demo]').forEach((box) => {
+      const ticketPanel = root.querySelector<HTMLElement>('[data-demo-panel="ticket"]');
+      const titleEl = root.querySelector<HTMLElement>('[data-tsm-ticket-title]');
+      const idEl = root.querySelector<HTMLElement>('[data-tsm-ticket-id]');
+      const detailEl = root.querySelector<HTMLElement>('[data-tsm-ticket-detail]');
+      box.querySelectorAll<HTMLButtonElement>('[data-tsm-row]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          box.querySelectorAll('[data-tsm-row]').forEach((b) => b.classList.toggle('is-selected', b === btn));
+          if (titleEl) titleEl.textContent = btn.dataset.tsmTitle ?? '';
+          if (idEl) idEl.textContent = btn.dataset.tsmId ?? '';
+          if (detailEl) detailEl.textContent = btn.dataset.tsmDetail ?? '';
+          selectTab('ticket');
+          if (ticketPanel && live) live.textContent = ticketPanel.dataset.demoCaption ?? '';
+        });
+      });
+    });
+
+    /* CRM: channel threads */
+    root.querySelectorAll<HTMLElement>('[data-crm-demo]').forEach((crmBox) => {
+      const thread = crmBox.querySelector<HTMLElement>('[data-crm-thread]');
+      crmBox.querySelectorAll<HTMLButtonElement>('[data-crm-channel]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          crmBox.querySelectorAll('[data-crm-channel]').forEach((b) => {
+            b.setAttribute('aria-selected', b === btn ? 'true' : 'false');
+          });
+          if (thread) thread.textContent = btn.dataset.crmThreadText ?? '';
+        });
+      });
+    });
+  });
+</script>

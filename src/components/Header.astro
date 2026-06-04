@@ -1,0 +1,255 @@
+---
+/**
+ * Sticky site header (PRD §7.1).
+ * Logo on the inline-end side (right in RTL), lean nav, HE/EN switch,
+ * one gradient CTA pill -> BOOKING_URL. Mobile menu via vanilla JS.
+ */
+import { Image } from 'astro:assets';
+import logo from '../assets/clicks-logo.png';
+import { BOOKING_URL, COMPANY_NAME } from '../config';
+import { localizedPath, alternatePath, type Locale } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+
+const content = {
+  he: {
+    solutions: 'פתרונות',
+    about: 'אודות',
+    cases: 'סיפורי לקוח',
+    cta: 'לקביעת שיחת היכרות',
+    menu: 'תפריט',
+    other: 'EN',
+  },
+  en: {
+    solutions: 'Solutions',
+    about: 'About',
+    cases: 'Cases',
+    cta: 'Book a discovery call',
+    menu: 'Menu',
+    other: 'עברית',
+  },
+} as const;
+const t = content[locale];
+
+/** Lean top nav: one solutions hub; contact lives in footer + primary CTA. */
+const nav = [
+  { href: localizedPath('/solutions', locale), label: t.solutions },
+  { href: localizedPath('/cases', locale), label: t.cases },
+  { href: localizedPath('/about', locale), label: t.about },
+];
+
+const alt = alternatePath(Astro.url);
+const home = localizedPath('/', locale);
+---
+
+<header class="header">
+  <div class="container header__inner">
+    <a class="header__brand" href={home} aria-label={COMPANY_NAME}>
+      <Image
+        src={logo}
+        alt=""
+        class="header__logo"
+        width={652}
+        height={241}
+        widths={[280, 420, 560]}
+        loading="eager"
+        decoding="async"
+      />
+    </a>
+
+    <nav class="header__links-nav" id="header-nav" aria-label={t.menu} data-nav>
+      <ul class="header__links">
+        {nav.map((item) => (
+          <li><a href={item.href}>{item.label}</a></li>
+        ))}
+      </ul>
+
+      <div class="header__actions">
+        <a
+          class="header__lang"
+          href={alt.href}
+          hreflang={alt.locale}
+          lang={alt.locale}
+          aria-label={locale === 'he' ? 'Switch to English' : 'מעבר לעברית'}
+        >
+          {t.other}
+        </a>
+        <a class="btn btn-primary header__cta" href={BOOKING_URL}>{t.cta}</a>
+      </div>
+    </nav>
+
+    <button class="header__toggle" type="button" aria-expanded="false" aria-controls="header-nav" data-toggle>
+      <span class="visually-hidden">{t.menu}</span>
+      <span class="header__toggle-bar" aria-hidden="true"></span>
+      <span class="header__toggle-bar" aria-hidden="true"></span>
+      <span class="header__toggle-bar" aria-hidden="true"></span>
+    </button>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: var(--z-header);
+    background: var(--color-overlay-light);
+    backdrop-filter: blur(12px);
+    border-block-end: 1px solid var(--color-divider);
+  }
+
+  .header__inner {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    column-gap: var(--space-5);
+    padding-block: var(--space-3);
+    min-height: 4.25rem;
+  }
+
+  .header__brand {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    line-height: 0;
+    text-decoration: none;
+  }
+
+  .header__logo {
+    display: block;
+    height: 2.65rem;
+    width: auto;
+    max-width: 11.5rem;
+    object-fit: contain;
+    object-position: start center;
+  }
+
+  @media (min-width: 768px) {
+    .header__logo {
+      height: 2.85rem;
+      max-width: 12.5rem;
+    }
+  }
+
+  .header__links-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+    min-width: 0;
+  }
+
+  .header__links {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-4) var(--space-5);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .header__links a {
+    color: var(--color-text-secondary);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--text-sm);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .header__links a:hover {
+    color: var(--color-text);
+  }
+
+  .header__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex-shrink: 0;
+  }
+
+  .header__lang {
+    color: var(--color-text-secondary);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--text-sm);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-full);
+    border: 1px solid var(--color-border);
+    text-decoration: none;
+  }
+
+  .header__cta {
+    font-size: var(--text-sm);
+    padding-block: var(--space-2);
+    padding-inline: var(--space-4);
+  }
+
+  .header__toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: 0;
+    padding: var(--space-2);
+  }
+
+  .header__toggle-bar {
+    width: 22px;
+    height: 2px;
+    background: var(--color-text);
+    border-radius: 2px;
+  }
+
+  @media (max-width: 880px) {
+    .header__inner {
+      grid-template-columns: 1fr auto;
+    }
+
+    .header__brand {
+      grid-column: 1;
+    }
+
+    .header__toggle {
+      display: flex;
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .header__links-nav {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--space-4);
+      display: none;
+    }
+
+    .header__links-nav[data-open='true'] {
+      display: flex;
+    }
+
+    .header__links {
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--space-3);
+    }
+
+    .header__actions {
+      justify-content: space-between;
+      padding-block-start: var(--space-2);
+      border-block-start: 1px solid var(--color-divider);
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.querySelector('[data-toggle]');
+  const nav = document.querySelector('[data-nav]');
+  toggle?.addEventListener('click', () => {
+    const open = nav?.getAttribute('data-open') === 'true';
+    nav?.setAttribute('data-open', String(!open));
+    toggle.setAttribute('aria-expanded', String(!open));
+  });
+</script>

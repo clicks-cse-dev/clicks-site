@@ -1,0 +1,25 @@
+---
+/** Operations hub — Clicks TSM */
+interface Props {
+  class?: string;
+  size?: number;
+}
+const { class: className = '', size } = Astro.props;
+---
+
+<svg
+  class={className}
+  width={size}
+  height={size}
+  viewBox="0 0 100 100"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-hidden="true"
+>
+  <circle cx="50" cy="50" r="38" stroke="var(--product-brand-line)" stroke-width="2.5" opacity="0.5" />
+  <circle cx="50" cy="50" r="12" fill="var(--product-brand-deep)" />
+  <circle cx="50" cy="50" r="6" fill="var(--product-brand-pale)" />
+  <path d="M50 14v10M50 76v10M14 50h10M76 50h10" stroke="var(--product-brand-node)" stroke-width="3" stroke-linecap="round" />
+  <path d="M24 24l7 7M69 69l7 7M76 24l-7 7M31 69l-7 7" stroke="var(--product-brand-line)" stroke-width="2.5" stroke-linecap="round" />
+  <circle cx="50" cy="18" r="4" fill="var(--product-brand-spark)" />
+</svg>

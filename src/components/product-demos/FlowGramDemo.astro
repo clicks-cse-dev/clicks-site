@@ -1,0 +1,374 @@
+---
+import type { Locale } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+const t =
+  locale === 'he'
+    ? {
+        tabs: [
+          { id: 'miro', label: 'מפת Miro' },
+          { id: 'monday', label: 'לוח בדיקה · monday' },
+        ],
+        miroWindow: 'Miro · סדנת FlowGram',
+        mondayWindow: 'monday.com · בקשות שירות (בדיקה)',
+        miroCaption: 'מפת תהליך משותפת — לפני שורה ראשונה בלוח. לחצו על כרטיס.',
+        mondayCaption: 'לוח בדיקה שמממש את המפה — לחצו על פריט.',
+        miroBoardName: 'אפיון תהליך · בקשות שירות',
+        miroMainFlow: ['start', 'intake', 'check', 'approve', 'respond'] as const,
+        miroBranchLabel: 'חסר מידע?',
+        miroBranchId: 'return' as const,
+        miroCards: {
+          start: { tone: 'violet', title: 'התחלה', body: 'פנייה נכנסת' },
+          intake: { tone: 'yellow', title: 'קליטת בקשה', body: 'פריט + שיוך' },
+          check: { tone: 'blue', title: 'בדיקת זכאות', body: 'רישום · מסמכים' },
+          approve: { tone: 'pink', title: 'אישור מנהל', body: 'גורם מוסמך' },
+          respond: { tone: 'green', title: 'מענה לתושב', body: 'סגירת לולאה' },
+          return: { tone: 'orange', title: 'חזרה לקליטה', body: 'תזכורת' },
+        },
+        miroDetails: {
+          start: 'כל פנייה נכנסת ממופה לנקודת התחלה אחת — לפני שמחלקים למחלקות.',
+          intake: 'נציג קולט את הבקשה, בודק שדות חובה ופותח פריט טיוטה בלוח העתידי.',
+          check: 'בדיקה מול רישום ומערכות קיימות; אם חסר מידע — ענף חזרה.',
+          approve: 'מנהל מוסמך מאשר או דוחה; SLA והתראות לפי תפקיד.',
+          respond: 'מענה לתושב וסגירה; הסטטוס בלוח מתעדכן אוטומטית.',
+          return: 'החזרה לשלב קליטה עם רשימת מסמכים חסרים.',
+        },
+        miroDetailTitle: 'שלב נבחר',
+        miroLegend: 'זרימה מאושרת · גרסה 3',
+        mondayBoard: 'בקשות שירות — הטמעת FlowGram',
+        mondayGroups: [
+          { id: 'intake', label: 'קליטה', color: '#579bfc' },
+          { id: 'review', label: 'בבדיקה', color: '#ffcb00' },
+          { id: 'approval', label: 'ממתין לאישור', color: '#e85d4c' },
+          { id: 'done', label: 'הושלם', color: '#00c875' },
+        ],
+        mondayItems: [
+          {
+            id: '1',
+            group: 'intake',
+            name: 'בקשה #2041 · רח׳ הזית 9',
+            owner: 'שירות',
+            date: 'היום',
+            detail: 'נפתח מהטופס הציבורי. ממתין לשיוך למחלקת רישוי.',
+            step: 'קליטת בקשה',
+          },
+          {
+            id: '2',
+            group: 'review',
+            name: 'בדיקת זכאות · מגרש 412',
+            owner: 'רישוי',
+            date: 'אתמול',
+            detail: 'בדיקה מול רישום; חסר תשריט — יוחזר לקליטה לפי המפה.',
+            step: 'בדיקת זכאות',
+          },
+          {
+            id: '3',
+            group: 'approval',
+            name: 'אישור מנהל אגף',
+            owner: 'מנהל',
+            date: 'לפני 2 ימים',
+            detail: 'ממתין לאישור סופי לפני מענה לתושב.',
+            step: 'אישור מנהל',
+          },
+          {
+            id: '4',
+            group: 'done',
+            name: 'מענה נשלח · פנייה #1988',
+            owner: 'שירות',
+            date: 'לפני שבוע',
+            detail: 'לולאה נסגרה; תושב קיבל מענה בוואטסאפ.',
+            step: 'מענה לתושב',
+          },
+          {
+            id: '5',
+            group: 'intake',
+            name: 'ליד מקמפיין · Meta',
+            owner: 'שיווק',
+            date: 'היום',
+            detail: 'נקלט דרך CRM Connections — יעבור לבדיקה מחר.',
+            step: 'קליטת בקשה',
+          },
+        ],
+        mondayPick: 'בחרו פריט מהלוח',
+        mondayFields: { owner: 'אחראי', updated: 'עודכן', step: 'שלב במפה' },
+      }
+    : {
+        tabs: [
+          { id: 'miro', label: 'Miro map' },
+          { id: 'monday', label: 'Test board · monday' },
+        ],
+        miroWindow: 'Miro · FlowGram workshop',
+        mondayWindow: 'monday.com · Service requests (test)',
+        miroCaption: 'Shared process map — before the first board row. Click a card.',
+        mondayCaption: 'Test board that implements the map — click an item.',
+        miroBoardName: 'Process design · Service requests',
+        miroMainFlow: ['start', 'intake', 'check', 'approve', 'respond'] as const,
+        miroBranchLabel: 'Missing info?',
+        miroBranchId: 'return' as const,
+        miroCards: {
+          start: { tone: 'violet', title: 'Start', body: 'Inbound' },
+          intake: { tone: 'yellow', title: 'Intake', body: 'Item + assign' },
+          check: { tone: 'blue', title: 'Eligibility', body: 'Registry · docs' },
+          approve: { tone: 'pink', title: 'Approval', body: 'Authorized role' },
+          respond: { tone: 'green', title: 'Response', body: 'Close loop' },
+          return: { tone: 'orange', title: 'Back to intake', body: 'Reminder' },
+        },
+        miroDetails: {
+          start: 'Every inbound request lands on one start point — before routing to departments.',
+          intake: 'Agent captures the request, validates required fields and opens a draft board item.',
+          check: 'Check against registry and existing systems; missing info triggers the return branch.',
+          approve: 'Authorized manager approves or rejects; SLA and alerts by role.',
+          respond: 'Reply to resident and close; board status updates automatically.',
+          return: 'Return to intake with a list of missing documents.',
+        },
+        miroDetailTitle: 'Selected step',
+        miroLegend: 'Signed-off flow · v3',
+        mondayBoard: 'Service requests — FlowGram rollout',
+        mondayGroups: [
+          { id: 'intake', label: 'Intake', color: '#579bfc' },
+          { id: 'review', label: 'In review', color: '#ffcb00' },
+          { id: 'approval', label: 'Awaiting approval', color: '#e85d4c' },
+          { id: 'done', label: 'Done', color: '#00c875' },
+        ],
+        mondayItems: [
+          {
+            id: '1',
+            group: 'intake',
+            name: 'Request #2041 · 9 Hazait St.',
+            owner: 'Service',
+            date: 'Today',
+            detail: 'Opened from public form. Waiting for licensing assignment.',
+            step: 'Intake',
+          },
+          {
+            id: '2',
+            group: 'review',
+            name: 'Eligibility · parcel 412',
+            owner: 'Licensing',
+            date: 'Yesterday',
+            detail: 'Registry check; missing plan — returns to intake per the map.',
+            step: 'Eligibility check',
+          },
+          {
+            id: '3',
+            group: 'approval',
+            name: 'Division manager sign-off',
+            owner: 'Manager',
+            date: '2 days ago',
+            detail: 'Waiting for final approval before resident response.',
+            step: 'Manager approval',
+          },
+          {
+            id: '4',
+            group: 'done',
+            name: 'Reply sent · case #1988',
+            owner: 'Service',
+            date: '1 week ago',
+            detail: 'Loop closed; resident notified on WhatsApp.',
+            step: 'Resident response',
+          },
+          {
+            id: '5',
+            group: 'intake',
+            name: 'Campaign lead · Meta',
+            owner: 'Marketing',
+            date: 'Today',
+            detail: 'Captured via CRM Connections — moves to review tomorrow.',
+            step: 'Intake',
+          },
+        ],
+        mondayPick: 'Pick an item from the board',
+        mondayFields: { owner: 'Owner', updated: 'Updated', step: 'Map step' },
+      };
+
+---
+
+<>
+  <div class="product-demo__tabs" role="tablist" aria-label="FlowGram demo">
+    {
+      t.tabs.map((tab, i) => (
+        <button
+          type="button"
+          class="product-demo__tab"
+          role="tab"
+          data-demo-tab={tab.id}
+          aria-selected={i === 0 ? 'true' : 'false'}
+          tabindex={i === 0 ? 0 : -1}
+        >
+          {tab.label}
+        </button>
+      ))
+    }
+  </div>
+
+  <div
+    class="product-demo__panel"
+    role="tabpanel"
+    data-demo-panel="miro"
+    data-demo-caption={t.miroCaption}
+  >
+    <div class="product-demo__frame">
+      <div class="product-demo__chrome">
+        <span class="product-demo__dot product-demo__dot--a" />
+        <span class="product-demo__dot product-demo__dot--b" />
+        <span class="product-demo__dot product-demo__dot--c" />
+        <span class="product-demo__window-title">{t.miroWindow}</span>
+      </div>
+      <div class="product-demo__body fg-miro-mock" data-fg-miro>
+        <div class="fg-miro-mock__appbar">
+          <span class="fg-miro-mock__logo" aria-hidden="true">Miro</span>
+          <span class="fg-miro-mock__board">{t.miroBoardName}</span>
+          <span class="fg-miro-mock__legend">{t.miroLegend}</span>
+        </div>
+        <div class="fg-miro-mock__workspace">
+          <div class="fg-miro-mock__canvas" dir="ltr">
+            <div class="fg-miro-mock__flow-grid">
+              {
+                t.miroMainFlow.map((id, i) => {
+                  const card = t.miroCards[id];
+                  return [
+                    i > 0 ? <span class="fg-miro-mock__arrow" aria-hidden="true" /> : null,
+                    <button
+                      type="button"
+                      class:list={[
+                        'fg-miro-mock__card',
+                        `fg-miro-mock__card--${card.tone}`,
+                        id === 'intake' && 'is-active',
+                      ]}
+                      data-fg-miro-card={id}
+                      data-fg-miro-title={card.title}
+                      data-fg-miro-detail={t.miroDetails[id]}
+                    >
+                      <span class="fg-miro-mock__card-title">{card.title}</span>
+                      <span class="fg-miro-mock__card-body">{card.body}</span>
+                    </button>,
+                  ];
+                })
+              }
+              <div class="fg-miro-mock__branch-cell">
+                <span class="fg-miro-mock__branch-stem" aria-hidden="true" />
+                <span class="fg-miro-mock__branch-tag">{t.miroBranchLabel}</span>
+                <button
+                  type="button"
+                  class:list={[
+                    'fg-miro-mock__card',
+                    `fg-miro-mock__card--${t.miroCards[t.miroBranchId].tone}`,
+                  ]}
+                  data-fg-miro-card={t.miroBranchId}
+                  data-fg-miro-title={t.miroCards[t.miroBranchId].title}
+                  data-fg-miro-detail={t.miroDetails[t.miroBranchId]}
+                >
+                  <span class="fg-miro-mock__card-title">{t.miroCards[t.miroBranchId].title}</span>
+                  <span class="fg-miro-mock__card-body">{t.miroCards[t.miroBranchId].body}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <aside class="fg-miro-mock__sidebar">
+            <p class="fg-miro-mock__sidebar-label">{t.miroDetailTitle}</p>
+            <p class="fg-miro-mock__sidebar-title" data-fg-miro-title>
+              {t.miroCards.intake.title}
+            </p>
+            <p class="fg-miro-mock__sidebar-text" data-fg-miro-detail>
+              {t.miroDetails.intake}
+            </p>
+          </aside>
+        </div>
+      </div>
+    </div>
+    <p class="product-demo__caption">{t.miroCaption}</p>
+  </div>
+
+  <div
+    class="product-demo__panel"
+    role="tabpanel"
+    data-demo-panel="monday"
+    data-demo-caption={t.mondayCaption}
+    hidden
+  >
+    <div class="product-demo__frame">
+      <div class="product-demo__chrome">
+        <span class="product-demo__dot product-demo__dot--a" />
+        <span class="product-demo__dot product-demo__dot--b" />
+        <span class="product-demo__dot product-demo__dot--c" />
+        <span class="product-demo__window-title">{t.mondayWindow}</span>
+      </div>
+      <div class="product-demo__body fg-monday-mock" data-fg-monday>
+        <header class="fg-monday-mock__head">
+          <h3 class="fg-monday-mock__board-title">{t.mondayBoard}</h3>
+          <span class="fg-monday-mock__badge">Test</span>
+        </header>
+        <div class="fg-monday-mock__layout">
+          <div class="fg-monday-mock__groups">
+            {
+              t.mondayGroups.map((group) => (
+                <section class="fg-monday-mock__group">
+                  <h4 class="fg-monday-mock__group-label">
+                    <span class="fg-monday-mock__group-dot" style={`background: ${group.color}`} />
+                    {group.label}
+                  </h4>
+                  <ul class="fg-monday-mock__items" role="list">
+                    {
+                      t.mondayItems
+                        .filter((item) => item.group === group.id)
+                        .map((item, i) => (
+                          <li>
+                            <button
+                              type="button"
+                              class:list={[
+                                'fg-monday-mock__item',
+                                group.id === 'review' && i === 0 && 'is-active',
+                              ]}
+                              data-fg-monday-item={item.id}
+                              data-fg-monday-name={item.name}
+                              data-fg-monday-detail={item.detail}
+                              data-fg-monday-owner={item.owner}
+                              data-fg-monday-date={item.date}
+                              data-fg-monday-step={item.step}
+                            >
+                              <span class="fg-monday-mock__item-name">{item.name}</span>
+                              <span class="fg-monday-mock__item-meta">
+                                {item.owner} · {item.date}
+                              </span>
+                            </button>
+                          </li>
+                        ))
+                    }
+                  </ul>
+                </section>
+              ))
+            }
+          </div>
+          <aside class="fg-monday-mock__detail">
+            <p class="fg-monday-mock__detail-title" data-fg-monday-title>
+              {t.mondayItems[1]?.name ?? t.mondayPick}
+            </p>
+            <p class="fg-monday-mock__detail-text" data-fg-monday-detail-text>
+              {t.mondayItems[1]?.detail ?? t.mondayPick}
+            </p>
+            <dl class="fg-monday-mock__detail-fields">
+              <div>
+                <dt>{t.mondayFields.owner}</dt>
+                <dd data-fg-monday-owner>{t.mondayItems[1]?.owner}</dd>
+              </div>
+              <div>
+                <dt>{t.mondayFields.updated}</dt>
+                <dd data-fg-monday-date>{t.mondayItems[1]?.date}</dd>
+              </div>
+              <div>
+                <dt>{t.mondayFields.step}</dt>
+                <dd data-fg-monday-step>{t.mondayItems[1]?.step}</dd>
+              </div>
+            </dl>
+          </aside>
+        </div>
+      </div>
+    </div>
+    <p class="product-demo__caption">{t.mondayCaption}</p>
+  </div>
+</>

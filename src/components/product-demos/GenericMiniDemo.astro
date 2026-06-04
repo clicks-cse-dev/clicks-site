@@ -1,0 +1,390 @@
+---
+import type { Locale } from '../../i18n';
+import type { ProductLogoKey } from '../../data/productPages';
+
+interface Props {
+  locale: Locale;
+  logo: ProductLogoKey;
+}
+
+const { locale, logo } = Astro.props;
+
+const copy = {
+  tsm: {
+    he: {
+      tabs: [
+        { id: 'dashboard', label: 'לוח בקרה' },
+        { id: 'ticket', label: 'פרטי קריאה' },
+      ],
+      window: 'Clicks TSM',
+      kpis: [
+        { value: '98.6%', label: 'עמידה ב-SLA' },
+        { value: '12', label: 'קריאות פתוחות' },
+        { value: '2.4ש׳', label: 'זמן תגובה' },
+      ],
+      rows: [
+        {
+          id: '#1042',
+          title: 'תקלת סנכרון ArcGIS',
+          sev: 'גבוה',
+          sla: 'בזמן',
+          detail: 'סנכרון שכבות נעצר אחרי עדכון שרת. צוות GIS בטיפול.',
+        },
+        {
+          id: '#1039',
+          title: 'בקשת הרשאה — לוח CRM',
+          sev: 'בינוני',
+          sla: 'בזמן',
+          detail: 'הרחבת הרשאות לנציגי שירות. ממתין לאישור מנהל מערכת.',
+        },
+      ],
+      cols: { id: 'מזהה', title: 'נושא', sev: 'חומרה', sla: 'SLA' },
+      ticketLabels: { owner: 'אחראי', status: 'סטטוס', timeline: 'ציר זמן' },
+      ticketDefaults: {
+        owner: 'צוות תשתיות',
+        status: 'בטיפול',
+        timeline: 'נפתח היום · עדכון לפני 20 דק׳',
+      },
+      dashboardCaption: 'לחצו על שורה כדי לפתוח את הקריאה.',
+      ticketCaption: 'פרטי קריאה, אחראי ו-SLA — כמו בלוח TSM.',
+      pickRow: 'בחרו קריאה מהלוח',
+    },
+    en: {
+      tabs: [
+        { id: 'dashboard', label: 'Dashboard' },
+        { id: 'ticket', label: 'Ticket detail' },
+      ],
+      window: 'Clicks TSM',
+      kpis: [
+        { value: '98.6%', label: 'SLA met' },
+        { value: '12', label: 'Open tickets' },
+        { value: '2.4h', label: 'Avg response' },
+      ],
+      rows: [
+        {
+          id: '#1042',
+          title: 'ArcGIS sync failure',
+          sev: 'High',
+          sla: 'On time',
+          detail: 'Layer sync stopped after server patch. GIS team engaged.',
+        },
+        {
+          id: '#1039',
+          title: 'CRM board access request',
+          sev: 'Medium',
+          sla: 'On time',
+          detail: 'Expand permissions for service reps. Waiting on system owner.',
+        },
+      ],
+      cols: { id: 'ID', title: 'Subject', sev: 'Severity', sla: 'SLA' },
+      ticketLabels: { owner: 'Owner', status: 'Status', timeline: 'Timeline' },
+      ticketDefaults: {
+        owner: 'Infrastructure team',
+        status: 'In progress',
+        timeline: 'Opened today · updated 20 min ago',
+      },
+      dashboardCaption: 'Click a row to open the ticket.',
+      ticketCaption: 'Ticket detail, owner and SLA — as in TSM.',
+      pickRow: 'Pick a ticket from the dashboard',
+    },
+  },
+  crm: {
+    he: {
+      tabs: [
+        { id: 'inbox', label: 'תיבת שיחות' },
+        { id: 'board', label: 'פריט בלוח' },
+      ],
+      window: 'CRM Connections',
+      channels: ['WhatsApp', 'Messenger', 'אימייל'],
+      threads: {
+        WhatsApp: 'פניית תושב · רח׳ הזית',
+        Messenger: 'ליד מקמפיין · דף פייסבוק',
+        'אימייל': 'פנייה@example.org',
+      },
+      inboxCaption: 'בחרו ערוץ — השיחה מתעדכנת בזמן אמת.',
+      boardTitle: 'פריט שנוצר בלוח monday',
+      boardRows: [
+        { label: 'משימה', value: 'בקשת היתר — רח׳ הזית 9' },
+        { label: 'סטטוס', value: 'בטיפול' },
+        { label: 'מקור', value: 'WhatsApp' },
+        { label: 'אחראי', value: 'מחלקת רישוי' },
+      ],
+      boardCaption: 'הודעה נכנסת הופכת לשורה בלוח — בלי העתקה ידנית.',
+    },
+    en: {
+      tabs: [
+        { id: 'inbox', label: 'Inbox' },
+        { id: 'board', label: 'Board item' },
+      ],
+      window: 'CRM Connections',
+      channels: ['WhatsApp', 'Messenger', 'Email'],
+      threads: {
+        WhatsApp: 'Resident request · Hazait St.',
+        Messenger: 'Campaign lead · Facebook page',
+        Email: 'request@example.org',
+      },
+      inboxCaption: 'Pick a channel — the thread updates live.',
+      boardTitle: 'Item created on monday',
+      boardRows: [
+        { label: 'Task', value: 'Permit request — 9 Hazait St.' },
+        { label: 'Status', value: 'In progress' },
+        { label: 'Source', value: 'WhatsApp' },
+        { label: 'Owner', value: 'Licensing dept' },
+      ],
+      boardCaption: 'Inbound message becomes a board row — no copy-paste.',
+    },
+  },
+  solutions: {
+    he: {
+      tabs: [
+        { id: 'spec', label: 'מפרט מאושר' },
+        { id: 'board', label: 'לוח חי' },
+      ],
+      window: 'Clicks Solutions',
+      channels: ['גילוי', 'אפיון', 'בנייה'],
+      threads: {
+        גילוי: 'מטרות · מגבלות · מערכות קיימות',
+        אפיון: 'תהליך · שדות · אוטומציות',
+        בנייה: 'לוחות · אינטגרציות · בדיקות',
+      },
+      inboxCaption: 'שלבי פרויקט — לפני שורה בלוח.',
+      boardTitle: 'פתרון monday מותאם',
+      boardRows: [
+        { label: 'פרויקט', value: 'מערכת פניות רב-מחלקתית' },
+        { label: 'סטטוס', value: 'בהטמעה' },
+        { label: 'חיבורים', value: 'ERP · GIS · WhatsApp' },
+        { label: 'תחזוקה', value: 'Clicks TSM' },
+      ],
+      boardCaption: 'מאפיון משותף (FlowGram) ועד תחזוקה שוטפת.',
+    },
+    en: {
+      tabs: [
+        { id: 'spec', label: 'Signed spec' },
+        { id: 'board', label: 'Live board' },
+      ],
+      window: 'Clicks Solutions',
+      channels: ['Discover', 'Design', 'Build'],
+      threads: {
+        Discover: 'Goals · constraints · existing systems',
+        Design: 'Process · fields · automations',
+        Build: 'Boards · integrations · tests',
+      },
+      inboxCaption: 'Project phases — before the first board row.',
+      boardTitle: 'Tailored monday solution',
+      boardRows: [
+        { label: 'Project', value: 'Multi-department requests system' },
+        { label: 'Status', value: 'Rolling out' },
+        { label: 'Connections', value: 'ERP · GIS · WhatsApp' },
+        { label: 'Care', value: 'Clicks TSM' },
+      ],
+      boardCaption: 'From FlowGram design through ongoing TSM care.',
+    },
+  },
+} as const;
+
+const t =
+  logo === 'tsm'
+    ? copy.tsm[locale]
+    : logo === 'solutions'
+      ? copy.solutions[locale]
+      : copy.crm[locale];
+---
+
+{
+  logo === 'tsm' && (
+    <>
+      <div class="product-demo__tabs" role="tablist" aria-label="Clicks TSM demo">
+        {t.tabs.map((tab, i) => (
+          <button
+            type="button"
+            class="product-demo__tab"
+            role="tab"
+            data-demo-tab={tab.id}
+            aria-selected={i === 0 ? 'true' : 'false'}
+            tabindex={i === 0 ? 0 : -1}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
+      <div
+        class="product-demo__panel"
+        role="tabpanel"
+        data-demo-panel="dashboard"
+        data-demo-caption={t.dashboardCaption}
+      >
+        <div class="product-demo__frame">
+          <div class="product-demo__chrome">
+            <span class="product-demo__dot product-demo__dot--a" />
+            <span class="product-demo__dot product-demo__dot--b" />
+            <span class="product-demo__dot product-demo__dot--c" />
+            <span class="product-demo__window-title">{t.window}</span>
+          </div>
+          <div class="product-demo__body" data-tsm-demo>
+            <div class="mini-tsm__kpis">
+              {t.kpis.map((kpi) => (
+                <div class="mini-tsm__kpi">
+                  <span class="mini-tsm__kpi-value">{kpi.value}</span>
+                  <span class="mini-tsm__kpi-label">{kpi.label}</span>
+                </div>
+              ))}
+            </div>
+            <div class="mini-board__row mini-board__row--head">
+              <span>{t.cols.id}</span>
+              <span>{t.cols.title}</span>
+              <span>{t.cols.sev}</span>
+              <span>{t.cols.sla}</span>
+            </div>
+            {t.rows.map((row, i) => (
+              <button
+                type="button"
+                class:list={['mini-board__row', 'mini-board__row--click', i === 0 && 'is-selected']}
+                data-tsm-row
+                data-tsm-id={row.id}
+                data-tsm-title={row.title}
+                data-tsm-detail={row.detail}
+                data-tsm-sev={row.sev}
+                data-tsm-sla={row.sla}
+              >
+                <span>{row.id}</span>
+                <span>{row.title}</span>
+                <span>{row.sev}</span>
+                <span>{row.sla}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+        <p class="product-demo__caption">{t.dashboardCaption}</p>
+      </div>
+
+      <div
+        class="product-demo__panel"
+        role="tabpanel"
+        data-demo-panel="ticket"
+        data-demo-caption={t.ticketCaption}
+        hidden
+      >
+        <div class="product-demo__frame">
+          <div class="product-demo__chrome">
+            <span class="product-demo__dot product-demo__dot--a" />
+            <span class="product-demo__dot product-demo__dot--b" />
+            <span class="product-demo__dot product-demo__dot--c" />
+            <span class="product-demo__window-title">{t.window}</span>
+          </div>
+          <div class="product-demo__body" data-tsm-ticket>
+            <p class="cms-mock__title" data-tsm-ticket-title>
+              {t.rows[0]?.title ?? t.pickRow}
+            </p>
+            <p class="cms-mock__sub" data-tsm-ticket-id>
+              {t.rows[0]?.id ?? ''}
+            </p>
+            <p class="cms-mock__sub" data-tsm-ticket-detail>
+              {t.rows[0]?.detail ?? t.pickRow}
+            </p>
+            <div class="cms-mock__row">
+              <span class="cms-mock__row-label">{t.ticketLabels.owner}</span>
+              <span>{t.ticketDefaults.owner}</span>
+            </div>
+            <div class="cms-mock__row">
+              <span class="cms-mock__row-label">{t.ticketLabels.status}</span>
+              <span>{t.ticketDefaults.status}</span>
+            </div>
+            <div class="cms-mock__row">
+              <span class="cms-mock__row-label">{t.ticketLabels.timeline}</span>
+              <span>{t.ticketDefaults.timeline}</span>
+            </div>
+          </div>
+        </div>
+        <p class="product-demo__caption">{t.ticketCaption}</p>
+      </div>
+    </>
+  )
+}
+
+{
+  (logo === 'crm' || logo === 'solutions') && (
+    <>
+      <div class="product-demo__tabs" role="tablist" aria-label="CRM Connections demo">
+        {t.tabs.map((tab, i) => (
+          <button
+            type="button"
+            class="product-demo__tab"
+            role="tab"
+            data-demo-tab={tab.id}
+            aria-selected={i === 0 ? 'true' : 'false'}
+            tabindex={i === 0 ? 0 : -1}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
+      <div
+        class="product-demo__panel"
+        role="tabpanel"
+        data-demo-panel="inbox"
+        data-demo-caption={t.inboxCaption}
+      >
+        <div class="product-demo__frame">
+          <div class="product-demo__chrome">
+            <span class="product-demo__dot product-demo__dot--a" />
+            <span class="product-demo__dot product-demo__dot--b" />
+            <span class="product-demo__dot product-demo__dot--c" />
+            <span class="product-demo__window-title">{t.window}</span>
+          </div>
+          <div class="product-demo__body" data-crm-demo>
+            <div class="product-demo__tabs product-demo__tabs--inner" role="tablist">
+              {t.channels.map((ch, i) => (
+                <button
+                  type="button"
+                  class="product-demo__tab"
+                  role="tab"
+                  data-crm-channel={ch}
+                  data-crm-thread-text={t.threads[ch as keyof typeof t.threads]}
+                  aria-selected={i === 0 ? 'true' : 'false'}
+                >
+                  {ch}
+                </button>
+              ))}
+            </div>
+            <p class="cms-mock__title" data-crm-thread>
+              {t.threads.WhatsApp}
+            </p>
+            <p class="cms-mock__sub">
+              {locale === 'he' ? 'סטטוס: בטיפול · מקושר ללוח' : 'Status: In progress · Linked to board'}
+            </p>
+          </div>
+        </div>
+        <p class="product-demo__caption">{t.inboxCaption}</p>
+      </div>
+
+      <div
+        class="product-demo__panel"
+        role="tabpanel"
+        data-demo-panel="board"
+        data-demo-caption={t.boardCaption}
+        hidden
+      >
+        <div class="product-demo__frame">
+          <div class="product-demo__chrome">
+            <span class="product-demo__dot product-demo__dot--a" />
+            <span class="product-demo__dot product-demo__dot--b" />
+            <span class="product-demo__dot product-demo__dot--c" />
+            <span class="product-demo__window-title">monday.com</span>
+          </div>
+          <div class="product-demo__body">
+            <p class="cms-mock__title">{t.boardTitle}</p>
+            {t.boardRows.map((row) => (
+              <div class="cms-mock__row">
+                <span class="cms-mock__row-label">{row.label}</span>
+                <span>{row.value}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <p class="product-demo__caption">{t.boardCaption}</p>
+      </div>
+    </>
+  )
+}

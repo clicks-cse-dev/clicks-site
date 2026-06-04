@@ -1,0 +1,811 @@
+---
+/**
+ * Hero section (PRD §7 #2, §3 messaging, §5 brand).
+ * Value-prop H1 (PRD §3 headline candidate #1) + subhead + ONE primary CTA
+ * (BOOKING_URL) + monday.com certified-partner badge + an animated CSS/SVG
+ * "ecosystem" centerpiece (Discover → Architect → Build → Operate).
+ *
+ * Contract: takes a `locale` prop; inline { he, en } content; scoped styles;
+ * tokens only; RTL via logical properties; respects prefers-reduced-motion.
+ */
+import { Image } from 'astro:assets';
+import type { Locale } from '../../i18n';
+import { BOOKING_URL, MONDAY_PARTNER_BADGE_ALT } from '../../config';
+import mondayPartnerBadge from '../../assets/monday-partner-badge.png';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+
+const content = {
+  he: {
+    // PRD §3 headline candidate #3 — outcome framing (conversion + differentiation)
+    title: 'קפה של בוקר — והבקשה כבר אושרה.',
+    titleAccentBefore: 'התהליכים שלכם, בקליק, על ',
+    titleAccentBrand: 'monday.com',
+    titleAccentAfter: '.',
+    subhead:
+      'חברת ייעוץ שמגשרת אסטרטגיה, תהליך וטכנולוגיה — מאפיינת, בונה ומתחזקת מערכות הפעלה חיות לגופים ציבוריים, רשויות, מלכ״רים, מפעלים וחברות הייטק.',
+    trustLine: 'מראים מערכות אמיתיות — לא מצגות.',
+    cta: 'לקביעת שיחת ייעוץ',
+    ctaAria: 'לקביעת שיחת ייעוץ ביומן Google',
+    diagramTitle: 'אקוסיסטם תפעולי מקצה לקצה',
+    stepsLabel: 'שלבי העבודה',
+    steps: ['אפיון', 'ארכיטקטורה', 'בנייה על monday', 'תפעול ותחזוקה'],
+    stepViews: [
+      {
+        caption: 'מיפוי צרכים, תהליכים ומדדים — לפני שורה אחת בלוח.',
+        variant: 'discover',
+      },
+      {
+        caption: 'ארכיטקטורת לוחות, הרשאות וזרימות — שלד המערכת.',
+        variant: 'architect',
+      },
+      {
+        caption: 'אוטומציות, אינטגרציות וסטטוסים חיים על monday.com.',
+        variant: 'build',
+      },
+      {
+        caption: 'תחזוקה, SLA וממשל — המערכת ממשיכה לרוץ.',
+        variant: 'operate',
+      },
+    ],
+    liveLabel: 'מערכת חיה',
+  },
+  en: {
+    // PRD §3 headline candidate #3 (EN)
+    title: 'A permit approved before the coffee gets cold.',
+    titleAccentBefore: 'Your processes, in one click, on ',
+    titleAccentBrand: 'monday.com',
+    titleAccentAfter: '.',
+    subhead:
+      'A consulting firm bridging strategy, process and technology — designing, building and maintaining living ecosystems for public sector, civic orgs, nonprofits, factories and high-tech companies.',
+    trustLine: 'We show real systems — not slideware.',
+    cta: 'Book a discovery call',
+    ctaAria: 'Book a discovery call on Google Calendar',
+    diagramTitle: 'An end-to-end operating ecosystem',
+    stepsLabel: 'How we work',
+    steps: ['Discover', 'Architect', 'Build on monday', 'Operate & maintain'],
+    stepViews: [
+      {
+        caption: 'Mapping needs, processes and metrics — before a single board row.',
+        variant: 'discover',
+      },
+      {
+        caption: 'Board architecture, permissions and flows — the system skeleton.',
+        variant: 'architect',
+      },
+      {
+        caption: 'Automations, integrations and live statuses on monday.com.',
+        variant: 'build',
+      },
+      {
+        caption: 'Maintenance, SLAs and governance — the system keeps running.',
+        variant: 'operate',
+      },
+    ],
+    liveLabel: 'Live system',
+  },
+} as const;
+
+const t = content[locale];
+---
+
+<section class="section hero" aria-labelledby="hero-title">
+  <div class="container hero__grid">
+    <div class="hero__copy">
+      <h1 id="hero-title" class="hero__title">
+        <span class="hero__title-main">{t.title}</span>
+        <span class="hero__title-accent">
+          {t.titleAccentBefore}<span class="hero__monday">{t.titleAccentBrand}</span>{t.titleAccentAfter}
+        </span>
+      </h1>
+
+      <p class="hero__subhead">
+        {t.subhead}
+        <span class="hero__trust-mobile"> {t.trustLine}</span>
+      </p>
+
+      <div class="hero__actions">
+        <a class="btn btn-primary hero__cta" href={BOOKING_URL} aria-label={t.ctaAria}>
+          {t.cta}
+          <svg class="hero__cta-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+
+        <span class="hero__partner-wrap">
+          <Image
+            src={mondayPartnerBadge}
+            alt={MONDAY_PARTNER_BADGE_ALT}
+            class="hero__partner-badge"
+            width={299}
+            height={324}
+            widths={[180, 260, 340]}
+            loading="lazy"
+            decoding="async"
+          />
+        </span>
+      </div>
+
+      <p class="hero__trust">{t.trustLine}</p>
+    </div>
+
+    {/* Product centerpiece: methodology steps + monday board preview (no floating pills). */}
+    <figure
+      class="hero__viz"
+      data-hero-viz
+      data-captions={JSON.stringify(t.stepViews.map((v) => v.caption))}
+      aria-label={t.diagramTitle}
+    >
+      <figcaption class="visually-hidden">{t.diagramTitle}</figcaption>
+
+      <div class="hero__viz-head">
+        <span class="hero__live">
+          <span class="hero__live-dot" aria-hidden="true"></span>
+          {t.liveLabel}
+        </span>
+      </div>
+
+      <div class="hero__flow">
+        <div class="hero__steps-wrap">
+          <p class="hero__steps-label" id="hero-steps-label">{t.stepsLabel}</p>
+          <ol class="hero__steps" role="tablist" aria-labelledby="hero-steps-label">
+            {t.steps.map((label, i) => (
+              <li role="presentation">
+                <button
+                  type="button"
+                  class="hero__step"
+                  role="tab"
+                  id={`hero-step-${i}`}
+                  aria-selected={i === 0 ? 'true' : 'false'}
+                  aria-controls={`hero-panel-${i}`}
+                  tabindex={i === 0 ? 0 : -1}
+                  data-step={i}
+                >
+                  <span class="hero__step-num" aria-hidden="true">{i + 1}</span>
+                  <span class="hero__step-label">{label}</span>
+                </button>
+              </li>
+            ))}
+          </ol>
+        </div>
+
+        <div class="hero__preview">
+          <div class="hero__preview-chrome" aria-hidden="true">
+            <span class="hero__preview-dot"></span>
+            <span class="hero__preview-dot"></span>
+            <span class="hero__preview-dot"></span>
+          </div>
+
+          <p class="hero__preview-caption" data-hero-caption aria-live="polite">
+            {t.stepViews[0].caption}
+          </p>
+
+          <div class="hero__panels">
+            {t.stepViews.map((view, i) => (
+              <div
+                class:list={['hero__panel', i === 0 && 'is-active']}
+                id={`hero-panel-${i}`}
+                role="tabpanel"
+                aria-labelledby={`hero-step-${i}`}
+                hidden={i !== 0}
+                data-panel={i}
+              >
+                <div class="hero__board">
+                  {view.variant === 'discover' && (
+                    <>
+                      <div class="hero__board-cols">
+                        <span></span><span></span><span></span>
+                      </div>
+                      <span class="hero__board-row hero__board-row--muted"></span>
+                      <span class="hero__board-row hero__board-row--muted hero__board-row--short"></span>
+                      <span class="hero__board-row hero__board-row--muted hero__board-row--mid"></span>
+                    </>
+                  )}
+                  {view.variant === 'architect' && (
+                    <>
+                      <div class="hero__board-cols">
+                        <span></span><span></span><span></span><span></span>
+                      </div>
+                      <span class="hero__board-row hero__board-row--head"></span>
+                      <span class="hero__board-row hero__board-row--muted"></span>
+                      <span class="hero__board-row hero__board-row--muted hero__board-row--short"></span>
+                    </>
+                  )}
+                  {view.variant === 'build' && (
+                    <>
+                      <div class="hero__board-cols">
+                        <span></span><span></span><span></span><span></span>
+                      </div>
+                      <span class="hero__board-row hero__board-row--head"></span>
+                      <span class="hero__board-row">
+                        <i class="hero__chip hero__chip--g"></i>
+                        <i class="hero__chip hero__chip--w"></i>
+                      </span>
+                      <span class="hero__board-row">
+                        <i class="hero__chip hero__chip--v"></i>
+                        <i class="hero__chip hero__chip--p"></i>
+                      </span>
+                      <span class="hero__board-row hero__board-row--muted hero__board-row--short"></span>
+                    </>
+                  )}
+                  {view.variant === 'operate' && (
+                    <>
+                      <div class="hero__board-cols">
+                        <span></span><span></span><span></span><span></span>
+                      </div>
+                      <span class="hero__board-row hero__board-row--head"></span>
+                      <span class="hero__board-row">
+                        <i class="hero__chip hero__chip--g"></i>
+                        <i class="hero__chip hero__chip--v"></i>
+                      </span>
+                      <span class="hero__board-row">
+                        <i class="hero__chip hero__chip--w"></i>
+                        <i class="hero__chip hero__chip--p"></i>
+                      </span>
+                      <span class="hero__board-row hero__board-row--muted"></span>
+                    </>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding-block: var(--space-6) var(--space-9);
+  }
+
+  /* Soft glow sits behind the viz column, not under the header. */
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset-block-start: 12%;
+    inset-inline-start: -6%;
+    inline-size: min(36rem, 55%);
+    block-size: 28rem;
+    background: var(--gradient-soft);
+    filter: blur(56px);
+    border-radius: var(--radius-full);
+    opacity: 0.55;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .hero__grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: var(--space-8);
+    align-items: center;
+  }
+
+  /* ---- Copy column ---- */
+  .hero__copy {
+    max-inline-size: var(--panel-max-wide);
+  }
+
+  .hero__title {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    max-inline-size: 20ch;
+    text-wrap: balance;
+  }
+
+  .hero__title-main {
+    font-size: clamp(1.85rem, 4.2vw, 3rem);
+    line-height: 1.12;
+    letter-spacing: -0.03em;
+    color: var(--color-text);
+  }
+
+  /* Accent line: solid ink; underline only under monday.com (DESIGN.md: no gradient text). */
+  .hero__title-accent {
+    font-size: clamp(var(--text-lg), 2.6vw, var(--text-2xl));
+    line-height: var(--line-height-snug);
+    letter-spacing: -0.02em;
+    color: var(--color-accent-hover);
+    max-inline-size: 26ch;
+  }
+  .hero__monday {
+    position: relative;
+    display: inline-block;
+    white-space: nowrap;
+  }
+  .hero__monday::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: 0.05em;
+    block-size: 0.11em;
+    background: var(--gradient-primary);
+    border-radius: var(--radius-full);
+    opacity: 0.6;
+  }
+
+  .hero__subhead {
+    margin-block-start: var(--space-4);
+    max-inline-size: 40ch;
+    font-size: var(--text-base);
+    line-height: var(--line-height-relaxed);
+    color: var(--color-text-secondary);
+  }
+
+  .hero__actions {
+    margin-block-start: var(--space-5);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: var(--space-4);
+  }
+
+  .hero__trust {
+    margin-block-start: var(--space-5);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+    max-inline-size: 36ch;
+  }
+  .hero__trust::before {
+    content: '';
+    display: inline-block;
+    inline-size: 6px;
+    block-size: 6px;
+    margin-inline-end: var(--space-2);
+    border-radius: var(--radius-full);
+    background: var(--color-spark);
+    vertical-align: middle;
+  }
+
+  @media (max-width: 640px) {
+    .hero__actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .hero__cta {
+      justify-content: center;
+    }
+    .hero__partner-badge {
+      margin-inline: auto;
+    }
+    .hero__trust {
+      display: none;
+    }
+    .hero__trust-mobile {
+      display: inline;
+      color: var(--color-text-muted);
+    }
+  }
+
+  .hero__trust-mobile {
+    display: none;
+  }
+
+  .hero__cta {
+    font-size: var(--text-md);
+    padding-block: var(--space-4);
+    padding-inline: var(--space-6);
+  }
+  .hero__cta-arrow {
+    transition: transform var(--transition);
+  }
+  /* Mirror the arrow in RTL so it points "forward". */
+  :global([dir='rtl']) .hero__cta-arrow {
+    transform: scaleX(-1);
+  }
+  .hero__cta:hover .hero__cta-arrow {
+    transform: translateX(2px);
+  }
+  :global([dir='rtl']) .hero__cta:hover .hero__cta-arrow {
+    transform: scaleX(-1) translateX(2px);
+  }
+
+  /* monday.com Certified Partner hex badge (official asset, transparent matte). */
+  .hero__partner-wrap {
+    display: inline-flex;
+    align-items: center;
+    align-self: center;
+    flex-shrink: 0;
+    line-height: 0;
+    background: transparent;
+  }
+  .hero__partner-badge {
+    display: block;
+    height: 5rem;
+    width: auto;
+    object-fit: contain;
+    object-position: center;
+    image-rendering: -webkit-optimize-contrast;
+  }
+  @media (min-width: 768px) {
+    .hero__partner-badge {
+      height: 5.75rem;
+    }
+  }
+
+  /* ============================================================
+     Centerpiece — steps + board preview
+     ============================================================ */
+  .hero__viz {
+    margin: 0;
+    padding: var(--space-5);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
+    min-block-size: 20rem;
+    max-block-size: min(34rem, 78vh);
+  }
+
+  .hero__viz-head {
+    display: flex;
+    justify-content: flex-start;
+    margin-block-end: var(--space-4);
+  }
+  .hero__live {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+  .hero__live-dot {
+    inline-size: 8px;
+    block-size: 8px;
+    border-radius: var(--radius-full);
+    background: var(--color-spark);
+    box-shadow: 0 0 0 0 var(--color-spark);
+    animation: heroPulse 2.4s var(--ease-out) infinite;
+  }
+
+  .hero__flow {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+    align-items: stretch;
+  }
+  @media (min-width: 520px) {
+    .hero__flow {
+      grid-template-columns: 0.95fr 1.1fr;
+      gap: var(--space-6);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero__flow {
+      gap: var(--space-7);
+    }
+  }
+
+  .hero__steps-label {
+    margin: 0 0 var(--space-3);
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+  }
+  .hero__steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  .hero__steps > li {
+    margin: 0;
+  }
+  .hero__step {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-xs);
+    font: inherit;
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+    line-height: 1.25;
+    text-align: start;
+    cursor: pointer;
+    transition:
+      border-color var(--transition),
+      background var(--transition),
+      box-shadow var(--transition);
+  }
+  .hero__step:hover {
+    border-color: var(--color-border-strong);
+    background: var(--color-surface-raised);
+  }
+  .hero__step[aria-selected='true'] {
+    border-color: var(--color-accent);
+    background: var(--color-accent-muted);
+    box-shadow: var(--shadow-sm);
+  }
+  .hero__step:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+  .hero__step-num {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    inline-size: 2rem;
+    block-size: 2rem;
+    border-radius: var(--radius-full);
+    background: var(--gradient-primary);
+    color: #fff;
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-bold);
+  }
+  .hero__step-label {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .hero__preview {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    min-block-size: 15rem;
+  }
+  .hero__preview-caption {
+    margin: 0;
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--text-sm);
+    line-height: 1.45;
+    color: var(--color-text-secondary);
+    border-block-end: 1px solid var(--color-divider);
+    min-block-size: 3.75rem;
+  }
+  .hero__panels {
+    position: relative;
+    flex: 1;
+  }
+  .hero__panel {
+    padding: 0;
+  }
+  .hero__panel.is-active {
+    animation: heroPanelIn 0.28s var(--ease-out) forwards;
+  }
+  .hero__panel[hidden] {
+    display: none;
+  }
+  .hero__preview-chrome {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-4);
+    background: var(--color-surface-muted);
+    border-block-end: 1px solid var(--color-divider);
+  }
+  .hero__preview-dot {
+    inline-size: 8px;
+    block-size: 8px;
+    border-radius: var(--radius-full);
+    background: var(--color-border-strong);
+  }
+  .hero__preview-dot:nth-child(1) { background: var(--color-danger); opacity: 0.85; }
+  .hero__preview-dot:nth-child(2) { background: var(--color-warning); opacity: 0.85; }
+  .hero__preview-dot:nth-child(3) { background: var(--color-success); opacity: 0.85; }
+
+  .hero__board {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-5);
+  }
+  .hero__board-cols {
+    display: grid;
+    grid-template-columns: 1.4fr 0.5fr 0.8fr 0.6fr;
+    gap: var(--space-1);
+    margin-block-end: var(--space-2);
+  }
+  .hero__board-cols span {
+    block-size: 4px;
+    border-radius: var(--radius-sm);
+    background: var(--color-border);
+    opacity: 0.7;
+  }
+  .hero__board-row {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    block-size: 17px;
+    border-radius: var(--radius-sm);
+    background: var(--color-surface-subtle);
+  }
+  .hero__board-row--head {
+    block-size: 12px;
+    background: var(--gradient-primary);
+    opacity: 0.75;
+  }
+  .hero__board-row--muted {
+    opacity: 0.5;
+    inline-size: 88%;
+  }
+  .hero__board-row--short {
+    inline-size: 56%;
+  }
+  .hero__board-row--mid {
+    inline-size: 72%;
+  }
+  .hero__chip {
+    flex: 1;
+    block-size: 10px;
+    border-radius: var(--radius-sm);
+    max-inline-size: 28%;
+  }
+  .hero__chip--g { background: var(--color-success); }
+  .hero__chip--w { background: var(--color-warning); }
+  .hero__chip--v { background: var(--color-accent-light); }
+  .hero__chip--p { background: var(--color-brand-pale); }
+
+  /* ============================================================
+     Motion keyframes
+     ============================================================ */
+  @keyframes heroPulse {
+    0%   { box-shadow: 0 0 0 0 rgba(232, 93, 76, 0.5); }
+    70%  { box-shadow: 0 0 0 8px rgba(232, 93, 76, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(232, 93, 76, 0); }
+  }
+  @keyframes heroPanelIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: none; }
+  }
+  /* Entrance: transform only so content stays visible if animation is skipped */
+  .hero__copy > *,
+  .hero__viz {
+    transform: translateY(10px);
+    animation: heroReveal 0.7s var(--ease-out) forwards;
+  }
+  .hero__copy > :nth-child(1) { animation-delay: 0.05s; }
+  .hero__copy > :nth-child(2) { animation-delay: 0.12s; }
+  .hero__copy > :nth-child(3) { animation-delay: 0.19s; }
+  .hero__copy > :nth-child(4) { animation-delay: 0.24s; }
+  .hero__copy > :nth-child(5) { animation-delay: 0.3s; }
+  .hero__viz { animation-delay: 0.2s; }
+
+  @keyframes heroReveal {
+    to { transform: none; }
+  }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 900px) {
+    .hero__grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-7);
+    }
+    .hero__viz { order: -1; }
+    .hero__subhead { max-inline-size: none; }
+  }
+
+  /* Respect reduced motion (PRD §10, DESIGN.md). */
+  @media (prefers-reduced-motion: reduce) {
+    .hero__live-dot,
+    .hero__panel,
+    .hero__panel.is-active {
+      animation: none;
+    }
+    .hero__step {
+      transition: none;
+    }
+    .hero__copy > *,
+    .hero__viz {
+      animation: none;
+      transform: none;
+    }
+    .hero__cta-arrow,
+    .hero__cta:hover .hero__cta-arrow {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const roots = document.querySelectorAll<HTMLElement>('[data-hero-viz]');
+
+  roots.forEach((root) => {
+    const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[role="tab"][data-step]'));
+    const panels = Array.from(root.querySelectorAll<HTMLElement>('[data-panel]'));
+    const captionEl = root.querySelector<HTMLElement>('[data-hero-caption]');
+    let captions: string[] = [];
+    try {
+      captions = JSON.parse(root.dataset.captions ?? '[]');
+    } catch {
+      captions = [];
+    }
+
+    if (!tabs.length || !panels.length) return;
+
+    let active = 0;
+    let timer: ReturnType<typeof setInterval> | null = null;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const intervalMs = 4500;
+
+    const activate = (index: number, focusTab = false) => {
+      const i = ((index % tabs.length) + tabs.length) % tabs.length;
+      active = i;
+
+      tabs.forEach((tab, ti) => {
+        const on = ti === i;
+        tab.setAttribute('aria-selected', on ? 'true' : 'false');
+        tab.tabIndex = on ? 0 : -1;
+      });
+
+      panels.forEach((panel, pi) => {
+        const on = pi === i;
+        panel.hidden = !on;
+        panel.classList.toggle('is-active', on);
+      });
+
+      if (captionEl && captions[i]) captionEl.textContent = captions[i];
+      if (focusTab) tabs[i]?.focus();
+    };
+
+    const stopAuto = () => {
+      if (timer) {
+        clearInterval(timer);
+        timer = null;
+      }
+    };
+
+    const startAuto = () => {
+      stopAuto();
+      if (reduceMotion || tabs.length < 2) return;
+      timer = setInterval(() => activate(active + 1), intervalMs);
+    };
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => {
+        activate(i);
+        stopAuto();
+      });
+      tab.addEventListener('keydown', (e) => {
+        if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+        e.preventDefault();
+        const next =
+          e.key === 'ArrowDown'
+            ? (i + 1) % tabs.length
+            : (i - 1 + tabs.length) % tabs.length;
+        activate(next, true);
+        stopAuto();
+      });
+    });
+
+    root.addEventListener('mouseenter', stopAuto);
+    root.addEventListener('mouseleave', startAuto);
+    root.addEventListener('focusin', stopAuto);
+    root.addEventListener('focusout', (e) => {
+      if (!root.contains(e.relatedTarget as Node)) startAuto();
+    });
+
+    activate(0);
+    startAuto();
+  });
+</script>

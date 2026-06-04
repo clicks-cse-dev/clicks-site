@@ -1,0 +1,232 @@
+/**
+ * Product wordmark lockups — ported from MondayCMS CseLogo + MondayGIS ProductLogo.
+ * Scoped under .product-brand--cms / .product-brand--gis for per-product palette.
+ */
+.product-lockup {
+  --logo-scale: clamp(1.0625rem, 2.75vw, 1.375rem);
+  font-size: var(--logo-scale);
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 0.22em;
+  line-height: 1;
+  text-decoration: none;
+  user-select: none;
+  font-family: var(--font-display);
+}
+
+.product-lockup--compact {
+  --logo-scale: clamp(0.9375rem, 2.25vw, 1.25rem);
+  gap: 0.2em;
+}
+
+.product-lockup--hero {
+  --logo-scale: clamp(1.45rem, 4.5vw, 2rem);
+}
+
+.product-lockup--hero .product-lockup__mark {
+  height: 1.35em;
+}
+
+.product-lockup--card {
+  --logo-scale: clamp(1rem, 2.5vw, 1.35rem);
+  gap: 0.22em;
+  max-width: 100%;
+}
+
+.product-lockup--card .product-lockup__mark {
+  height: 1.4em;
+  width: auto;
+}
+
+.product-lockup--card .product-lockup__badge--wide {
+  font-size: 0.5em;
+}
+
+/* Hub cards: same horizontal lockup, slightly smaller so nothing wraps */
+.product-lockup--hub {
+  --logo-scale: clamp(0.8125rem, 1.65vw, 1.0625rem);
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 0.2em;
+  max-width: 100%;
+}
+
+.product-lockup--hub .product-lockup__mark {
+  height: 1.35em;
+  width: auto;
+  flex-shrink: 0;
+}
+
+.product-lockup--hub .product-lockup__badge {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.product-lockup--hub .product-lockup__badge--wide {
+  font-size: 0.48em;
+  letter-spacing: 0.01em;
+  padding-inline: 0.4em;
+}
+
+.product-lockup--hub .product-lockup__clicks,
+.product-lockup--hub .product-lockup__name {
+  flex-shrink: 0;
+}
+
+/* Sector detail product tiles — uniform lockup across all Clicks products */
+.product-lockup--sector {
+  --logo-scale: clamp(1.0625rem, 2.35vw, 1.3125rem);
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 0.22em;
+  max-width: 100%;
+}
+
+.product-lockup--sector .product-lockup__mark {
+  height: 1.28em;
+  width: 1.28em;
+  flex-shrink: 0;
+}
+
+.product-lockup--sector .product-lockup__badge {
+  font-size: 0.58em;
+  padding: 0.1em 0.42em;
+}
+
+.product-lockup--sector .product-lockup__badge--wide {
+  font-size: 0.5em;
+  padding-inline: 0.38em;
+}
+
+.product-lockup--sector .product-lockup__clicks,
+.product-lockup--sector .product-lockup__name {
+  flex-shrink: 0;
+}
+
+.product-lockup__badge--wide {
+  font-size: 0.52em;
+  letter-spacing: 0.01em;
+  padding-inline: 0.38em;
+}
+
+.product-lockup__mark {
+  flex-shrink: 0;
+  height: 1em;
+  width: auto;
+  display: block;
+}
+
+.product-lockup__clicks,
+.product-lockup__name {
+  font-size: 1em;
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.product-lockup__clicks {
+  color: var(--product-accent-light, var(--color-accent-light));
+}
+
+.product-lockup__name {
+  color: var(--product-brand-deep, var(--color-brand-deep));
+}
+
+.product-lockup__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  white-space: nowrap;
+  font-size: 0.62em;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  color: #fff;
+  background: var(--product-accent, var(--color-accent));
+  padding: 0.1em 0.44em;
+  border-radius: 0.3em;
+  line-height: 1;
+  box-sizing: border-box;
+}
+
+/* Monday CMS — indigo bridge (MondayCMS lane B) */
+.product-brand--cms {
+  --product-accent: #5246d9;
+  --product-accent-light: #6d63e8;
+  --product-brand-deep: #3730a3;
+  --product-brand-node: #6366f1;
+  --product-brand-line: #8b85f0;
+  --product-brand-pale: #c4b5fd;
+  --product-brand-spark: #e85d4c;
+  --product-accent-soft: rgba(82, 70, 217, 0.14);
+}
+
+/* Monday GIS — sage teal (MondayGIS / Tourism 360) */
+.product-brand--gis {
+  --product-accent: #3d8b7e;
+  --product-accent-light: #6ec4b8;
+  --product-brand-deep: #2d6a62;
+  --product-brand-node: #4a9e8e;
+  --product-brand-line: #8ec9bc;
+  --product-brand-pale: #c5e8df;
+  --product-brand-spark: #5b9aa8;
+  --product-accent-soft: rgba(61, 139, 126, 0.12);
+}
+
+/* Clicks umbrella services */
+.product-brand--flowgram {
+  --product-accent: #5246d9;
+  --product-accent-light: #7b5bf0;
+  --product-brand-deep: #3411b0;
+  --product-brand-node: #6366f1;
+  --product-brand-line: #8b85f0;
+  --product-brand-pale: #c4b5fd;
+  --product-brand-spark: #e85d4c;
+  --product-accent-soft: rgba(82, 70, 217, 0.12);
+}
+
+.product-brand--tsm {
+  --product-accent: #475569;
+  --product-accent-light: #64748b;
+  --product-brand-deep: #1e293b;
+  --product-brand-node: #64748b;
+  --product-brand-line: #94a3b8;
+  --product-brand-pale: #cbd5e1;
+  --product-brand-spark: #5246d9;
+  --product-accent-soft: rgba(71, 85, 105, 0.12);
+}
+
+.product-brand--crm {
+  --product-accent: #e85d4c;
+  --product-accent-light: #f08a7d;
+  --product-brand-deep: #9f1239;
+  --product-brand-node: #e85d4c;
+  --product-brand-line: #f4a5a0;
+  --product-brand-pale: #ffe4e6;
+  --product-brand-spark: #5246d9;
+  --product-accent-soft: rgba(232, 93, 76, 0.12);
+}
+
+.product-brand--solutions {
+  --product-accent: #5246d9;
+  --product-accent-light: #7b5bf0;
+  --product-brand-deep: #4316e0;
+  --product-brand-node: #6366f1;
+  --product-brand-line: #a89bf5;
+  --product-brand-pale: #ddd6fe;
+  --product-brand-spark: #e85d4c;
+  --product-accent-soft: rgba(82, 70, 217, 0.12);
+}
+
+.product-brand--ready {
+  --product-accent: #5246d9;
+  --product-accent-light: #7b5bf0;
+  --product-brand-deep: #4316e0;
+  --product-brand-node: #7b5bf0;
+  --product-brand-line: #a89bf5;
+  --product-brand-pale: #ddd6fe;
+  --product-brand-spark: #d97706;
+  --product-accent-soft: rgba(82, 70, 217, 0.1);
+}

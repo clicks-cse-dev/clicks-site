@@ -1,0 +1,13 @@
+---
+import SectorDetailPage from '../../../components/SectorDetailPage.astro';
+import { SECTOR_PAGE_DATA, getSectorPage } from '../../../data/sectorPages';
+
+export function getStaticPaths() {
+  return SECTOR_PAGE_DATA.map((sector) => ({ params: { slug: sector.slug } }));
+}
+
+const locale = 'en' as const;
+const sector = getSectorPage(Astro.params.slug!)!;
+---
+
+<SectorDetailPage locale={locale} sector={sector} />

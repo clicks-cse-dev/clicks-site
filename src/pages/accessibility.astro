@@ -1,0 +1,83 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { EMAIL_SAPIR, PHONE, PHONE_E164 } from '../config';
+
+const locale = 'he' as const;
+
+const t = {
+  title: 'הצהרת נגישות',
+  description: 'הצהרת נגישות לאתר קליקס — תקן ישראלי 5568 ו-WCAG 2.1 AA.',
+  h1: 'הצהרת נגישות',
+  updated: 'עודכן לאחרונה: יוני 2026',
+  sections: [
+    {
+      h: 'מחויבות',
+      p: 'קליקס — מערכות הפעלה אסטרטגיות (Clicks Strategic Ecosystems) מחויבת להנגיש את האתר לאנשים עם מוגבלות, בהתאם לתקן הישראלי (ת"י 5568) המבוסס על WCAG 2.1 ברמת AA.',
+    },
+    {
+      h: 'מה נעשה באתר',
+      p: 'האתר נבנה עברית-first עם RTL מקורי, ניווט מקלדת, קישור "דלג לתוכן", ניגודיות צבעים לפי מערכת העיצוב, תמיכה ב-prefers-reduced-motion, ומבנה סמנטי (כותרות, אזורי landmark).',
+    },
+    {
+      h: 'יצירת קשר בנושא נגישות',
+      p: `לפניות, תקלות או הצעות לשיפור — אפשר לפנות אלינו:`,
+    },
+  ],
+} as const;
+---
+
+<Layout locale={locale} title={t.title} description={t.description}>
+  <article class="section page legal">
+    <div class="container page__narrow">
+      <h1 class="page__title">{t.h1}</h1>
+      <p class="legal__meta">{t.updated}</p>
+      {t.sections.map((s) => (
+        <section class="legal__block">
+          <h2>{s.h}</h2>
+          <p>{s.p}</p>
+        </section>
+      ))}
+      <ul class="legal__contact">
+        <li><a href={`mailto:${EMAIL_SAPIR}`}>{EMAIL_SAPIR}</a></li>
+        <li><a href={`tel:${PHONE_E164}`}>{PHONE}</a></li>
+      </ul>
+    </div>
+  </article>
+</Layout>
+
+<style>
+  .page__narrow {
+    max-width: var(--content-narrow, 720px);
+  }
+  .page__title {
+    margin: 0 0 var(--space-3);
+    font-size: var(--text-3xl);
+    font-weight: var(--font-weight-bold);
+  }
+  .legal__meta {
+    margin: 0 0 var(--space-8);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+  .legal__block {
+    margin-block-end: var(--space-6);
+  }
+  .legal__block h2 {
+    margin: 0 0 var(--space-3);
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-semibold);
+  }
+  .legal__block p {
+    margin: 0;
+    color: var(--color-text-secondary);
+    line-height: 1.65;
+  }
+  .legal__contact {
+    list-style: none;
+    margin: var(--space-6) 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+</style>

@@ -1,0 +1,11 @@
+---
+import { BLOG_POSTS } from '../../data/blogPosts';
+import { localizedPath } from '../../i18n';
+
+export function getStaticPaths() {
+  return BLOG_POSTS.map((post) => ({ params: { slug: post.slug } }));
+}
+
+const { slug } = Astro.params;
+return Astro.redirect(localizedPath(`/cases/${slug}`, 'he'), 301);
+---

@@ -1,0 +1,12 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SolutionsHubPage from '../../components/SolutionsHubPage.astro';
+import { SOLUTIONS_HUB_COPY } from '../../data/solutionsHub';
+
+const locale = 'en' as const;
+const t = SOLUTIONS_HUB_COPY[locale];
+---
+
+<Layout locale={locale} title={t.title} description={t.description}>
+  <SolutionsHubPage locale={locale} />
+</Layout>

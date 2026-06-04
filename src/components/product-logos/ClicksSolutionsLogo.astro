@@ -1,0 +1,38 @@
+---
+import SolutionsMark from './SolutionsMark.astro';
+import './ProductLockup.css';
+
+interface Props {
+  variant?: 'full' | 'compact' | 'card' | 'hub' | 'mark' | 'sector';
+  class?: string;
+  decorative?: boolean;
+}
+const { variant = 'full', class: className = '', decorative = false } = Astro.props;
+const showWordmark = variant !== 'mark';
+const label = 'Clicks Solutions';
+const lockupClass = [
+  'product-lockup',
+  'product-brand--solutions',
+  variant === 'compact' && 'product-lockup--compact',
+  variant === 'card' && 'product-lockup--card',
+  variant === 'hub' && 'product-lockup--hub',
+  variant === 'sector' && 'product-lockup--sector',
+  className,
+]
+  .filter(Boolean)
+  .join(' ');
+---
+
+<div
+  class={lockupClass}
+  dir="ltr"
+  {...decorative ? { 'aria-hidden': true } : { 'aria-label': label }}
+>
+  <SolutionsMark class="product-lockup__mark" />
+  {showWordmark && (
+    <>
+      <span class="product-lockup__clicks">Clicks</span>
+      <span class="product-lockup__badge">Solutions</span>
+    </>
+  )}
+</div>

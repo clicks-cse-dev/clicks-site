@@ -1,0 +1,25 @@
+---
+import type { ProductLogoKey } from '../../data/productPages';
+import ClicksSolutionsLogo from './ClicksSolutionsLogo.astro';
+import MondayCmsLogo from './MondayCmsLogo.astro';
+import MondayGisLogo from './MondayGisLogo.astro';
+import FlowGramLogo from './FlowGramLogo.astro';
+import TsmLogo from './TsmLogo.astro';
+import CrmLogo from './CrmLogo.astro';
+import ReadyLogo from './ReadyLogo.astro';
+
+interface Props {
+  logo: ProductLogoKey;
+}
+
+const { logo } = Astro.props;
+const variant = 'hero' as const;
+---
+
+{logo === 'flowgram' && <FlowGramLogo variant={variant} />}
+{logo === 'tsm' && <TsmLogo variant={variant} />}
+{logo === 'cms' && <MondayCmsLogo variant={variant} />}
+{logo === 'gis' && <MondayGisLogo variant={variant} />}
+{logo === 'crm' && <CrmLogo variant={variant} />}
+{logo === 'solutions' && <ClicksSolutionsLogo variant={variant} />}
+{logo === 'ready' && <ReadyLogo variant={variant} />}

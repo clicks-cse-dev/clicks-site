@@ -1,0 +1,78 @@
+---
+/** Sector icon marks — shared with BySector cards */
+import type { SectorIconKey } from './types';
+
+interface Props {
+  icon: SectorIconKey;
+  class?: string;
+}
+
+const { icon, class: className = '' } = Astro.props;
+---
+
+<svg
+  class={className}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+>
+  {
+    icon === 'gov' && (
+      <>
+        <path d="M12 3 3 8h18z" />
+        <path d="M5 10v7M9.5 10v7M14.5 10v7M19 10v7" />
+        <path d="M3.5 20h17" />
+      </>
+    )
+  }
+  {
+    icon === 'municipality' && (
+      <>
+        <path d="M4 21V9l6-4 6 4v12" />
+        <path d="M16 21V11l4 2.5V21" />
+        <path d="M3 21h18" />
+        <path d="M8 13h2M8 17h2" />
+      </>
+    )
+  }
+  {
+    icon === 'cluster' && (
+      <>
+        <circle cx="6" cy="6" r="2.4" />
+        <circle cx="18" cy="7" r="2.4" />
+        <circle cx="12" cy="18" r="2.4" />
+        <path d="M7.7 7.6 10.6 16M16.6 9 13.2 16.4M8.3 6.4 15.6 6.7" />
+      </>
+    )
+  }
+  {
+    icon === 'nonprofit' && (
+      <path d="M12 20.5S4 15.5 4 9.8A4 4 0 0 1 12 7a4 4 0 0 1 8 2.8c0 5.7-8 10.7-8 10.7Z" />
+    )
+  }
+  {
+    icon === 'manufacturing' && (
+      <>
+        <path d="M3 21h18" />
+        <path d="M5 21V9l4-3 4 3v12" />
+        <path d="M13 21V7l4-2.5V21" />
+        <path d="M9 12h2M9 16h2" />
+        <circle cx="17" cy="11" r="2" />
+      </>
+    )
+  }
+  {
+    icon === 'hitech' && (
+      <>
+        <rect x="4" y="4" width="16" height="16" rx="3" />
+        <path d="M8 8h8M8 12h8M8 16h5" />
+        <circle cx="17" cy="7" r="1.2" fill="currentColor" stroke="none" />
+        <path d="M17 8.5v3" />
+      </>
+    )
+  }
+</svg>

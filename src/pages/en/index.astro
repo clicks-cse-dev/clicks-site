@@ -1,0 +1,37 @@
+---
+/**
+ * Home — English (LTR). PRD §7 section order.
+ */
+import Layout from '../../layouts/Layout.astro';
+import Hero from '../../components/sections/Hero.astro';
+import TrustBand from '../../components/sections/TrustBand.astro';
+import Positioning from '../../components/sections/Positioning.astro';
+import Methodology from '../../components/sections/Methodology.astro';
+import ProductsFamily from '../../components/sections/ProductsFamily.astro';
+import ShowProduct from '../../components/sections/ShowProduct.astro';
+import BySector from '../../components/sections/BySector.astro';
+import CaseStudy from '../../components/sections/CaseStudy.astro';
+import FoundersTeaser from '../../components/sections/FoundersTeaser.astro';
+import ProcurementBand from '../../components/sections/ProcurementBand.astro';
+import ClosingCTA from '../../components/sections/ClosingCTA.astro';
+
+const locale = 'en' as const;
+---
+
+<Layout
+  locale={locale}
+  title="Strategic ecosystems on monday.com"
+  description="Clicks Strategic Ecosystems — we design, build and maintain operating ecosystems on monday.com for public, civic, manufacturing and high-tech teams in Israel."
+>
+  <Hero locale={locale} />
+  <TrustBand locale={locale} />
+  <Positioning locale={locale} />
+  <Methodology locale={locale} />
+  <ProductsFamily locale={locale} />
+  <BySector locale={locale} />
+  <ShowProduct locale={locale} />
+  <CaseStudy locale={locale} />
+  <FoundersTeaser locale={locale} />
+  <ProcurementBand locale={locale} />
+  <ClosingCTA locale={locale} />
+</Layout>

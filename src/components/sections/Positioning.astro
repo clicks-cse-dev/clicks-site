@@ -1,0 +1,441 @@
+---
+/**
+ * Positioning / "what we do" (PRD §7.4, §3).
+ * Bridges strategy <-> process <-> technology; the strategic-ecosystem metaphor
+ * in plain language + the "everyday in one click" outcome framing.
+ * Contract: `locale` prop, inline { he, en } content, scoped styles, tokens only,
+ * RTL via logical properties, reduced-motion respected (BUILD_CONTRACT §2/§6).
+ */
+import type { Locale } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+
+const content = {
+  he: {
+    title: 'מגשרים בין אסטרטגיה, תהליך וטכנולוגיה — בנקודת ההשפעה',
+    lead: 'רוב הארגונים תקועים בפער שבין החזון לבין מה שקורה בפועל ביום־יום: אסטרטגיה במצגת, תהליכים בראש של מישהו, וטכנולוגיה שאף אחד לא ממש מתחזק. אנחנו סוגרים את הפער הזה — ובונים ממנו מערכת חיה.',
+    bridgeLabel: 'מאסטרטגיה ועד ביצוע, כשהכול מחובר:',
+    pillars: [
+      {
+        key: 'strategy',
+        label: 'אסטרטגיה',
+        body: 'מבינים לאן הארגון רוצה להגיע, ומתרגמים את זה ליעדים מדידים — לא לסיסמאות.',
+      },
+      {
+        key: 'process',
+        label: 'תהליך',
+        body: 'מהנדסים את התהליכים מקצה לקצה עם FlowGram: זרימות, אוטומציות ואינטגרציות עמוקות.',
+      },
+      {
+        key: 'technology',
+        label: 'טכנולוגיה',
+        body: 'בונים הכול על monday.com — ומתחזקים את זה לאורך זמן עם Clicks TSM.',
+      },
+    ],
+    metaphorTitle: 'מה זאת "מערכת הפעלה אסטרטגית"?',
+    metaphorBody: 'במקום אוסף של כלים מנותקים, אנחנו מרכיבים אקוסיסטם אחד שבו האסטרטגיה, התהליכים, הנתונים והאנשים מדברים אותה שפה. כמו אורגניזם — כל חלק יודע מה תפקידו, והמערכת כולה מתעדכנת וצומחת עם הארגון.',
+    outcomeKicker: 'השורה התחתונה',
+    outcomeLead: 'היום־יום שלכם —',
+    outcomeHighlight: 'בקליק אחד.',
+    outcomeBody: 'בקשה שמאושרת לפני שהקפה התקרר. דוח שמתעדכן לבד. פנייה של תושב שמנותבת לאדם הנכון מעצמה. זה לא קסם — זו מערכת שתוכננה נכון.',
+  },
+  en: {
+    title: 'We bridge strategy, process and technology — at the point of impact',
+    lead: 'Most organizations are stuck in the gap between the vision and what actually happens day to day: strategy lives in a slide deck, processes live in someone’s head, and technology no one really maintains. We close that gap — and turn it into a living system.',
+    bridgeLabel: 'From strategy to execution, with everything connected:',
+    pillars: [
+      {
+        key: 'strategy',
+        label: 'Strategy',
+        body: 'We understand where the organization is headed and translate it into measurable goals — not slogans.',
+      },
+      {
+        key: 'process',
+        label: 'Process',
+        body: 'We engineer your processes end to end with FlowGram: workflows, automations and deep integrations.',
+      },
+      {
+        key: 'technology',
+        label: 'Technology',
+        body: 'We build it all on monday.com — and keep it running over time with Clicks TSM.',
+      },
+    ],
+    metaphorTitle: 'What is a "strategic ecosystem"?',
+    metaphorBody: 'Instead of a pile of disconnected tools, we assemble one ecosystem where strategy, processes, data and people speak the same language. Like an organism — every part knows its role, and the whole system updates and grows with your organization.',
+    outcomeKicker: 'The bottom line',
+    outcomeLead: 'Your everyday —',
+    outcomeHighlight: 'in one click.',
+    outcomeBody: 'A request approved before the coffee gets cold. A report that updates itself. A resident’s inquiry routed to the right person automatically. It’s not magic — it’s a system designed right.',
+  },
+} as const;
+
+const t = content[locale];
+---
+
+<section class="section positioning" aria-labelledby="positioning-title">
+  <div class="container positioning__inner">
+    <header class="positioning__head reveal">
+      <h2 id="positioning-title" class="positioning__title">{t.title}</h2>
+      <p class="positioning__lead">{t.lead}</p>
+    </header>
+
+    <div class="positioning__bridge reveal" role="group" aria-label={t.bridgeLabel}>
+      <p class="positioning__bridge-label">{t.bridgeLabel}</p>
+      <ol class="positioning__pillars">
+        {
+          t.pillars.map((p, i) => (
+            <li class="pillar" data-key={p.key}>
+              <span class="pillar__mark" aria-hidden="true">
+                {p.key === 'strategy' && (
+                  // Compass / target — direction & goals
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="9" />
+                    <polygon points="14.5 9.5 11 11 9.5 14.5 13 13 14.5 9.5" fill="currentColor" stroke="none" />
+                  </svg>
+                )}
+                {p.key === 'process' && (
+                  // Connected flow nodes — process engineering
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="5" cy="6" r="2.2" />
+                    <circle cx="19" cy="6" r="2.2" />
+                    <circle cx="12" cy="18" r="2.2" />
+                    <path d="M7 7.2 10.6 16M17 7.2 13.4 16M7.2 6h9.6" />
+                  </svg>
+                )}
+                {p.key === 'technology' && (
+                  // Stacked layers / board — built & maintained tech
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3.5" y="4" width="17" height="6" rx="1.6" />
+                    <rect x="3.5" y="14" width="17" height="6" rx="1.6" />
+                    <path d="M7 7h2M7 17h2" />
+                  </svg>
+                )}
+              </span>
+              <h3 class="pillar__label">{p.label}</h3>
+              <p class="pillar__body">{p.body}</p>
+              {i < t.pillars.length - 1 && (
+                <span class="pillar__link" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path class="pillar__link-arrow" d="M5 12h13M13 7l5 5-5 5" />
+                  </svg>
+                </span>
+              )}
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+
+    <div class="positioning__split">
+      <div class="positioning__metaphor reveal">
+        <span class="positioning__ecosystem" aria-hidden="true">
+          <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <!-- connected-nodes "ecosystem" motif (PRD §5 imagery) -->
+            <line x1="60" y1="60" x2="60" y2="20" stroke-width="1.4" opacity="0.55" />
+            <line x1="60" y1="60" x2="95" y2="42" stroke-width="1.4" opacity="0.55" />
+            <line x1="60" y1="60" x2="95" y2="82" stroke-width="1.4" opacity="0.55" />
+            <line x1="60" y1="60" x2="60" y2="100" stroke-width="1.4" opacity="0.55" />
+            <line x1="60" y1="60" x2="25" y2="82" stroke-width="1.4" opacity="0.55" />
+            <line x1="60" y1="60" x2="25" y2="42" stroke-width="1.4" opacity="0.55" />
+            <circle cx="60" cy="20" r="5" stroke-width="1.6" />
+            <circle cx="95" cy="42" r="5" stroke-width="1.6" />
+            <circle cx="95" cy="82" r="5" stroke-width="1.6" />
+            <circle cx="60" cy="100" r="5" stroke-width="1.6" />
+            <circle cx="25" cy="82" r="5" stroke-width="1.6" />
+            <circle cx="25" cy="42" r="5" stroke-width="1.6" />
+            <circle class="positioning__ecosystem-core" cx="60" cy="60" r="8" fill="currentColor" stroke="none" />
+          </svg>
+        </span>
+        <h3 class="positioning__metaphor-title">{t.metaphorTitle}</h3>
+        <p class="positioning__metaphor-body">{t.metaphorBody}</p>
+      </div>
+
+      <div class="positioning__outcome reveal">
+        <p class="positioning__outcome-kicker">{t.outcomeKicker}</p>
+        <p class="positioning__outcome-headline">
+          <span class="positioning__outcome-lead">{t.outcomeLead}</span>
+          <span class="positioning__outcome-highlight">{t.outcomeHighlight}</span>
+        </p>
+        <p class="positioning__outcome-body">{t.outcomeBody}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .positioning__inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  /* ---- Head ---- */
+  .positioning__head {
+    max-width: var(--panel-max-wide);
+  }
+
+  .positioning__title {
+    margin-block-start: var(--space-3);
+    font-size: var(--text-3xl);
+    line-height: var(--line-height-tight);
+    letter-spacing: -0.01em;
+  }
+
+  .positioning__lead {
+    margin-block-start: var(--space-4);
+    font-size: var(--text-md);
+    line-height: var(--line-height-relaxed);
+    color: var(--color-text-secondary);
+  }
+
+  /* ---- Bridge: strategy -> process -> technology ---- */
+  .positioning__bridge-label {
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-muted);
+    margin-block-end: var(--space-4);
+  }
+
+  .positioning__pillars {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-5);
+  }
+
+  .pillar {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+
+  .pillar__mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 44px;
+    block-size: 44px;
+    border-radius: var(--radius-md);
+    background: var(--color-accent-soft);
+    color: var(--color-accent);
+    margin-block-end: var(--space-2);
+  }
+
+  .pillar__mark svg {
+    inline-size: 24px;
+    block-size: 24px;
+  }
+
+  .pillar__label {
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .pillar__body {
+    font-size: var(--text-base);
+    line-height: var(--line-height-normal);
+    color: var(--color-text-secondary);
+  }
+
+  /* Connector arrow sits in the gutter after each pillar (mirrors via logical inset) */
+  .pillar__link {
+    position: absolute;
+    inset-block-start: 10px;
+    inset-inline-end: calc(var(--space-5) * -0.5);
+    transform: translateX(50%);
+    color: var(--color-brand-line);
+    display: inline-flex;
+  }
+
+  .pillar__link svg {
+    inline-size: 22px;
+    block-size: 22px;
+  }
+
+  /* RTL: flip the arrow so it points along the reading direction */
+  :global([dir='rtl']) .pillar__link svg {
+    transform: scaleX(-1);
+  }
+
+  /* ---- Split: ecosystem metaphor + outcome ---- */
+  .positioning__split {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: var(--space-5);
+    align-items: stretch;
+  }
+
+  .positioning__metaphor,
+  .positioning__outcome {
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .positioning__ecosystem {
+    display: inline-flex;
+    color: var(--color-accent);
+    margin-block-end: var(--space-4);
+  }
+
+  .positioning__ecosystem svg {
+    inline-size: 72px;
+    block-size: 72px;
+  }
+
+  .positioning__ecosystem-core {
+    color: var(--color-accent);
+  }
+
+  .positioning__metaphor-title {
+    font-size: var(--text-xl);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .positioning__metaphor-body {
+    margin-block-start: var(--space-3);
+    font-size: var(--text-base);
+    line-height: var(--line-height-relaxed);
+    color: var(--color-text-secondary);
+  }
+
+  /* Outcome panel — the single signature gradient nod in this section */
+  .positioning__outcome {
+    background: var(--gradient-primary);
+    border-color: transparent;
+    box-shadow: var(--shadow-accent);
+    justify-content: center;
+    color: #fff;
+  }
+
+  .positioning__outcome-kicker {
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.78);
+  }
+
+  .positioning__outcome-headline {
+    margin-block-start: var(--space-3);
+    font-family: var(--font-display);
+    font-weight: var(--font-weight-extrabold);
+    font-size: var(--text-3xl);
+    line-height: var(--line-height-tight);
+    letter-spacing: -0.015em;
+  }
+
+  .positioning__outcome-lead {
+    display: block;
+    color: rgba(255, 255, 255, 0.88);
+  }
+
+  /* Solid white, NOT gradient-on-text (DESIGN.md ban) */
+  .positioning__outcome-highlight {
+    display: block;
+    color: #fff;
+  }
+
+  .positioning__outcome-body {
+    margin-block-start: var(--space-4);
+    font-size: var(--text-md);
+    line-height: var(--line-height-relaxed);
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  /* ---- Scroll-reveal (tasteful; disabled for reduced-motion) ---- */
+  .reveal {
+    transform: translateY(16px);
+    transition: transform 0.5s var(--ease-out);
+  }
+
+  .reveal.is-visible {
+    transform: none;
+  }
+
+  .positioning__ecosystem-core {
+    transition: transform 0.6s var(--ease-out);
+  }
+
+  .positioning__metaphor:hover .positioning__ecosystem-core {
+    transform: scale(1.12);
+    transform-origin: 60px 60px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    .positioning__metaphor:hover .positioning__ecosystem-core {
+      transform: none;
+    }
+  }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 900px) {
+    .positioning__split {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .positioning__pillars {
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
+    /* Stacked: turn connectors downward */
+    .pillar__link {
+      inset-block-start: auto;
+      inset-block-end: calc(var(--space-6) * -0.5);
+      inset-inline-start: 22px;
+      inset-inline-end: auto;
+      transform: translateY(50%) rotate(90deg);
+    }
+    :global([dir='rtl']) .pillar__link svg {
+      transform: none;
+    }
+    .positioning__title {
+      font-size: var(--text-2xl);
+    }
+    .positioning__outcome-headline {
+      font-size: var(--text-2xl);
+    }
+  }
+</style>
+
+<script>
+  // Tasteful scroll-reveal. Reduced-motion users see everything immediately
+  // (the CSS media query neutralizes the transition + initial offset).
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const els = document.querySelectorAll<HTMLElement>('.positioning .reveal');
+
+  if (prefersReduced || !('IntersectionObserver' in window)) {
+    els.forEach((el) => el.classList.add('is-visible'));
+  } else {
+    const io = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            obs.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -10% 0px' },
+    );
+    els.forEach((el) => io.observe(el));
+  }
+</script>

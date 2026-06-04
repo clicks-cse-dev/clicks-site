@@ -1,0 +1,1990 @@
+/**
+ * Interactive product demos (ported from MondayCMS UiMock + MondayGIS docs patterns).
+ */
+.product-demo {
+  --demo-accent: var(--color-accent);
+  --demo-accent-soft: var(--color-accent-soft);
+  margin-block-start: var(--space-2);
+}
+
+.product-demo.product-brand--cms {
+  --demo-accent: #5246d9;
+  --demo-accent-soft: rgba(82, 70, 217, 0.12);
+}
+
+.product-demo.product-brand--gis {
+  --demo-accent: #3d8b7e;
+  --demo-accent-soft: rgba(61, 139, 126, 0.14);
+}
+
+.product-demo.product-brand--flowgram {
+  --demo-accent: #5246d9;
+  --demo-accent-soft: rgba(82, 70, 217, 0.12);
+}
+
+.product-demo.product-brand--tsm {
+  --demo-accent: #475569;
+  --demo-accent-soft: rgba(71, 85, 105, 0.12);
+}
+
+.product-demo.product-brand--crm {
+  --demo-accent: #e85d4c;
+  --demo-accent-soft: rgba(232, 93, 76, 0.12);
+}
+
+.product-demo.product-brand--ready {
+  --demo-accent: #5246d9;
+  --demo-accent-soft: rgba(82, 70, 217, 0.12);
+}
+
+.product-demo__note {
+  margin: 0 0 var(--space-5);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.product-demo__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-block-end: var(--space-4);
+}
+
+.product-demo__tab {
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  background: var(--color-surface-raised);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition:
+    background var(--transition),
+    border-color var(--transition),
+    color var(--transition);
+}
+
+.product-demo__tab[aria-selected='true'] {
+  background: var(--demo-accent-soft);
+  border-color: color-mix(in srgb, var(--demo-accent) 35%, var(--color-border));
+  color: var(--demo-accent);
+}
+
+.product-demo__panel[hidden] {
+  display: none;
+}
+
+.product-demo__frame {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: var(--color-surface-raised);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.product-demo__chrome {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-block-end: 1px solid var(--color-divider);
+  background: var(--color-surface-muted);
+}
+
+.product-demo__dot {
+  inline-size: 9px;
+  block-size: 9px;
+  border-radius: var(--radius-full);
+  background: var(--color-border-strong);
+}
+
+.product-demo__dot--a {
+  background: #ff6b6b;
+}
+.product-demo__dot--b {
+  background: #f4c150;
+}
+.product-demo__dot--c {
+  background: #5bd778;
+}
+
+.product-demo__window-title {
+  margin-inline-start: var(--space-2);
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-muted);
+}
+
+.product-demo__body {
+  padding: var(--space-5);
+  font-size: var(--text-sm);
+  line-height: var(--line-height-relaxed);
+}
+
+.product-demo__caption {
+  margin-block-start: var(--space-4);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  text-align: center;
+  text-wrap: pretty;
+}
+
+.product-demo__live {
+  min-height: 1.25rem;
+  margin: 0 0 var(--space-4);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+/* ---- CMS mock (UiMock-inspired) ---- */
+.cms-mock__title {
+  margin: 0 0 4px;
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-bold);
+}
+
+.cms-mock__sub {
+  margin: 0 0 var(--space-4);
+  color: var(--color-text-muted);
+}
+
+.cms-mock__section {
+  margin-block-end: var(--space-4);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-muted);
+}
+
+.cms-mock__section-label {
+  margin: 0 0 var(--space-3);
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.cms-mock__choice {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+  width: 100%;
+  margin-block-end: var(--space-3);
+  padding: 0;
+  border: none;
+  background: none;
+  text-align: inherit;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.cms-mock__choice:last-child {
+  margin-block-end: 0;
+}
+
+.cms-mock__radio {
+  flex-shrink: 0;
+  inline-size: 16px;
+  block-size: 16px;
+  margin-block-start: 2px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--color-border-strong);
+  background: transparent;
+}
+
+.cms-mock__choice.is-selected .cms-mock__radio {
+  border-color: var(--demo-accent);
+  background: var(--demo-accent);
+  box-shadow: inset 0 0 0 3px var(--color-surface-raised);
+}
+
+.cms-mock__choice strong {
+  display: block;
+  font-weight: var(--font-weight-semibold);
+}
+
+.cms-mock__hint {
+  display: block;
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin-block-start: 2px;
+}
+
+.cms-mock__sync-btn {
+  display: block;
+  width: 100%;
+  margin-block-start: var(--space-4);
+  padding: var(--space-4);
+  border: none;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(165deg, #14b8a6 0%, var(--demo-accent) 100%);
+  color: #fff;
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+}
+
+.cms-mock__progress-track {
+  block-size: 8px;
+  margin-block: var(--space-4);
+  border-radius: var(--radius-full);
+  background: var(--color-surface-muted);
+  overflow: hidden;
+}
+
+.cms-mock__progress-fill {
+  block-size: 100%;
+  inline-size: 25%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--demo-accent), #14b8a6);
+  transition: inline-size 0.6s var(--ease-out);
+}
+
+.cms-mock__progress-fill.is-running {
+  inline-size: 72%;
+}
+
+.cms-mock__progress-fill.is-done {
+  inline-size: 100%;
+}
+
+.cms-mock__dash-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-block-end: var(--space-4);
+  margin-block-end: var(--space-4);
+  border-block-end: 1px solid var(--color-divider);
+}
+
+.cms-mock__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  background: color-mix(in srgb, #059669 12%, var(--color-surface));
+  border: 1px solid color-mix(in srgb, #059669 28%, transparent);
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-semibold);
+  color: #047857;
+}
+
+.cms-mock__badge-dot {
+  inline-size: 8px;
+  block-size: 8px;
+  border-radius: var(--radius-full);
+  background: #059669;
+}
+
+.cms-mock__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  margin-block-end: var(--space-2);
+  font-size: var(--text-sm);
+}
+
+.cms-mock__row-label {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-muted);
+}
+
+/* ---- GIS: ArcGIS sync integration mock ---- */
+.gis-sync-mock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.gis-sync-mock__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--demo-accent-soft) 70%, var(--color-surface-raised)) 0%,
+    var(--color-surface-raised) 100%
+  );
+  border: 1px solid var(--color-border);
+}
+
+.gis-sync-mock__title {
+  margin: 0;
+  font-size: var(--text-md);
+  font-weight: var(--font-weight-bold);
+  text-align: center;
+}
+
+.gis-sync-mock__steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+
+@media (min-width: 540px) {
+  .gis-sync-mock__steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.gis-sync-mock__steps li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-border);
+  text-align: start;
+}
+
+.gis-sync-mock__step-num {
+  flex: none;
+  display: grid;
+  place-items: center;
+  inline-size: 1.5rem;
+  block-size: 1.5rem;
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-bold);
+  color: #fff;
+  background: var(--demo-accent);
+}
+
+.gis-sync-mock__step-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  font-size: var(--text-sm);
+}
+
+.gis-sync-mock__step-body strong {
+  font-weight: var(--font-weight-semibold);
+}
+
+.gis-sync-mock__step-body span {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.gis-sync-mock__grid {
+  display: grid;
+  gap: var(--space-3);
+}
+
+@media (min-width: 640px) {
+  .gis-sync-mock__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.gis-sync-mock__card {
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.gis-sync-mock__card h4 {
+  margin: 0;
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-bold);
+}
+
+.gis-sync-mock__hint {
+  margin: 0;
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  line-height: var(--line-height-normal);
+}
+
+.gis-sync-mock__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.gis-sync-mock__field span {
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-muted);
+}
+
+.gis-sync-mock__field input {
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-family: ui-monospace, monospace;
+  font-size: var(--text-xs);
+  color: var(--color-text);
+  background: var(--color-surface-raised);
+}
+
+.gis-sync-mock__field--narrow input {
+  max-width: 5rem;
+  text-align: center;
+}
+
+.gis-sync-mock__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.gis-sync-mock__connected {
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-semibold);
+  color: #065f46;
+  background: #d1fae5;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-full);
+}
+
+.gis-sync-mock__ghost {
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+  font-size: var(--text-xs);
+  color: var(--color-danger);
+  cursor: pointer;
+}
+
+.gis-sync-mock__toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  cursor: pointer;
+  font-size: var(--text-sm);
+}
+
+.gis-sync-mock__toggle input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.gis-sync-mock__toggle-ui {
+  position: relative;
+  inline-size: 2.5rem;
+  block-size: 1.375rem;
+  flex: none;
+  border-radius: 999px;
+  background: var(--color-border-strong);
+  transition: background var(--transition);
+}
+
+.gis-sync-mock__toggle-ui::before {
+  content: '';
+  position: absolute;
+  inset-block-start: 3px;
+  inset-inline-end: 3px;
+  inline-size: 1rem;
+  block-size: 1rem;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: var(--shadow-xs);
+  transition: transform var(--transition);
+}
+
+.gis-sync-mock__toggle input:checked + .gis-sync-mock__toggle-ui {
+  background: var(--demo-accent);
+}
+
+.gis-sync-mock__toggle input:checked + .gis-sync-mock__toggle-ui::before {
+  transform: translateX(-1.125rem);
+}
+
+:global([dir='rtl']) .gis-sync-mock__toggle input:checked + .gis-sync-mock__toggle-ui::before {
+  transform: translateX(1.125rem);
+}
+
+.gis-sync-mock__toggle input:disabled + .gis-sync-mock__toggle-ui {
+  opacity: 0.45;
+}
+
+.gis-sync-mock__foot {
+  display: flex;
+  justify-content: flex-end;
+  padding-block-start: var(--space-2);
+  border-block-start: 1px solid var(--color-divider);
+}
+
+.gis-sync-mock__history-head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-block-end: var(--space-4);
+}
+
+.gis-sync-mock__runs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  max-block-size: 22rem;
+  overflow-y: auto;
+  padding-inline-end: 2px;
+}
+
+.gis-sync-mock__run.is-new {
+  animation: gis-run-in 0.35s ease-out;
+}
+
+@keyframes gis-run-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.gis-sync-mock__run {
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.gis-sync-mock__run-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-block-end: var(--space-3);
+}
+
+.gis-sync-mock__run-head time {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+.gis-sync-mock__run-trigger {
+  display: block;
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.gis-sync-mock__chip {
+  font-size: 11px;
+  font-weight: var(--font-weight-semibold);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  background: #d1fae5;
+  color: #065f46;
+  white-space: nowrap;
+}
+
+.gis-sync-mock__chip.is-running {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.gis-sync-mock__chip.is-error {
+  background: #ffe4e6;
+  color: #be123c;
+}
+
+.gis-sync-mock__run-stats {
+  list-style: none;
+  margin: 0;
+  padding: var(--space-3) 0 0;
+  border-block-start: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.gis-sync-mock__run-stats li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.gis-sync-mock__run-stats strong {
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text);
+}
+
+/* ---- GIS: board view mock (MondayGIS TourismMapScreen) ---- */
+.product-demo__body.gis-board-mock {
+  padding: 0;
+}
+
+.gis-board-mock {
+  display: flex;
+  flex-direction: column;
+  min-block-size: 22rem;
+}
+
+.gis-board-mock__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-block-end: 1px solid var(--color-divider);
+  background: var(--color-surface-muted);
+}
+
+.gis-board-mock__title {
+  margin: 0;
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-bold);
+}
+
+.gis-board-mock__counts {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.gis-board-mock__layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  min-block-size: 20rem;
+}
+
+@media (min-width: 720px) {
+  .gis-board-mock__layout {
+    flex-direction: row;
+    align-items: stretch;
+  }
+}
+
+.gis-board-mock__list {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+@media (min-width: 720px) {
+  .gis-board-mock__list {
+    width: 17rem;
+  }
+}
+
+.gis-board-mock__list-head {
+  padding: var(--space-3);
+  border-block-end: 1px solid var(--color-divider);
+}
+
+.gis-board-mock__list-title {
+  margin: 0 0 var(--space-2);
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-muted);
+}
+
+.gis-board-mock__search,
+.gis-board-mock__filter {
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  background: var(--color-surface-raised);
+}
+
+.gis-board-mock__search {
+  margin-block-end: var(--space-2);
+}
+
+.gis-board-mock__count {
+  margin: 0;
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  background: var(--color-surface-muted);
+  border-block-end: 1px solid var(--color-divider);
+}
+
+.gis-board-mock__items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-2);
+  max-block-size: 14rem;
+  overflow-y: auto;
+}
+
+.gis-board-mock__item {
+  width: 100%;
+  text-align: start;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  transition:
+    border-color var(--transition),
+    background var(--transition),
+    box-shadow var(--transition);
+}
+
+.gis-board-mock__item:hover {
+  border-color: var(--color-border);
+  background: var(--color-surface-muted);
+}
+
+.gis-board-mock__item.is-selected {
+  border-color: var(--demo-accent);
+  background: color-mix(in srgb, var(--demo-accent-soft) 55%, var(--color-surface));
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--demo-accent) 25%, transparent);
+}
+
+.gis-board-mock__item-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.gis-board-mock__item-name {
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-semibold);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gis-board-mock__badge {
+  flex-shrink: 0;
+  font-size: 10px;
+  font-weight: var(--font-weight-semibold);
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-full);
+}
+
+.gis-board-mock__badge--active {
+  background: #d1fae5;
+  color: #047857;
+}
+
+.gis-board-mock__badge--lead {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.gis-board-mock__badge--inactive {
+  background: var(--color-surface-muted);
+  color: var(--color-text-muted);
+}
+
+.gis-board-mock__item-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
+  margin-block-start: var(--space-1);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.gis-board-mock__meta-label {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-faint);
+  font-size: 10px;
+  margin-inline-end: 2px;
+}
+
+.gis-board-mock__no-geo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-block-start: var(--space-1);
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-danger);
+}
+
+.gis-board-mock__no-geo::before {
+  content: '';
+  inline-size: 6px;
+  block-size: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.gis-board-mock__map {
+  position: relative;
+  flex: 1;
+  min-block-size: 16rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: #aad3df;
+}
+
+.gis-board-mock__map-tiles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.gis-board-mock__map-image {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.gis-board-mock__attribution {
+  position: absolute;
+  inset-block-end: var(--space-1);
+  inset-inline-end: var(--space-2);
+  z-index: 1;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  font-size: 9px;
+  line-height: 1.4;
+  color: #334;
+  background: rgba(255, 255, 255, 0.88);
+  pointer-events: none;
+}
+
+.gis-board-mock__pin {
+  position: absolute;
+  inline-size: 14px;
+  block-size: 14px;
+  margin: -7px 0 0 -7px;
+  padding: 0;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+  z-index: 3;
+  transition: transform var(--transition);
+}
+
+.gis-board-mock__pin--active {
+  background: #00c875;
+}
+
+.gis-board-mock__pin--lead {
+  background: #fdab3d;
+}
+
+.gis-board-mock__pin--inactive {
+  background: #c4c4c4;
+}
+
+.gis-board-mock__pin.is-selected {
+  transform: scale(1.25);
+  box-shadow:
+    0 0 0 4px color-mix(in srgb, var(--demo-accent) 35%, transparent),
+    0 1px 6px rgba(0, 0, 0, 0.4);
+}
+
+.gis-board-mock__drawer {
+  position: absolute;
+  inset-block: var(--space-3);
+  inset-inline-end: var(--space-3);
+  inline-size: min(100% - var(--space-6), 15rem);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.97);
+  box-shadow: var(--shadow-md);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.gis-board-mock__drawer-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border-block-end: 1px solid var(--color-divider);
+}
+
+.gis-board-mock__drawer-head h4 {
+  margin: 0 0 var(--space-1);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-bold);
+}
+
+.gis-board-mock__drawer-close {
+  border: none;
+  background: none;
+  font-size: 1.25rem;
+  line-height: 1;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  padding: 0;
+}
+
+.gis-board-mock__drawer-body {
+  padding: var(--space-3);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.gis-board-mock__drawer-body section h5 {
+  margin: 0 0 var(--space-2);
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.gis-board-mock__drawer-body dl {
+  margin: 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-1) var(--space-3);
+  font-size: var(--text-xs);
+}
+
+.gis-board-mock__drawer-body dt {
+  color: var(--color-text-muted);
+  font-weight: var(--font-weight-medium);
+}
+
+.gis-board-mock__drawer-body dd {
+  margin: 0;
+  font-weight: var(--font-weight-semibold);
+}
+
+.gis-board-mock__monday-link {
+  margin: 0;
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--demo-accent);
+}
+
+/* ---- Compact board / flow demos ---- */
+.mini-board__row {
+  display: grid;
+  grid-template-columns: 1.4fr 0.5fr 0.7fr 0.6fr;
+  gap: var(--space-2);
+  padding: var(--space-2) 0;
+  border-block-end: 1px solid var(--color-divider);
+  font-size: var(--text-xs);
+}
+
+.mini-board__row--head {
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-muted);
+}
+
+.mini-status {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-weight: var(--font-weight-semibold);
+}
+
+.mini-status--done {
+  background: #d1fae5;
+  color: #047857;
+}
+.mini-status--progress {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+.mini-status--pending {
+  background: #f3f4f6;
+  color: #4b5563;
+}
+
+.mini-flow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.mini-flow__node {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-muted);
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-semibold);
+}
+
+.mini-flow__arrow {
+  color: var(--color-text-faint);
+}
+
+.mini-flow__node.is-active {
+  border-color: var(--demo-accent);
+  background: var(--demo-accent-soft);
+  color: var(--demo-accent);
+}
+
+.mini-flow__branch {
+  display: flex;
+  gap: var(--space-4);
+  margin: var(--space-3) 0;
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.mini-flow__branch-yes::before {
+  content: '✓ ';
+  color: #047857;
+}
+
+.mini-flow__branch-no::before {
+  content: '↩ ';
+  color: #b45309;
+}
+
+.mini-rules {
+  list-style: none;
+  margin: var(--space-4) 0 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+}
+
+.mini-rules__item {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+}
+
+.mini-rules__item span {
+  color: var(--color-text-secondary);
+}
+
+.mini-tsm__kpis {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin-block-end: var(--space-5);
+}
+
+.mini-tsm__kpi {
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-muted);
+  text-align: center;
+}
+
+.mini-tsm__kpi-value {
+  display: block;
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+}
+
+.mini-tsm__kpi-label {
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+}
+
+.mini-board__row--click {
+  width: 100%;
+  border: none;
+  background: transparent;
+  text-align: inherit;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+
+.mini-board__row--click:hover,
+.mini-board__row--click.is-selected {
+  background: var(--demo-accent-soft);
+}
+
+.product-demo__tabs--inner {
+  margin-block-end: var(--space-4);
+}
+
+/* ---- FlowGram: Miro-style process map ---- */
+.product-demo__body.fg-miro-mock {
+  display: flex;
+  flex-direction: column;
+  min-block-size: 26rem;
+  background: #eceef2;
+}
+
+.fg-miro-mock__appbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  background: #fff;
+  border-block-end: 1px solid #d0d4dc;
+}
+
+.fg-miro-mock__logo {
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-bold);
+  color: #ffd02f;
+  text-shadow: 0 0 0 #050038;
+  letter-spacing: -0.02em;
+}
+
+.fg-miro-mock__logo::before {
+  content: '● ';
+  color: #050038;
+}
+
+.fg-miro-mock__board {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-semibold);
+  color: #1f2937;
+}
+
+.fg-miro-mock__legend {
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-semibold);
+  color: #6b7280;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  background: #f3f4f6;
+}
+
+.fg-miro-mock__workspace {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) min(16rem, 34%);
+  min-block-size: 22rem;
+}
+
+.fg-miro-mock__canvas {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-5) var(--space-4);
+  background-color: #fafbfc;
+  background-image: radial-gradient(circle, #c5cad3 1px, transparent 1px);
+  background-size: 20px 20px;
+  overflow: auto;
+}
+
+.fg-miro-mock__flow-grid {
+  display: grid;
+  grid-template-columns: repeat(9, auto);
+  grid-template-rows: auto auto;
+  gap: var(--space-2) var(--space-1);
+  justify-content: center;
+  align-items: center;
+  max-inline-size: 100%;
+}
+
+.fg-miro-mock__arrow {
+  inline-size: 1.35rem;
+  block-size: 2px;
+  background: #4262ff;
+  border-radius: var(--radius-full);
+  position: relative;
+}
+
+.fg-miro-mock__arrow::after {
+  content: '';
+  position: absolute;
+  inset-block: -3px;
+  inset-inline-end: -1px;
+  border: 4px solid transparent;
+  border-inline-start-color: #4262ff;
+}
+
+.fg-miro-mock__branch-cell {
+  grid-column: 5;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  margin-block-start: var(--space-1);
+}
+
+.fg-miro-mock__branch-stem {
+  display: block;
+  inline-size: 2px;
+  block-size: 1.25rem;
+  background: #f59e0b;
+  border-radius: var(--radius-full);
+}
+
+.fg-miro-mock__branch-tag {
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-semibold);
+  color: #b45309;
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-sm);
+  background: #fff7ed;
+  border: 1px dashed #f59e0b;
+}
+
+.fg-miro-mock__card {
+  inline-size: min(8.75rem, 28vw);
+  min-block-size: 4.25rem;
+  padding: var(--space-3);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  text-align: start;
+  cursor: pointer;
+  font: inherit;
+  transition:
+    transform var(--transition),
+    box-shadow var(--transition);
+}
+
+.fg-miro-mock__card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.fg-miro-mock__card.is-active {
+  outline: 2px solid #4262ff;
+  outline-offset: 2px;
+  box-shadow: 0 8px 24px rgba(66, 98, 255, 0.28);
+}
+
+.fg-miro-mock__card--yellow {
+  background: #fff9b1;
+}
+.fg-miro-mock__card--blue {
+  background: #cfe8fc;
+}
+.fg-miro-mock__card--pink {
+  background: #ffdce5;
+}
+.fg-miro-mock__card--green {
+  background: #d6f4dd;
+}
+.fg-miro-mock__card--orange {
+  background: #ffe0b3;
+}
+.fg-miro-mock__card--violet {
+  background: #e8e0ff;
+}
+
+.fg-miro-mock__card-title {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-bold);
+  color: #111827;
+  margin-block-end: var(--space-1);
+  line-height: 1.25;
+}
+
+.fg-miro-mock__card-body {
+  display: block;
+  font-size: var(--text-xs);
+  line-height: 1.4;
+  color: #4b5563;
+}
+
+.fg-miro-mock__sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-5);
+  background: #fff;
+  border-inline-start: 1px solid #d0d4dc;
+}
+
+.fg-miro-mock__sidebar-label {
+  margin: 0;
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #9ca3af;
+}
+
+.fg-miro-mock__sidebar-title {
+  margin: 0;
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-bold);
+  color: #111827;
+  line-height: var(--line-height-snug);
+}
+
+.fg-miro-mock__sidebar-text {
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: var(--line-height-relaxed);
+  color: #374151;
+}
+
+@media (max-width: 52rem) {
+  .fg-miro-mock__workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .fg-miro-mock__sidebar {
+    border-inline-start: none;
+    border-block-start: 1px solid #d0d4dc;
+  }
+
+  .fg-miro-mock__flow-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    justify-items: stretch;
+  }
+
+  .fg-miro-mock__arrow {
+    display: none;
+  }
+
+  .fg-miro-mock__branch-cell {
+    grid-column: 1;
+    grid-row: auto;
+    align-items: stretch;
+    margin-block-start: var(--space-3);
+    padding-block-start: var(--space-3);
+    border-block-start: 1px dashed #f59e0b;
+  }
+
+  .fg-miro-mock__card {
+    inline-size: 100%;
+  }
+}
+
+/* ---- FlowGram: monday test board ---- */
+.product-demo__body.fg-monday-mock {
+  padding: 0;
+  min-block-size: 22rem;
+}
+
+.fg-monday-mock__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-block-end: 1px solid var(--color-divider);
+  background: linear-gradient(180deg, #5034ff 0%, #4426d9 100%);
+  color: #fff;
+}
+
+.fg-monday-mock__board-title {
+  margin: 0;
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-bold);
+}
+
+.fg-monday-mock__badge {
+  font-size: 10px;
+  font-weight: var(--font-weight-bold);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.fg-monday-mock__layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-3);
+}
+
+@media (min-width: 720px) {
+  .fg-monday-mock__layout {
+    flex-direction: row;
+    align-items: stretch;
+  }
+}
+
+.fg-monday-mock__groups {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+@media (min-width: 900px) {
+  .fg-monday-mock__groups {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.fg-monday-mock__group {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: var(--color-surface-muted);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+}
+
+.fg-monday-mock__group-label {
+  margin: 0;
+  padding: var(--space-2) var(--space-3);
+  font-size: 11px;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  border-block-end: 1px solid var(--color-divider);
+}
+
+.fg-monday-mock__group-dot {
+  inline-size: 8px;
+  block-size: 8px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+.fg-monday-mock__items {
+  list-style: none;
+  margin: 0;
+  padding: var(--space-2);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  flex: 1;
+  min-block-size: 6rem;
+}
+
+.fg-monday-mock__item {
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-raised);
+  text-align: start;
+  cursor: pointer;
+  font: inherit;
+  box-shadow: var(--shadow-xs);
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition);
+}
+
+.fg-monday-mock__item:hover,
+.fg-monday-mock__item.is-active {
+  border-color: var(--demo-accent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--demo-accent) 20%, transparent);
+}
+
+.fg-monday-mock__item-name {
+  display: block;
+  font-size: 11px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+  line-height: 1.3;
+}
+
+.fg-monday-mock__item-meta {
+  display: block;
+  margin-block-start: 2px;
+  font-size: 10px;
+  color: var(--color-text-muted);
+}
+
+.fg-monday-mock__detail {
+  flex-shrink: 0;
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-raised);
+}
+
+@media (min-width: 720px) {
+  .fg-monday-mock__detail {
+    width: 14rem;
+  }
+}
+
+.fg-monday-mock__detail-title {
+  margin: 0 0 var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+  line-height: 1.35;
+}
+
+.fg-monday-mock__detail-text {
+  margin: 0 0 var(--space-4);
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+}
+
+.fg-monday-mock__detail-fields {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.fg-monday-mock__detail-fields div {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  font-size: var(--text-xs);
+}
+
+.fg-monday-mock__detail-fields dt {
+  color: var(--color-text-muted);
+  font-weight: var(--font-weight-semibold);
+}
+
+.fg-monday-mock__detail-fields dd {
+  margin: 0;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+  text-align: end;
+}
+
+.fg-monday-mock__detail--wide {
+  width: auto;
+  min-width: 12rem;
+}
+
+@media (min-width: 720px) {
+  .fg-monday-mock__detail--wide {
+    width: 16rem;
+  }
+}
+
+/* ---- CRM Connections board (Ready-to-deploy CRM 360 tab) ---- */
+.product-demo__body.crm-board-mock {
+  padding: 0;
+  min-block-size: 20rem;
+}
+
+.crm-board-mock__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-block-end: 1px solid var(--color-divider);
+  background: linear-gradient(180deg, #e85d4c 0%, #c2410c 100%);
+  color: #fff;
+}
+
+.crm-board-mock__title {
+  margin: 0;
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-bold);
+}
+
+.crm-board-mock__badge {
+  font-size: 10px;
+  font-weight: var(--font-weight-bold);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.crm-board-mock__workspace {
+  padding: var(--space-4);
+  background: #fff5f5;
+}
+
+.product-brand--crm .product-demo__tab[aria-selected='true'] {
+  background: rgba(232, 93, 76, 0.14);
+  border-color: color-mix(in srgb, #e85d4c 40%, var(--color-border));
+  color: #c2410c;
+}
+
+.crm-board-mock__thread {
+  margin: var(--space-3) 0 var(--space-1);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-bold);
+  color: #323338;
+}
+
+.crm-board-mock__linked {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-3);
+  font-size: var(--text-xs);
+  color: #676879;
+}
+
+.crm-board-mock__sync-dot {
+  inline-size: 8px;
+  block-size: 8px;
+  border-radius: var(--radius-full);
+  background: #00c875;
+  box-shadow: 0 0 0 2px rgba(0, 200, 117, 0.25);
+}
+
+.crm-board-mock__layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+@media (min-width: 720px) {
+  .crm-board-mock__layout {
+    flex-direction: row;
+    align-items: stretch;
+  }
+}
+
+.crm-board-mock__table {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid #f4a5a0;
+  border-radius: var(--radius-md);
+  background: #fff;
+  overflow: hidden;
+}
+
+.crm-board-mock__row {
+  grid-template-columns: 1.5fr 0.75fr 0.7fr 0.55fr;
+}
+
+.crm-board-mock__row.mini-board__row--click:hover,
+.crm-board-mock__row.mini-board__row--click.is-selected {
+  background: rgba(232, 93, 76, 0.1);
+}
+
+.crm-board-mock__detail {
+  flex-shrink: 0;
+  padding: var(--space-4);
+  border: 1px solid #f4a5a0;
+  border-radius: var(--radius-md);
+  background: #fff;
+}
+
+@media (min-width: 720px) {
+  .crm-board-mock__detail {
+    width: 14rem;
+  }
+}
+
+.crm-board-mock__detail-title {
+  margin: 0 0 var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-bold);
+  color: #323338;
+  line-height: 1.35;
+}
+
+.crm-board-mock__detail-text {
+  margin: 0 0 var(--space-3);
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  color: #676879;
+}
+
+.mndy-file-chips {
+  list-style: none;
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.mndy-file-chips[hidden] {
+  display: none;
+}
+
+.mndy-file-chips li {
+  font-size: 10px;
+  font-weight: var(--font-weight-semibold);
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  background: #f0f3ff;
+  color: #5034ff;
+  border: 1px solid #d0d7ff;
+}
+
+/* ---- Ready-to-deploy: monday table & dashboard ---- */
+.mndy-workspace {
+  padding: var(--space-3);
+  background: #f6f7fb;
+  min-block-size: 18rem;
+}
+
+.mndy-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-block-end: var(--space-3);
+}
+
+.mndy-toolbar__primary {
+  padding: 6px 14px;
+  border: none;
+  border-radius: var(--radius-md);
+  background: #5034ff;
+  color: #fff;
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+}
+
+.mndy-toolbar__ghost {
+  padding: 6px 12px;
+  border: 1px solid #d0d4dc;
+  border-radius: var(--radius-md);
+  background: #fff;
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-semibold);
+  color: #676879;
+  cursor: pointer;
+}
+
+.mndy-table {
+  border: 1px solid #d0d4dc;
+  border-radius: var(--radius-md);
+  background: #fff;
+  overflow: hidden;
+}
+
+.mndy-table__row {
+  display: grid;
+  grid-template-columns: 1.6fr 0.9fr 0.85fr 0.65fr 0.9fr;
+  gap: var(--space-2);
+  align-items: center;
+  padding: var(--space-2) var(--space-3);
+  border-block-end: 1px solid #e6e9ef;
+  font-size: 11px;
+  text-align: start;
+}
+
+.mndy-table__row--head {
+  background: #f6f7fb;
+  font-weight: var(--font-weight-bold);
+  color: #676879;
+  border-block-end: 1px solid #d0d4dc;
+}
+
+.mndy-table__row--data {
+  width: 100%;
+  border: none;
+  background: #fff;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  transition: background 0.15s;
+}
+
+.mndy-table__row--data:hover,
+.mndy-table__row--data.is-selected {
+  background: #f0f3ff;
+}
+
+.mndy-table__task {
+  font-weight: var(--font-weight-semibold);
+  color: #323338;
+}
+
+.mndy-table__owner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.mndy-avatar {
+  inline-size: 22px;
+  block-size: 22px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, #579bfc, #5034ff);
+  color: #fff;
+  font-size: 10px;
+  font-weight: var(--font-weight-bold);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.mndy-pill {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  font-size: 10px;
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+}
+
+.mndy-pill--pending {
+  background: #c4c4c4;
+  color: #fff;
+}
+
+.mndy-pill--progress {
+  background: #579bfc;
+  color: #fff;
+}
+
+.mndy-pill--done {
+  background: #00c875;
+  color: #fff;
+}
+
+.mndy-pill--sla {
+  background: #dff0ff;
+  color: #1d4ed8;
+}
+
+.mndy-table-kpis {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-2);
+  margin-block-start: var(--space-3);
+}
+
+.mndy-table-kpis__card {
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  background: #fff;
+  border: 1px solid #d0d4dc;
+  text-align: center;
+}
+
+.mndy-table-kpis__value {
+  display: block;
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-bold);
+  color: #5034ff;
+}
+
+.mndy-table-kpis__label {
+  font-size: 10px;
+  color: #676879;
+}
+
+.mndy-table__hint {
+  margin: var(--space-3) 0 0;
+  font-size: var(--text-xs);
+  color: #676879;
+}
+
+.mndy-dash__widgets {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+@media (min-width: 640px) {
+  .mndy-dash__widgets {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.mndy-dash__widget {
+  position: relative;
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  background: #fff;
+  border: 1px solid #d0d4dc;
+  overflow: hidden;
+}
+
+.mndy-dash__widget-bar {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  block-size: 3px;
+}
+
+.mndy-dash__widget-value {
+  margin: var(--space-2) 0 0;
+  font-size: var(--text-xl);
+  font-weight: var(--font-weight-bold);
+  color: #323338;
+}
+
+.mndy-dash__widget-label {
+  margin: 2px 0 0;
+  font-size: 10px;
+  color: #676879;
+}
+
+.mndy-dash__chart {
+  margin-block-start: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  background: #fff;
+  border: 1px solid #d0d4dc;
+}
+
+.mndy-dash__chart-title {
+  margin: 0 0 var(--space-3);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-bold);
+  color: #323338;
+}
+
+.mndy-dash__bars {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-4);
+  block-size: 8.5rem;
+  padding-block-start: var(--space-2);
+}
+
+.mndy-dash__bar-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-1);
+  block-size: 100%;
+  font-size: 10px;
+  color: #676879;
+}
+
+.mndy-dash__bar {
+  width: 100%;
+  max-width: 2.75rem;
+  /* --h is unitless 0–100 (share of chart height) */
+  block-size: calc(var(--h, 50) * 0.085rem);
+  min-block-size: 1.25rem;
+  border-radius: 4px 4px 0 0;
+  background: linear-gradient(180deg, #5034ff 0%, #579bfc 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cms-mock__progress-fill {
+    transition: none;
+  }
+
+  .fg-miro-mock__card:hover {
+    transform: none;
+  }
+}

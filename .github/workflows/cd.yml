@@ -1,0 +1,26 @@
+name: CD
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Deploy to Railway
+    runs-on: ubuntu-latest
+    container: ghcr.io/railwayapp/cli:latest
+    env:
+      RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+      RAILWAY_SERVICE_ID: a59a3b98-8c8f-4c98-8396-b71b928a81eb
+      RAILWAY_ENVIRONMENT_ID: c148952d-8a72-4b9e-a9f8-1bcecaefe9fc
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy
+        run: railway up --ci --service=$RAILWAY_SERVICE_ID --environment=$RAILWAY_ENVIRONMENT_ID

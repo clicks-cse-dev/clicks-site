@@ -1,0 +1,380 @@
+---
+/**
+ * BySector section (PRD §7 #6).
+ * Self-routing sector cards: government, municipalities, clusters, nonprofits,
+ * manufacturing/low-tech and high-tech — each mapped to a concrete persona pain.
+ * and a "what convinces them" proof line, routing to the relevant /sectors page.
+ *
+ * Contract (BUILD_CONTRACT.md): `locale` prop + inline { he, en } content; scoped
+ * styles; design tokens only; RTL via logical properties; inline themed SVG icons
+ * (currentColor); tasteful reveal/hover respecting prefers-reduced-motion.
+ * Bans honored: no gradient text, no nested cards, no side-stripe alerts,
+ * no purple-hero cliché.
+ */
+import type { Locale } from '../../i18n';
+import { localizedPath } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+
+const content = {
+  he: {
+    title: 'בנינו מערכות הפעלה למי שדומה לכם',
+    lead: 'מגזר ציבורי ואזרחי — וגם מפעלים, ארגוני low-tech והייטק. בחרו את התחום שלכם ותראו איך אנחנו פותרים אותו על monday.com, מהאפיון ועד התחזוקה.',
+    findYours: 'מצאו את המגזר שלכם',
+    cta: 'לפתרון למגזר',
+    sectors: [
+      {
+        key: 'gov',
+        icon: 'gov',
+        name: 'גופים ממשלתיים',
+        pain: 'מערכות מפוצלות, בירוקרטיה ידנית ושרשרת אחריות לא ברורה.',
+        proof: 'מוכנות לרכש, נגישות לפי תקן, אסמכתאות בשם אמיתי ומוצר עובד — לא מצגת.',
+        href: '/sectors/public-sector',
+      },
+      {
+        key: 'municipalities',
+        icon: 'municipality',
+        name: 'רשויות מקומיות ועיריות',
+        pain: 'שירות לתושב שנתקע בתהליכים איטיים ובהעברות בין מחלקות.',
+        proof: 'תוצאות של "היומיום בקליק" עם מספרי ROI — בקשות שנסגרות מהר, פחות נפילות בין הכיסאות.',
+        href: '/sectors/local-authorities',
+      },
+      {
+        key: 'clusters',
+        icon: 'cluster',
+        name: 'אשכולות וגופי תכנון אזוריים',
+        pain: 'נתק בין צוותי התכנון לצוותי הביצוע, מידע גאוגרפי שלא מדבר עם המשימות.',
+        proof: 'monday-GIS, דאשבורדים ואינטגרציות עומק שמחברים תכנון לביצוע על מפה אחת.',
+        href: '/sectors/regional-clusters',
+      },
+      {
+        key: 'nonprofits',
+        icon: 'nonprofit',
+        name: 'עמותות וארגונים חברתיים',
+        pain: 'CRM 360, קליטה וניהול מקרים — עם תקציב מצומצם וצוות רזה.',
+        proof: 'ליווי צמוד, מערכות מוכנות-להטמעה וגישה ישירה למייסדים — רולאאוט מהיר בלי פרויקט ענק.',
+        href: '/sectors/nonprofits',
+      },
+      {
+        key: 'manufacturing',
+        icon: 'manufacturing',
+        name: 'מפעלים ותעשייה (low-tech)',
+        pain: 'אקסלים, וואטסאפ ומערכות ישנות — הזמנות, מלאי ותחזוקה בלי שרשרת אחת.',
+        proof: 'תהליכי ייצור ב-FlowGram, חיבור ל-ERP/MES קיים, ותחזוקה ב-Clicks TSM — בלי פרויקט ERP ענק.',
+        href: '/sectors/manufacturing',
+      },
+      {
+        key: 'hitech',
+        icon: 'hitech',
+        name: 'חברות הייטק',
+        pain: 'Jira, CRM וכספים בערימות נפרדות — בלי תמונת מצב אחת לצוותים ולמנהלים.',
+        proof: 'אינטגרציות עומק, אוטומציות ודשבורדים — ומוצרי Clicks כשצריך חיבור מהיר.',
+        href: '/sectors/high-tech',
+      },
+    ],
+  },
+  en: {
+    title: 'We have built operating systems for organizations like yours',
+    lead: 'Public and civic sectors — plus factories, low-tech industry and high-tech. Pick your field and see how we solve it on monday.com, from design through maintenance.',
+    findYours: 'Find your sector',
+    cta: 'See the sector solution',
+    sectors: [
+      {
+        key: 'gov',
+        icon: 'gov',
+        name: 'Government bodies',
+        pain: 'Fragmented systems, manual bureaucracy and an unclear chain of accountability.',
+        proof: 'Procurement-readiness, standards-compliant accessibility, named references and a real working product — not slideware.',
+        href: '/sectors/public-sector',
+      },
+      {
+        key: 'municipalities',
+        icon: 'municipality',
+        name: 'Local authorities & municipalities',
+        pain: 'Resident services stuck in slow processes and hand-offs between departments.',
+        proof: '"Everyday in one click" outcomes with ROI numbers — requests that close faster, fewer things falling between the chairs.',
+        href: '/sectors/local-authorities',
+      },
+      {
+        key: 'clusters',
+        icon: 'cluster',
+        name: 'Regional clusters & planning bodies',
+        pain: 'A gap between planning and execution teams; geographic data that never talks to the work.',
+        proof: 'monday-GIS, dashboards and deep integrations that connect planning to execution on a single map.',
+        href: '/sectors/regional-clusters',
+      },
+      {
+        key: 'nonprofits',
+        icon: 'nonprofit',
+        name: 'Nonprofits & civic organizations',
+        pain: 'CRM 360, intake and case management — on a tight budget with a lean team.',
+        proof: 'Close consulting partnership, ready-to-deploy systems and direct founder access — a fast rollout without a giant project.',
+        href: '/sectors/nonprofits',
+      },
+      {
+        key: 'manufacturing',
+        icon: 'manufacturing',
+        name: 'Manufacturing & low-tech',
+        pain: 'Spreadsheets, WhatsApp and legacy systems — orders, inventory and maintenance with no single chain.',
+        proof: 'Production flows in FlowGram, hooks to existing ERP/MES, and maintenance in Clicks TSM — without a giant ERP project.',
+        href: '/sectors/manufacturing',
+      },
+      {
+        key: 'hitech',
+        icon: 'hitech',
+        name: 'High-tech companies',
+        pain: 'Jira, CRM and finance in separate stacks — no single view for teams and leadership.',
+        proof: 'Deep integrations, automations and dashboards — plus Clicks products when you need a fast connect.',
+        href: '/sectors/high-tech',
+      },
+    ],
+  },
+} as const;
+
+const t = content[locale];
+---
+
+<section class="section by-sector" aria-labelledby="by-sector-title">
+  <div class="container">
+    <header class="by-sector__head">
+      <h2 id="by-sector-title">{t.title}</h2>
+      <p class="by-sector__lead">{t.lead}</p>
+    </header>
+
+    <ul class="by-sector__grid" role="list" aria-label={t.findYours}>
+      {
+        t.sectors.map((sector, i) => (
+          <li class="by-sector__item" style={`--reveal-delay:${i * 70}ms`}>
+            <a class="card sector-card" href={localizedPath(sector.href, locale)}>
+              <span class="sector-card__icon" aria-hidden="true">
+                {sector.icon === 'gov' && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 3 3 8h18z" />
+                    <path d="M5 10v7M9.5 10v7M14.5 10v7M19 10v7" />
+                    <path d="M3.5 20h17" />
+                  </svg>
+                )}
+                {sector.icon === 'municipality' && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 21V9l6-4 6 4v12" />
+                    <path d="M16 21V11l4 2.5V21" />
+                    <path d="M3 21h18" />
+                    <path d="M8 13h2M8 17h2" />
+                  </svg>
+                )}
+                {sector.icon === 'cluster' && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="6" cy="6" r="2.4" />
+                    <circle cx="18" cy="7" r="2.4" />
+                    <circle cx="12" cy="18" r="2.4" />
+                    <path d="M7.7 7.6 10.6 16M16.6 9 13.2 16.4M8.3 6.4 15.6 6.7" />
+                  </svg>
+                )}
+                {sector.icon === 'nonprofit' && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 20.5S4 15.5 4 9.8A4 4 0 0 1 12 7a4 4 0 0 1 8 2.8c0 5.7-8 10.7-8 10.7Z" />
+                  </svg>
+                )}
+                {sector.icon === 'manufacturing' && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 21h18" />
+                    <path d="M5 21V9l4-3 4 3v12" />
+                    <path d="M13 21V7l4-2.5V21" />
+                    <path d="M9 12h2M9 16h2" />
+                    <circle cx="17" cy="11" r="2" />
+                  </svg>
+                )}
+                {sector.icon === 'hitech' && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="4" y="4" width="16" height="16" rx="3" />
+                    <path d="M8 8h8M8 12h8M8 16h5" />
+                    <circle cx="17" cy="7" r="1.2" fill="currentColor" stroke="none" />
+                    <path d="M17 8.5v3" />
+                  </svg>
+                )}
+              </span>
+
+              <h3 class="sector-card__name">{sector.name}</h3>
+
+              <p class="sector-card__label">{locale === 'he' ? 'הכאב' : 'The pain'}</p>
+              <p class="sector-card__pain">{sector.pain}</p>
+
+              <p class="sector-card__label sector-card__label--proof">
+                {locale === 'he' ? 'מה משכנע אתכם' : 'What convinces you'}
+              </p>
+              <p class="sector-card__proof">{sector.proof}</p>
+
+              <span class="sector-card__cta">
+                {t.cta}
+                <svg class="sector-card__arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M3 8h9" />
+                  <path d="M8.5 4 12.5 8l-4 4" />
+                </svg>
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .by-sector__head {
+    max-width: var(--content-narrow);
+    margin-block-end: var(--space-8);
+  }
+
+  .by-sector__head h2 {
+    margin-block: var(--space-3) var(--space-4);
+    font-size: var(--text-3xl);
+  }
+
+  .by-sector__lead {
+    font-size: var(--text-md);
+    line-height: var(--line-height-relaxed);
+    color: var(--color-text-secondary);
+  }
+
+  .by-sector__grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--space-5);
+  }
+
+  .by-sector__item {
+    display: flex;
+  }
+
+  /* Whole card is the route — one .card per region (no nested cards) */
+  .sector-card {
+    display: flex;
+    flex-direction: column;
+    inline-size: 100%;
+    color: var(--color-text);
+    text-align: start;
+    transition:
+      transform var(--transition),
+      box-shadow var(--transition),
+      border-color var(--transition);
+  }
+
+  .sector-card:hover {
+    color: var(--color-text);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-border-strong);
+  }
+
+  .sector-card__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 48px;
+    block-size: 48px;
+    border-radius: var(--radius-md);
+    background: var(--color-accent-soft);
+    color: var(--color-accent);
+    margin-block-end: var(--space-4);
+  }
+
+  .sector-card__icon svg {
+    inline-size: 26px;
+    block-size: 26px;
+  }
+
+  .sector-card__name {
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-bold);
+    margin-block-end: var(--space-4);
+  }
+
+  .sector-card__label {
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+    margin-block-end: var(--space-1);
+  }
+
+  /* Subdivide within the single card via a top divider, not a nested card */
+  .sector-card__label--proof {
+    margin-block-start: var(--space-4);
+    padding-block-start: var(--space-4);
+    border-block-start: 1px solid var(--color-divider);
+    color: var(--color-accent);
+  }
+
+  .sector-card__pain {
+    font-size: var(--text-base);
+    line-height: var(--line-height-snug);
+    color: var(--color-text-secondary);
+  }
+
+  .sector-card__proof {
+    font-size: var(--text-base);
+    line-height: var(--line-height-snug);
+    color: var(--color-text);
+  }
+
+  .sector-card__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-block-start: var(--space-5);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-accent);
+  }
+
+  .sector-card__arrow {
+    inline-size: 16px;
+    block-size: 16px;
+    transition: transform var(--transition);
+  }
+
+  /* Mirror the arrow for RTL so it points toward the reading direction */
+  :global([dir='rtl']) .sector-card__arrow {
+    transform: scaleX(-1);
+  }
+
+  .sector-card:hover .sector-card__arrow {
+    transform: translateX(3px);
+  }
+
+  :global([dir='rtl']) .sector-card:hover .sector-card__arrow {
+    transform: scaleX(-1) translateX(3px);
+  }
+
+  /* Tasteful scroll-reveal */
+  .by-sector__item {
+    transform: translateY(14px);
+    animation: by-sector-reveal var(--duration-normal, 200ms) var(--ease-out, ease-out) forwards;
+    animation-delay: var(--reveal-delay, 0ms);
+  }
+
+  @keyframes by-sector-reveal {
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .by-sector__item {
+      transform: none;
+      animation: none;
+    }
+
+    .sector-card,
+    .sector-card__arrow {
+      transition: none;
+    }
+  }
+</style>

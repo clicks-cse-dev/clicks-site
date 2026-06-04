@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="5 7 18 19" fill="none" role="img" aria-label="Clicks">
+  <!-- Filled mark: outline logo does not survive 16×16; this matches the logo silhouette -->
+  <path fill="#5246d9" d="M8.25 24.75V11.35c0-2.05 1.65-3.7 3.7-3.7h7.35l-4.15 6.55h2.35l5.1 10.8H8.25Z" />
+  <circle cx="7.85" cy="14.65" r="1.55" fill="#f0eeff" />
+  <circle cx="9.55" cy="12.35" r="1.55" fill="#f0eeff" />
+  <circle cx="11.25" cy="10.05" r="1.55" fill="#f0eeff" />
+</svg>

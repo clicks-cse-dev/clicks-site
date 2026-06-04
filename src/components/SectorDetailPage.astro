@@ -1,0 +1,495 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SectorMark from './sector/SectorMark.astro';
+import ProductCardLogo from './product-logos/ProductCardLogo.astro';
+import '../components/product-logos/ProductLockup.css';
+import { localizedPath, type Locale } from '../i18n';
+import { BOOKING_URL } from '../config';
+import type { SectorPageData } from '../data/sectorPages';
+import { getPostsForSector } from '../data/blogPostRefs';
+import BlogCaseStudiesBlock from './blog/BlogCaseStudiesBlock.astro';
+
+interface Props {
+  locale: Locale;
+  sector: SectorPageData;
+}
+
+const { locale, sector } = Astro.props;
+const caseStudies = getPostsForSector(sector.slug, 2);
+const t = {
+  breadcrumbSolutions: locale === 'he' ? 'פתרונות' : 'Solutions',
+  breadcrumbSectors: locale === 'he' ? 'לפי מגזר' : 'By sector',
+  painLabel: locale === 'he' ? 'הכאב' : 'The pain',
+  proofLabel: locale === 'he' ? 'מה משכנע' : 'What convinces',
+  approachTitle: locale === 'he' ? 'איך אנחנו עוזרים' : 'How we help',
+  productsTitle: locale === 'he' ? 'מוצרים ושירותים במערכת' : 'Products & services in the stack',
+  productsLead:
+    locale === 'he'
+      ? 'לוחות, אוטומציות ותחזוקה — עם לוגואי המוצרים שמחברים את האקוסיסטם.'
+      : 'Boards, automations and maintenance — the product marks that wire the ecosystem.',
+  explore: locale === 'he' ? 'לדף המוצר' : 'View product',
+  book: locale === 'he' ? 'לקביעת שיחת ייעוץ' : 'Book a discovery call',
+  cases: locale === 'he' ? 'סיפורי לקוחות' : 'Case studies',
+  ctaTitle: locale === 'he' ? 'רוצים לראות איך זה נראה אצלכם?' : 'Want to see what this looks like for you?',
+  ctaLead:
+    locale === 'he'
+      ? 'שיחת ייעוץ קצרה: מיפוי כאב, הדגמת מערכת חיה, ותוכנית הטמעה ריאלית.'
+      : 'A short discovery call: map the pain, see a live system, and a realistic rollout plan.',
+  allSectors: locale === 'he' ? 'כל המגזרים' : 'All sectors',
+};
+
+const title = sector.titles[locale];
+const description = sector.descriptions[locale];
+const solutionsHref = localizedPath('/solutions', locale);
+const casesHref = localizedPath('/cases', locale);
+const sectorsHubHref = localizedPath('/#by-sector-title', locale);
+---
+
+<Layout locale={locale} title={title} description={description}>
+  <article class="sector-page">
+    <header class="sector-hero section">
+      <div class="container sector-hero__inner">
+        <nav class="sector-breadcrumb" aria-label={locale === 'he' ? 'מיקום בעמוד' : 'Breadcrumb'}>
+          <a href={solutionsHref}>{t.breadcrumbSolutions}</a>
+          <span class="sector-breadcrumb__sep" aria-hidden="true">/</span>
+          <span>{t.breadcrumbSectors}</span>
+          <span class="sector-breadcrumb__sep" aria-hidden="true">/</span>
+          <span aria-current="page">{title}</span>
+        </nav>
+
+        <div class="sector-hero__body">
+          <div class="sector-hero__mark" aria-hidden="true">
+            <SectorMark icon={sector.icon} class="sector-hero__icon" />
+          </div>
+          <div class="sector-hero__copy">
+            <p class="sector-hero__tag">{t.breadcrumbSectors}</p>
+            <h1 class="sector-hero__title">{title}</h1>
+            <p class="sector-hero__lead">{description}</p>
+            <div class="sector-hero__actions">
+              <a class="btn btn-primary" href={BOOKING_URL}>{t.book}</a>
+              <a class="btn btn-secondary" href={casesHref}>{t.cases}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="section sector-insights" aria-labelledby="sector-insights-title">
+      <div class="container">
+        <h2 id="sector-insights-title" class="visually-hidden">
+          {locale === 'he' ? 'כאב ומה משכנע' : 'Pain and proof'}
+        </h2>
+        <div class="sector-insights__grid">
+          <article class="sector-panel sector-panel--pain">
+            <p class="sector-panel__label">{t.painLabel}</p>
+            <p class="sector-panel__text">{sector.pains[locale]}</p>
+          </article>
+          <article class="sector-panel sector-panel--proof">
+            <p class="sector-panel__label">{t.proofLabel}</p>
+            <p class="sector-panel__text">{sector.proofs[locale]}</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section sector-approach" aria-labelledby="approach-title">
+      <div class="container sector-approach__inner">
+        <h2 id="approach-title" class="sector-section-title">{t.approachTitle}</h2>
+        <ol class="sector-steps" role="list">
+          {
+            sector.bullets[locale].map((bullet, i) => (
+              <li class="sector-step">
+                <span class="sector-step__num" aria-hidden="true">{i + 1}</span>
+                <p class="sector-step__text">{bullet}</p>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </section>
+
+    <section class="section sector-products" aria-labelledby="products-title">
+      <div class="container">
+        <header class="sector-products__head">
+          <h2 id="products-title" class="sector-section-title">{t.productsTitle}</h2>
+          <p class="sector-products__lead">{t.productsLead}</p>
+        </header>
+        <ul class="sector-products__grid" role="list">
+          {
+            sector.products.map((p) => (
+              <li>
+                <a class="sector-product card" href={localizedPath(p.href, locale)}>
+                  <div class="sector-product__logo">
+                    <ProductCardLogo product={p.product} label={p.label[locale]} variant="sector" />
+                  </div>
+                  <span class="sector-product__explore">
+                    {t.explore}
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M3 8h9" />
+                      <path d="M8 4l4 4-4 4" />
+                    </svg>
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <section class="section sector-blog-cases">
+      <div class="container">
+        <BlogCaseStudiesBlock locale={locale} posts={caseStudies} />
+      </div>
+    </section>
+
+    <section class="section sector-cta" aria-labelledby="sector-cta-title">
+      <div class="container">
+        <div class="sector-cta__panel card">
+          <h2 id="sector-cta-title" class="sector-cta__title">{t.ctaTitle}</h2>
+          <p class="sector-cta__lead">{t.ctaLead}</p>
+          <div class="sector-cta__actions">
+            <a class="btn btn-primary" href={BOOKING_URL}>{t.book}</a>
+            <a class="btn btn-secondary" href={sectorsHubHref}>{t.allSectors}</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </article>
+</Layout>
+
+<style>
+  .sector-page {
+    background: var(--color-bg-mesh);
+  }
+
+  /* ---- Hero ---- */
+  .sector-hero {
+    padding-block: var(--space-8) var(--space-7);
+    border-block-end: 1px solid var(--color-divider);
+    background:
+      radial-gradient(ellipse 70% 55% at 100% 0%, var(--color-accent-muted), transparent 55%),
+      var(--color-surface);
+  }
+
+  .sector-breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+    margin-block-end: var(--space-6);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .sector-breadcrumb a {
+    color: var(--color-accent);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .sector-breadcrumb a:hover {
+    color: var(--color-accent-hover);
+  }
+
+  .sector-breadcrumb__sep {
+    opacity: 0.45;
+    user-select: none;
+  }
+
+  .sector-breadcrumb [aria-current='page'] {
+    color: var(--color-text-secondary);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .sector-hero__body {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-6) var(--space-7);
+    align-items: start;
+    max-width: var(--panel-max-wide);
+  }
+
+  .sector-hero__mark {
+    display: grid;
+    place-items: center;
+    inline-size: 5.5rem;
+    block-size: 5.5rem;
+    border-radius: var(--radius-lg);
+    background: var(--gradient-soft);
+    color: var(--color-accent);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .sector-hero__icon {
+    inline-size: 2.75rem;
+    block-size: 2.75rem;
+  }
+
+  .sector-hero__tag {
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-accent);
+    letter-spacing: 0.02em;
+  }
+
+  .sector-hero__title {
+    margin: 0 0 var(--space-4);
+    font-size: clamp(1.75rem, 4.5vw, 2.5rem);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: -0.03em;
+    line-height: 1.12;
+    text-wrap: balance;
+  }
+
+  .sector-hero__lead {
+    margin: 0 0 var(--space-6);
+    max-width: 42rem;
+    font-size: var(--text-lg);
+    line-height: 1.55;
+    color: var(--color-text-secondary);
+  }
+
+  .sector-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+
+  /* ---- Pain / proof ---- */
+  .sector-insights__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-5);
+    max-width: var(--panel-max-wide);
+    margin-inline: auto;
+  }
+
+  .sector-panel {
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    background: var(--color-surface-raised);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .sector-panel--pain {
+    background: linear-gradient(165deg, var(--color-surface-raised) 0%, var(--color-surface-muted) 100%);
+  }
+
+  .sector-panel--proof {
+    background: linear-gradient(165deg, var(--color-surface-raised) 0%, var(--color-accent-muted) 100%);
+  }
+
+  .sector-panel__label {
+    margin: 0 0 var(--space-3);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .sector-panel__text {
+    margin: 0;
+    font-size: var(--text-md);
+    line-height: 1.6;
+    color: var(--color-text);
+  }
+
+  /* ---- Approach steps ---- */
+  .sector-approach__inner {
+    max-width: var(--panel-max-wide);
+    margin-inline: auto;
+  }
+
+  .sector-section-title {
+    margin: 0 0 var(--space-6);
+    font-size: var(--text-2xl);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  .sector-steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .sector-step {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-4);
+    align-items: start;
+    padding: var(--space-5);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+  }
+
+  .sector-step__num {
+    display: grid;
+    place-items: center;
+    inline-size: 2.25rem;
+    block-size: 2.25rem;
+    border-radius: var(--radius-full);
+    background: var(--gradient-primary);
+    color: #fff;
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-bold);
+    flex-shrink: 0;
+  }
+
+  .sector-step__text {
+    margin: 0;
+    padding-block-start: 0.2rem;
+    font-size: var(--text-md);
+    line-height: 1.55;
+    color: var(--color-text-secondary);
+  }
+
+  /* ---- Product tiles ---- */
+  .sector-products__head {
+    max-width: var(--content-narrow);
+    margin-block-end: var(--space-6);
+  }
+
+  .sector-products__lead {
+    margin: var(--space-3) 0 0;
+    color: var(--color-text-secondary);
+    font-size: var(--text-md);
+    line-height: 1.55;
+  }
+
+  .sector-products__grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--space-5);
+  }
+
+  .sector-product {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    padding: var(--space-6) var(--space-7);
+    min-block-size: 10.5rem;
+    color: var(--color-text);
+    transition:
+      transform var(--transition),
+      box-shadow var(--transition),
+      border-color var(--transition);
+  }
+
+  .sector-product:hover,
+  .sector-product:focus-visible {
+    color: var(--color-text);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-border-strong);
+  }
+
+  .sector-product__logo {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    min-block-size: 4.25rem;
+    max-block-size: 5rem;
+  }
+
+  .sector-product__explore {
+    margin-block-start: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-accent);
+  }
+
+  .sector-product__explore svg {
+    inline-size: 15px;
+    block-size: 15px;
+    transition: transform var(--transition);
+  }
+
+  :global([dir='rtl']) .sector-product__explore svg {
+    transform: scaleX(-1);
+  }
+
+  .sector-product:hover .sector-product__explore svg,
+  .sector-product:focus-visible .sector-product__explore svg {
+    transform: translateX(3px);
+  }
+
+  :global([dir='rtl']) .sector-product:hover .sector-product__explore svg,
+  :global([dir='rtl']) .sector-product:focus-visible .sector-product__explore svg {
+    transform: scaleX(-1) translateX(3px);
+  }
+
+  /* ---- Closing CTA ---- */
+  .sector-cta__panel {
+    max-width: var(--panel-max-wide);
+    margin-inline: auto;
+    padding: var(--space-7) var(--space-6);
+    text-align: center;
+    background: var(--gradient-soft);
+    border-color: var(--color-border-strong);
+  }
+
+  .sector-cta__title {
+    margin: 0 0 var(--space-3);
+    font-size: var(--text-2xl);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  .sector-cta__lead {
+    margin: 0 auto var(--space-6);
+    max-width: 36rem;
+    color: var(--color-text-secondary);
+    font-size: var(--text-md);
+    line-height: 1.55;
+  }
+
+  .sector-cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-4);
+  }
+
+  @media (max-width: 720px) {
+    .sector-hero__body {
+      grid-template-columns: 1fr;
+    }
+
+    .sector-hero__mark {
+      inline-size: 4.5rem;
+      block-size: 4.5rem;
+    }
+
+    .sector-insights__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sector-product,
+    .sector-product__explore svg {
+      transition: none;
+    }
+
+    .sector-product:hover,
+    .sector-product:focus-visible {
+      transform: none;
+    }
+  }
+</style>

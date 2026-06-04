@@ -1,0 +1,166 @@
+---
+/**
+ * Founders / About teaser (PRD §7 #10, §8).
+ */
+import type { Locale } from '../../i18n';
+import { localizedPath } from '../../i18n';
+import { FOUNDERS, FOUNDERS_SECTION } from '../../data/founders';
+import FounderProfile from '../FounderProfile.astro';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+
+const t = FOUNDERS_SECTION[locale];
+const aboutHref = localizedPath('/about', locale);
+---
+
+<section class="section founders" aria-labelledby="founders-title">
+  <div class="container founders__container">
+    <h2 id="founders-title" class="founders__title">{t.title}</h2>
+
+    <p class="founders__story-teaser">
+      {t.storyTeaser}
+      <a class="founders__story-more" href={aboutHref}>{t.storyMore}</a>
+    </p>
+
+    <h3 class="founders__founders-lead">{t.foundersLead}</h3>
+
+    <ul class="founders__grid" role="list">
+      {
+        FOUNDERS.map((founder, i) => (
+          <li data-reveal style={`--reveal-delay:${i * 80}ms`}>
+            <FounderProfile locale={locale} founder={founder} variant="teaser" />
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="founders__foot">
+      <a class="btn btn-secondary" href={aboutHref}>{t.aboutCta}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .founders__container {
+    max-width: 42rem;
+    margin-inline: auto;
+  }
+
+  .founders__title {
+    margin: 0 0 var(--space-6);
+    font-size: var(--text-3xl);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+
+  .founders__story-teaser {
+    margin: 0 0 var(--space-8);
+    font-size: var(--text-md);
+    line-height: 1.75;
+    color: var(--color-text-secondary);
+    text-wrap: pretty;
+  }
+
+  .founders__story-more {
+    display: inline-block;
+    margin-block-start: var(--space-3);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+
+  .founders__story-more:hover {
+    color: var(--color-accent-hover);
+    text-decoration: underline;
+  }
+
+  .founders__founders-lead {
+    margin: 0 0 var(--space-5);
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+  }
+
+  .founders__grid {
+    display: grid;
+    gap: var(--space-6);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .founders__grid > li {
+    display: flex;
+    min-height: 0;
+  }
+
+  .founders__grid > li :global(.founder-profile) {
+    flex: 1;
+    width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    .founders__container {
+      max-width: 56rem;
+    }
+
+    .founders__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-7);
+      align-items: stretch;
+    }
+  }
+
+  .founders__foot {
+    margin-block-start: var(--space-8);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(14px);
+      transition:
+        opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+      transition-delay: var(--reveal-delay, 0ms);
+    }
+
+    [data-reveal].is-visible {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal] {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  const reveals = document.querySelectorAll<HTMLElement>('.founders [data-reveal]');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce || !('IntersectionObserver' in window)) {
+    reveals.forEach((el) => el.classList.add('is-visible'));
+  } else {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 },
+    );
+    reveals.forEach((el) => io.observe(el));
+  }
+</script>

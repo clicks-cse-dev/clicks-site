@@ -1,0 +1,29 @@
+---
+/** Multi-channel inbox — CRM Connections */
+interface Props {
+  class?: string;
+  size?: number;
+}
+const { class: className = '', size } = Astro.props;
+---
+
+<svg
+  class={className}
+  width={size}
+  height={size}
+  viewBox="0 0 100 100"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-hidden="true"
+>
+  <path
+    d="M16 28h52a10 10 0 0 1 10 10v22a10 10 0 0 1-10 10H38l-14 12v-12H16a10 10 0 0 1-10-10V38a10 10 0 0 1 10-10Z"
+    stroke="var(--product-brand-deep)"
+    stroke-width="3"
+    stroke-linejoin="round"
+    fill="var(--product-accent-soft)"
+  />
+  <path d="M28 44h40M28 56h26" stroke="var(--product-brand-node)" stroke-width="3" stroke-linecap="round" />
+  <circle cx="72" cy="32" r="10" fill="var(--product-brand-spark)" />
+  <path d="M72 42v8" stroke="var(--product-brand-spark)" stroke-width="2.5" stroke-linecap="round" />
+</svg>

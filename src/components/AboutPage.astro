@@ -1,0 +1,158 @@
+---
+import Layout from '../layouts/Layout.astro';
+import FounderProfile from './FounderProfile.astro';
+import FoundersStoryBody from './FoundersStoryBody.astro';
+import { localizedPath, type Locale } from '../i18n';
+import { BOOKING_URL, WHATSAPP } from '../config';
+import { FOUNDERS, FOUNDERS_SECTION } from '../data/founders';
+import { ABOUT_PAGE } from '../data/aboutPage';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = ABOUT_PAGE[locale];
+const foundersCopy = FOUNDERS_SECTION[locale];
+---
+
+<Layout locale={locale} title={t.title} description={t.description}>
+  <article class="inner-page about-page">
+    <header class="inner-hero about-page__hero" aria-labelledby="about-title">
+      <div class="container about-page__content">
+        <p class="inner-hero__eyebrow">{t.eyebrow}</p>
+        <h1 id="about-title" class="about-page__title">{t.h1}</h1>
+        <p class="about-page__lead">{t.lead}</p>
+      </div>
+    </header>
+
+    <div class="container about-page__body">
+      <div class="about-page__content">
+      <section class="about-page__story" aria-labelledby="about-story-title">
+        <h2 id="about-story-title" class="about-page__story-title">{foundersCopy.storyTitle}</h2>
+        <FoundersStoryBody locale={locale} paragraphs={t.story} class="about-page__prose" />
+      </section>
+
+      <section class="about-page__founders" aria-labelledby="about-founders">
+        <h2 id="about-founders" class="about-page__founders-title">{t.foundersLead}</h2>
+        <div class="about-page__founders-grid">
+          {
+            FOUNDERS.map((founder) => (
+              <FounderProfile locale={locale} founder={founder} variant="about" />
+            ))
+          }
+        </div>
+      </section>
+
+      <div class="inner-cta-band about-page__cta">
+        <h2 class="inner-cta-band__title">{t.ctaTitle}</h2>
+        <p class="inner-cta-band__text">{t.ctaText}</p>
+        <div class="inner-cta-band__actions">
+          <a class="btn btn-primary" href={BOOKING_URL}>{t.book}</a>
+          <a class="btn btn-secondary" href={WHATSAPP} target="_blank" rel="noopener noreferrer">
+            {t.contact}
+          </a>
+        </div>
+      </div>
+      </div>
+    </div>
+  </article>
+</Layout>
+
+<style>
+  .about-page__content {
+    width: 100%;
+    max-width: 50rem;
+    margin-inline: auto;
+  }
+
+  .about-page__hero {
+    padding-block-end: var(--space-7);
+  }
+
+  .about-page__title {
+    margin: 0 0 var(--space-4);
+    font-size: clamp(var(--text-2xl), 4.5vw, var(--text-4xl));
+    font-weight: var(--font-weight-bold);
+    letter-spacing: -0.035em;
+    line-height: 1.12;
+    text-wrap: balance;
+    max-width: 44rem;
+  }
+
+  .about-page__lead {
+    margin: 0;
+    max-width: 44rem;
+    font-size: var(--text-lg);
+    line-height: var(--line-height-relaxed);
+    color: var(--color-text-secondary);
+    text-wrap: pretty;
+  }
+
+  .about-page__body {
+    padding-block: var(--space-8) var(--space-10);
+  }
+
+  .about-page__body .about-page__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-9);
+  }
+
+  .about-page__story-title {
+    margin: 0 0 var(--space-5);
+    font-size: var(--text-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+    text-wrap: balance;
+  }
+
+  .about-page__story :global(.founders-story__p) {
+    max-width: 44rem;
+  }
+
+  .about-page__founders-title {
+    margin: 0 0 var(--space-5);
+    font-size: var(--text-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+  }
+
+  .about-page__founders-grid {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .about-page__founders-grid > :global(.founder-profile) {
+    height: 100%;
+  }
+
+  @media (min-width: 768px) {
+    .about-page__founders-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-6);
+      align-items: stretch;
+    }
+  }
+
+  .about-page__cta {
+    margin-block-start: 0;
+    padding: var(--space-6) var(--space-6);
+    text-align: start;
+  }
+
+  .about-page__cta :global(.inner-cta-band__title) {
+    font-size: var(--text-xl);
+    text-align: start;
+  }
+
+  .about-page__cta :global(.inner-cta-band__text) {
+    margin-inline: 0;
+    max-width: 40rem;
+    text-align: start;
+  }
+
+  .about-page__cta :global(.inner-cta-band__actions) {
+    justify-content: flex-start;
+  }
+</style>
