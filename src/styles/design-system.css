@@ -178,6 +178,11 @@ html {
   }
 }
 
+html {
+  overflow-x: clip;
+  scroll-padding-top: 5rem;
+}
+
 body {
   margin: 0;
   font-family: var(--font-sans);
@@ -189,6 +194,8 @@ body {
   background-attachment: fixed;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+  max-inline-size: 100%;
 }
 
 h1, h2, h3, h4, h5, h6 {

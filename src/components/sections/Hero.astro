@@ -102,10 +102,8 @@ const t = content[locale];
         </span>
       </h1>
 
-      <p class="hero__subhead">
-        {t.subhead}
-        <span class="hero__trust-mobile"> {t.trustLine}</span>
-      </p>
+      <p class="hero__subhead">{t.subhead}</p>
+      <p class="hero__trust-mobile">{t.trustLine}</p>
 
       <div class="hero__actions">
         <a class="btn btn-primary hero__cta" href={BOOKING_URL} aria-label={t.ctaAria}>
@@ -261,8 +259,13 @@ const t = content[locale];
 <style>
   .hero {
     position: relative;
-    overflow: hidden;
+    overflow-x: clip;
+    overflow-y: visible;
     padding-block: var(--space-6) var(--space-9);
+  }
+
+  .hero__grid > * {
+    min-inline-size: 0;
   }
 
   /* Soft glow sits behind the viz column, not under the header. */
@@ -371,26 +374,55 @@ const t = content[locale];
 
   @media (max-width: 640px) {
     .hero__actions {
-      flex-direction: column;
-      align-items: stretch;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: center;
+      gap: var(--space-3);
     }
     .hero__cta {
+      flex: 1 1 auto;
+      min-inline-size: 0;
       justify-content: center;
+      padding-block: var(--space-3);
+      padding-inline: var(--space-4);
+      font-size: var(--text-base);
+    }
+    .hero__partner-wrap {
+      flex-shrink: 0;
     }
     .hero__partner-badge {
-      margin-inline: auto;
+      height: 3.35rem;
+      margin-inline: 0;
     }
     .hero__trust {
       display: none;
-    }
-    .hero__trust-mobile {
-      display: inline;
-      color: var(--color-text-muted);
     }
   }
 
   .hero__trust-mobile {
     display: none;
+    margin-block-start: var(--space-3);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-muted);
+    line-height: var(--line-height-snug);
+  }
+
+  .hero__trust-mobile::before {
+    content: '';
+    display: inline-block;
+    inline-size: 6px;
+    block-size: 6px;
+    margin-inline-end: var(--space-2);
+    border-radius: var(--radius-full);
+    background: var(--color-spark);
+    vertical-align: middle;
+  }
+
+  @media (max-width: 640px) {
+    .hero__trust-mobile {
+      display: block;
+    }
   }
 
   .hero__cta {
@@ -714,152 +746,122 @@ const t = content[locale];
 
   @media (max-width: 640px) {
     .hero {
-      padding-block: var(--space-5) var(--space-7);
+      padding-block: var(--space-6) var(--space-7);
     }
 
     .hero::before {
-      inset-block-start: 4%;
+      inset-block-start: 8%;
       inset-inline-start: 50%;
       translate: -50% 0;
-      inline-size: min(22rem, 92vw);
-      block-size: 16rem;
-      opacity: 0.42;
+      inline-size: min(20rem, 100%);
+      block-size: 14rem;
+      opacity: 0.35;
     }
 
     .hero__grid {
-      gap: var(--space-5);
+      gap: var(--space-6);
+    }
+
+    .hero__copy > *,
+    .hero__viz {
+      animation: none;
+      transform: none;
     }
 
     .hero__title {
       max-inline-size: none;
-      gap: var(--space-3);
+      gap: var(--space-2);
     }
 
     .hero__title-main {
-      font-size: clamp(1.55rem, 7.2vw, 2rem);
-      line-height: 1.14;
+      font-size: clamp(1.375rem, 6.4vw, 1.75rem);
+      line-height: 1.2;
+      letter-spacing: -0.025em;
     }
 
     .hero__title-accent {
-      font-size: clamp(1.05rem, 4.4vw, 1.25rem);
+      font-size: clamp(0.9375rem, 3.8vw, 1.125rem);
+      line-height: 1.45;
       max-inline-size: none;
     }
 
     .hero__subhead {
-      margin-block-start: var(--space-3);
+      margin-block-start: var(--space-4);
       font-size: var(--text-sm);
-      line-height: 1.55;
+      line-height: 1.6;
     }
 
     .hero__actions {
-      margin-block-start: var(--space-4);
-      gap: var(--space-3);
+      margin-block-start: var(--space-5);
     }
 
-    .hero__viz {
-      padding: var(--space-4);
-      min-block-size: 0;
-      max-block-size: none;
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-sm);
+    .hero__flow {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+
+    .hero__steps-label {
+      display: none;
     }
 
     .hero__viz-head {
-      margin-block-end: var(--space-3);
+      margin-block-end: var(--space-2);
+    }
+
+    .hero__live {
+      font-size: 0.625rem;
+      letter-spacing: 0.06em;
+    }
+
+    .hero__steps {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-2);
+    }
+
+    .hero__step {
+      min-inline-size: 0;
+      max-inline-size: none;
+      padding: var(--space-2) var(--space-3);
+      font-size: 0.75rem;
+      gap: var(--space-2);
+      line-height: 1.3;
+    }
+
+    .hero__step-num {
+      inline-size: 1.5rem;
+      block-size: 1.5rem;
+      font-size: 0.625rem;
+    }
+
+    .hero__step-label {
+      overflow-wrap: anywhere;
+      hyphens: auto;
+    }
+
+    .hero__viz {
+      padding: var(--space-3);
+      min-block-size: 0;
+      max-block-size: none;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(67, 22, 224, 0.12);
     }
 
     .hero__preview {
-      min-block-size: 11.5rem;
+      min-block-size: 10rem;
     }
 
     .hero__preview-caption {
       min-block-size: 0;
-      padding-block: var(--space-2);
+      padding: var(--space-2) var(--space-3);
       font-size: var(--text-xs);
-      line-height: 1.4;
+      line-height: 1.45;
     }
 
     .hero__board {
-      padding: var(--space-4);
+      padding: var(--space-3) var(--space-4);
       gap: var(--space-2);
-    }
-  }
-
-  /* Narrow phones: horizontal step strip + edge-to-edge scroll */
-  @media (max-width: 519px) {
-    .hero__flow {
-      gap: var(--space-4);
-    }
-
-    .hero__steps-wrap {
-      position: relative;
-      margin-inline: calc(-1 * var(--space-4));
-      padding-inline: var(--space-4);
-    }
-
-    .hero__steps-wrap::after {
-      content: '';
-      position: absolute;
-      inset-block: 0;
-      inset-inline-end: 0;
-      inline-size: 2.5rem;
-      background: linear-gradient(
-        to left,
-        var(--color-surface-raised) 12%,
-        transparent
-      );
-      pointer-events: none;
-      border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
-    }
-
-    :global([dir='rtl']) .hero__steps-wrap::after {
-      inset-inline-end: auto;
-      inset-inline-start: 0;
-      background: linear-gradient(
-        to right,
-        var(--color-surface-raised) 12%,
-        transparent
-      );
-      border-radius: var(--radius-lg) 0 0 var(--radius-lg);
-    }
-
-    .hero__steps-label {
-      margin-block-end: var(--space-2);
-    }
-
-    .hero__steps {
-      flex-direction: row;
-      flex-wrap: nowrap;
-      gap: var(--space-2);
-      overflow-x: auto;
-      overscroll-behavior-x: contain;
-      scroll-snap-type: x proximity;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-      padding-block-end: var(--space-1);
-    }
-
-    .hero__steps::-webkit-scrollbar {
-      display: none;
-    }
-
-    .hero__steps > li {
-      flex: 0 0 auto;
-      scroll-snap-align: start;
-    }
-
-    .hero__step {
-      min-inline-size: 7.75rem;
-      max-inline-size: 10.5rem;
-      padding: var(--space-2) var(--space-3);
-      font-size: var(--text-sm);
-      gap: var(--space-2);
-    }
-
-    .hero__step-num {
-      inline-size: 1.625rem;
-      block-size: 1.625rem;
-      font-size: 0.625rem;
     }
   }
 
@@ -924,14 +926,6 @@ const t = content[locale];
 
       if (captionEl && captions[i]) captionEl.textContent = captions[i];
       if (focusTab) tabs[i]?.focus();
-
-      if (window.matchMedia('(max-width: 519px)').matches) {
-        tabs[i]?.scrollIntoView({
-          inline: 'nearest',
-          block: 'nearest',
-          behavior: reduceMotion ? 'auto' : 'smooth',
-        });
-      }
     };
 
     const stopAuto = () => {
