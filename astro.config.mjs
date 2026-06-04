@@ -41,8 +41,6 @@ export default defineConfig({
     '/en/solutions/monday-ecosystems': '/en/products/clicks-deploy-ready',
     '/contact': 'https://calendar.app.google/4fhrkmQYgUPnKJt87',
     '/en/contact': 'https://calendar.app.google/4fhrkmQYgUPnKJt87',
-    '/contact/': 'https://calendar.app.google/4fhrkmQYgUPnKJt87',
-    '/en/contact/': 'https://calendar.app.google/4fhrkmQYgUPnKJt87',
   },
   i18n: {
     defaultLocale: 'he',

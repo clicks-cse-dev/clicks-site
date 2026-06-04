@@ -1,0 +1,15 @@
+---
+const enabled = Boolean(import.meta.env.PUBLIC_MIXPANEL_TOKEN);
+---
+
+{enabled && (
+  <script>
+    import { initMixpanel } from '../../lib/mixpanel';
+
+    initMixpanel({
+      locale: document.documentElement.lang,
+      pagePath: window.location.pathname,
+      pageTitle: document.title,
+    });
+  </script>
+)}
