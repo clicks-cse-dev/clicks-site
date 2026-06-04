@@ -112,6 +112,34 @@ const t = content[locale];
     line-height: var(--line-height-relaxed);
   }
 
+  @media (max-width: 640px) {
+    .trustband__head h2 {
+      font-size: var(--text-2xl);
+      line-height: var(--line-height-snug);
+    }
+
+    .trustband__intro {
+      font-size: var(--text-base);
+    }
+
+    .trustband__sublabel {
+      margin-block: var(--space-6) var(--space-4);
+    }
+
+    .logowall {
+      gap: var(--space-3);
+    }
+
+    .logowall__tile {
+      min-height: 4.25rem;
+      padding: var(--space-3);
+    }
+
+    .stats__value {
+      font-size: var(--text-3xl);
+    }
+  }
+
   .trustband__sublabel {
     margin-block: var(--space-8) var(--space-5);
     text-align: center;

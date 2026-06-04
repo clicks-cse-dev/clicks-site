@@ -105,7 +105,7 @@ const home = localizedPath('/', locale);
     grid-template-columns: auto 1fr;
     align-items: center;
     column-gap: var(--space-5);
-    padding-block: var(--space-3);
+    padding-block: max(var(--space-3), env(safe-area-inset-top, 0px)) var(--space-3);
     min-height: 4.25rem;
   }
 
@@ -189,10 +189,14 @@ const home = localizedPath('/', locale);
   .header__toggle {
     display: none;
     flex-direction: column;
+    justify-content: center;
     gap: 5px;
     background: none;
     border: 0;
+    min-inline-size: 44px;
+    min-block-size: 44px;
     padding: var(--space-2);
+    margin-inline-end: calc(-1 * var(--space-2));
   }
 
   .header__toggle-bar {
