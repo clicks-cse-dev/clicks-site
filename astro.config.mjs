@@ -6,6 +6,12 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://clickcse.com',
   integrations: [react(), sitemap()],
+  vite: {
+    preview: {
+      // Railway custom domains send Host: www.clickcse.com — without this, preview returns 403.
+      allowedHosts: true,
+    },
+  },
   redirects: {
     '/blog': '/cases',
     '/en/blog': '/en/cases',

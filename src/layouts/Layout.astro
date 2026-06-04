@@ -8,6 +8,7 @@ import '../styles/design-system.css';
 import '../styles/inner-pages.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Mixpanel from '../components/analytics/Mixpanel.astro';
 import { dir, canonicalPathFromUrl, localizedPath, LOCALES, type Locale } from '../i18n';
 import { COMPANY_NAME, SITE_URL } from '../config';
 
@@ -68,5 +69,6 @@ const hreflangLinks = LOCALES.map((loc) => ({
       <slot />
     </main>
     <Footer locale={locale} />
+    <Mixpanel />
   </body>
 </html>
