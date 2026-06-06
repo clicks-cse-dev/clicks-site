@@ -20,8 +20,8 @@ const locale = 'he' as const;
 
 <Layout
   locale={locale}
-  title="ייעוץ, אפיון והטמעת monday.com לארגונים"
-  description='קליקס מלווה רשויות, גופים ציבוריים, מלכ"רים וארגונים תפעוליים באפיון, בנייה ותחזוקה של תהליכים על monday.com.'
+  title='שותף monday.com לרשויות, מלכ"רים וגופים ציבוריים — ייעוץ, אפיון והטמעה'
+  description='קליקס מלווה רשויות מקומיות, גופים ציבוריים, מלכ"רים וארגונים תפעוליים בהטמעת monday.com — אפיון תהליכים, בנייה על monday.com, אוטומציות, חיבורי CRM ו-GIS, ותחזוקה שוטפת. שותף monday.com מוסמך בישראל.'
 >
   <Hero locale={locale} />
   <TrustBand locale={locale} />
@@ -34,4 +34,45 @@ const locale = 'he' as const;
   <FoundersTeaser locale={locale} />
   <ProcurementBand locale={locale} />
   <ClosingCTA locale={locale} />
+
+  <section class="seo-context" aria-label="אודות קליקס">
+    <div class="container">
+      <div class="seo-context__body">
+        <h2 class="seo-context__title">שותף monday.com לרשויות ומגזר הציבורי בישראל</h2>
+        <p>קליקס סטרטג'יק אקוסיסטמס היא חברת ייעוץ והטמעה מוסמכת של monday.com, המתמחה בגופים ציבוריים, רשויות מקומיות, מועצות אזוריות, מלכ"רים וארגונים תפעוליים בישראל. אנו מלווים ארגונים משלב האפיון ועד לתחזוקה השוטפת — בנייה על monday.com, אוטומציות, חיבורי CRM, אינטגרציית GIS ועוד.</p>
+        <p>הגישה שלנו שונה מהמתחרים: אנחנו לא מוכרים רישיונות ולא פותחים לוחות בלי להבין את התהליך. כל פרויקט מתחיל במיפוי תהליכים מעמיק, מגיע לאדריכלות מידע ברורה, ומסתיים במערכת שאנשים משתמשים בה ביום-יום. ניסיוננו ברשויות מקומיות, גיוס מתנדבים, ניהול שירות אזרחי ותהליכי GIS אזוריים הופך אותנו לבחירה הטבעית לגוף שמחפש הטמעת monday.com שעובדת לאורך זמן.</p>
+        <p>אנו מציעים: <a href="/products/monday-cms">Clicks Monday CMS</a> לניהול תוכן ומידע ארגוני, <a href="/products/monday-gis">Clicks Monday GIS</a> לסנכרון מפות GIS עם monday.com, <a href="/products/clicks-deploy-ready">Clicks Deploy Ready</a> להשקה מהירה, <a href="/services/flowgram">FlowGram</a> לאפיון תהליכים, <a href="/services/clicks-tsm">Clicks TSM</a> לתחזוקה שוטפת, ועוד.</p>
+        <p>לקוחותינו כוללים רשויות מקומיות, מועצות אזוריות, מלכ"רים גדולים ומפעלים תעשייתיים. <a href="/cases">קראו סיפורי לקוח</a> או <a href="/sectors/public-sector">גלו כיצד עובדים עם מגזר ציבורי</a>.</p>
+      </div>
+    </div>
+  </section>
 </Layout>
+
+<style>
+  .seo-context {
+    padding-block: var(--space-7);
+    border-block-start: 1px solid var(--color-divider);
+    background: var(--color-surface-muted);
+  }
+  .seo-context__body {
+    max-width: var(--content-narrow);
+    margin-inline: auto;
+  }
+  .seo-context__title {
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+    margin-block-end: var(--space-4);
+  }
+  .seo-context p {
+    font-size: var(--text-sm);
+    line-height: var(--line-height-relaxed);
+    color: var(--color-text-secondary);
+    margin-block-end: var(--space-3);
+  }
+  .seo-context a {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+</style>

@@ -20,8 +20,8 @@ const locale = 'en' as const;
 
 <Layout
   locale={locale}
-  title="Strategic ecosystems on monday.com"
-  description="Clicks Strategic Ecosystems — we design, build and maintain operating ecosystems on monday.com for public, civic, manufacturing and high-tech teams in Israel."
+  title="monday.com Partner for Israeli Public Sector, Municipalities and Nonprofits"
+  description="Clicks Strategic Ecosystems — certified monday.com partner in Israel. We design, build and maintain operating systems on monday.com for municipalities, public-sector bodies, nonprofits and manufacturing teams: process design, CRM, GIS integration and ongoing support."
 >
   <Hero locale={locale} />
   <TrustBand locale={locale} />
@@ -34,4 +34,45 @@ const locale = 'en' as const;
   <FoundersTeaser locale={locale} />
   <ProcurementBand locale={locale} />
   <ClosingCTA locale={locale} />
+
+  <section class="seo-context" aria-label="About Clicks">
+    <div class="container">
+      <div class="seo-context__body">
+        <h2 class="seo-context__title">Certified monday.com Partner for Israeli Public Sector and Municipalities</h2>
+        <p>Clicks Strategic Ecosystems is a certified monday.com consulting and implementation partner specialising in public-sector bodies, local authorities, regional councils, nonprofits and operations-heavy organisations in Israel. We accompany organisations from process discovery through to ongoing maintenance — building on monday.com, automations, CRM integrations, GIS sync and more.</p>
+        <p>Our approach differs from competitors: we don't sell licences or open boards without understanding the process first. Every project starts with deep process mapping, reaches a clear information architecture, and ends with a system people use daily. Our experience with local authorities, volunteer recruitment, citizen service management and regional GIS processes makes us the natural choice for any body seeking a monday.com implementation that works long-term.</p>
+        <p>We offer: <a href="/en/products/monday-cms">Clicks Monday CMS</a> for content and organisational data management, <a href="/en/products/monday-gis">Clicks Monday GIS</a> for GIS-monday.com sync, <a href="/en/products/clicks-deploy-ready">Clicks Deploy Ready</a> for fast rollout, <a href="/en/services/flowgram">FlowGram</a> for process design, <a href="/en/services/clicks-tsm">Clicks TSM</a> for ongoing support, and more.</p>
+        <p>Our clients include local authorities, regional councils, large nonprofits and industrial manufacturers. <a href="/en/cases">Read client stories</a> or <a href="/en/sectors/public-sector">see how we work with the public sector</a>.</p>
+      </div>
+    </div>
+  </section>
 </Layout>
+
+<style>
+  .seo-context {
+    padding-block: var(--space-7);
+    border-block-start: 1px solid var(--color-divider);
+    background: var(--color-surface-muted);
+  }
+  .seo-context__body {
+    max-width: var(--content-narrow);
+    margin-inline: auto;
+  }
+  .seo-context__title {
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+    margin-block-end: var(--space-4);
+  }
+  .seo-context p {
+    font-size: var(--text-sm);
+    line-height: var(--line-height-relaxed);
+    color: var(--color-text-secondary);
+    margin-block-end: var(--space-3);
+  }
+  .seo-context a {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+</style>
