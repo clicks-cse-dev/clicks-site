@@ -75,6 +75,16 @@ const kindHubHref = localizedPath(
 );
 const casesHref = localizedPath('/cases', locale);
 const homeHref = localizedPath('/#products-family-title', locale);
+
+const faqJsonLd = product.faq[locale].length > 0 ? {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: product.faq[locale].map(({ question, answer }) => ({
+    '@type': 'Question',
+    name: question,
+    acceptedAnswer: { '@type': 'Answer', text: answer },
+  })),
+} : null;
 ---
 
 <Layout locale={locale} title={title} description={description}>
@@ -244,6 +254,25 @@ const homeHref = localizedPath('/#products-family-title', locale);
         </section>
       )
     }
+
+    {faqJsonLd && <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />}
+    {product.faq[locale].length > 0 && (
+      <section class="section product-faq" aria-labelledby="faq-title">
+        <div class="container">
+          <header class="product-section-head">
+            <h2 id="faq-title" class="product-section-head__title">{locale === 'he' ? 'שאלות נפוצות' : 'Frequently Asked Questions'}</h2>
+          </header>
+          <dl class="product-faq__list">
+            {product.faq[locale].map(({ question, answer }) => (
+              <div class="product-faq__item">
+                <dt class="product-faq__q">{question}</dt>
+                <dd class="product-faq__a">{answer}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+    )}
 
     <section class="section product-cta" aria-labelledby="product-cta-title">
       <div class="container">
@@ -774,6 +803,12 @@ const homeHref = localizedPath('/#products-family-title', locale);
   .product-cases :global(.blog-cases-block) {
     margin: 0;
   }
+
+  /* ---- FAQ ---- */
+  .product-faq__list { display: flex; flex-direction: column; gap: var(--space-5); max-width: var(--content-narrow); margin-inline: auto; list-style: none; margin-block: 0; padding: 0; }
+  .product-faq__item { border-block-start: 1px solid var(--color-divider); padding-block-start: var(--space-5); }
+  .product-faq__q { font-size: var(--text-md); font-weight: var(--font-weight-semibold); color: var(--color-text); margin-block-end: var(--space-3); }
+  .product-faq__a { font-size: var(--text-base); line-height: var(--line-height-relaxed); color: var(--color-text-secondary); margin: 0; }
 
   @media (prefers-reduced-motion: reduce) {
     .product-related__card:hover {
