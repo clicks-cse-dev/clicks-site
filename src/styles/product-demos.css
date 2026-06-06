@@ -1521,12 +1521,22 @@
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   background: var(--color-surface-raised);
+  transform-origin: right center;
+  transition: transform var(--duration-spring) var(--ease-spring), opacity var(--duration-spring) var(--ease-smooth);
+}
+
+.fg-monday-mock__detail.is-animating {
+  animation: slideUpDrawer var(--duration-spring) var(--ease-spring) forwards;
 }
 
 @media (min-width: 720px) {
   .fg-monday-mock__detail {
     width: 14rem;
   }
+  .fg-monday-mock__detail.is-animating {
+    animation: slideInDrawer var(--duration-spring) var(--ease-spring) forwards;
+  }
+}
 }
 
 .fg-monday-mock__detail-title {
@@ -1685,12 +1695,22 @@
   border: 1px solid #f4a5a0;
   border-radius: var(--radius-md);
   background: #fff;
+  transform-origin: right center;
+  transition: transform var(--duration-spring) var(--ease-spring), opacity var(--duration-spring) var(--ease-smooth);
+}
+
+.crm-board-mock__detail.is-animating {
+  animation: slideUpDrawer var(--duration-spring) var(--ease-spring) forwards;
 }
 
 @media (min-width: 720px) {
   .crm-board-mock__detail {
     width: 14rem;
   }
+  .crm-board-mock__detail.is-animating {
+    animation: slideInDrawer var(--duration-spring) var(--ease-spring) forwards;
+  }
+}
 }
 
 .crm-board-mock__detail-title {
@@ -1986,5 +2006,257 @@
 
   .fg-miro-mock__card:hover {
     transform: none;
+  }
+}
+
+/* ---- Chat Thread & Typing Indicator (Animation Polish Plan) ---- */
+.chat-thread-box {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  background: var(--color-surface-raised);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border-strong);
+  margin-block-start: var(--space-4);
+  min-block-size: 14.5rem;
+  justify-content: space-between;
+}
+
+.chat-thread-messages {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.chat-bubble {
+  max-width: 85%;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-lg);
+  font-size: var(--text-sm);
+  line-height: 1.4;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: 
+    opacity var(--duration-spring) var(--ease-smooth),
+    transform var(--duration-spring) var(--ease-spring);
+}
+
+.chat-bubble.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* User (incoming) speech bubble */
+.chat-bubble--incoming {
+  align-self: flex-start;
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+:global([dir='ltr']) .chat-bubble--incoming {
+  border-start-left-radius: 2px;
+}
+
+:global([dir='rtl']) .chat-bubble--incoming {
+  border-start-right-radius: 2px;
+}
+
+.chat-bubble__meta {
+  font-size: 10px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-muted);
+  margin-block-end: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+/* monday.com (outgoing/automated) response bubble */
+.chat-bubble--outgoing {
+  align-self: flex-end;
+  background: linear-gradient(135deg, rgba(82, 70, 217, 0.08) 0%, rgba(108, 93, 235, 0.08) 100%);
+  border: 1px solid rgba(82, 70, 217, 0.22);
+  color: var(--color-text);
+}
+
+:global([dir='ltr']) .chat-bubble--outgoing {
+  border-start-right-radius: 2px;
+}
+
+:global([dir='rtl']) .chat-bubble--outgoing {
+  border-start-left-radius: 2px;
+}
+
+.chat-bubble--outgoing .chat-bubble__meta {
+  color: var(--color-accent);
+}
+
+/* Typing Indicator */
+.chat-typing-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--color-surface-muted);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-full);
+  align-self: flex-start;
+  min-block-size: 1.75rem;
+  border: 1px solid var(--color-border);
+  margin-block-start: auto;
+}
+
+.typing-dot {
+  inline-size: 6px;
+  block-size: 6px;
+  background: var(--color-text-muted);
+  border-radius: var(--radius-full);
+  opacity: 0.4;
+  animation: typingPulse 1.2s infinite ease-in-out;
+}
+
+.typing-dot:nth-child(2) {
+  animation-delay: 200ms;
+}
+
+.typing-dot:nth-child(3) {
+  animation-delay: 400ms;
+}
+
+@keyframes typingPulse {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateY(-4px);
+    opacity: 1;
+    background: var(--color-accent);
+  }
+}
+
+/* ---- Solutions Milestone Items ---- */
+.solutions-milestone-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--text-sm);
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: 
+    opacity var(--duration-spring) var(--ease-smooth),
+    transform var(--duration-spring) var(--ease-spring);
+}
+
+.solutions-milestone-item.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---- Sliding Side-Drawer Panels (Animation Polish Plan) ---- */
+.crm-board-mock__detail.is-animating .crm-board-mock__detail-title,
+.crm-board-mock__detail.is-animating .crm-board-mock__detail-text,
+.crm-board-mock__detail.is-animating .cms-mock__row,
+.fg-monday-mock__detail.is-animating .fg-monday-mock__detail-title,
+.fg-monday-mock__detail.is-animating .fg-monday-mock__detail-text,
+.fg-monday-mock__detail.is-animating .fg-monday-mock__detail-fields div,
+.fg-monday-mock__detail.is-animating .mndy-file-chips {
+  animation: fadeInContent 300ms var(--ease-smooth) forwards;
+}
+
+@keyframes slideInDrawer {
+  0% {
+    transform: translateX(25px);
+    opacity: 0.75;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+:global([dir='rtl']) @keyframes slideInDrawer {
+  0% {
+    transform: translateX(-25px);
+    opacity: 0.75;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideUpDrawer {
+  0% {
+    transform: translateY(20px);
+    opacity: 0.75;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInContent {
+  0% {
+    opacity: 0.2;
+    transform: translateY(3px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---- Dashboard Data & Chart Animations (Animation Polish Plan) ---- */
+.product-demo__panel:not([hidden]) .mndy-dash__bar {
+  transform: scaleY(0);
+  transform-origin: bottom center;
+  animation: growBar 0.9s var(--ease-spring) forwards;
+}
+
+.product-demo__panel:not([hidden]) .mndy-dash__bar-wrap:nth-child(1) .mndy-dash__bar { animation-delay: 50ms; }
+.product-demo__panel:not([hidden]) .mndy-dash__bar-wrap:nth-child(2) .mndy-dash__bar { animation-delay: 120ms; }
+.product-demo__panel:not([hidden]) .mndy-dash__bar-wrap:nth-child(3) .mndy-dash__bar { animation-delay: 190ms; }
+.product-demo__panel:not([hidden]) .mndy-dash__bar-wrap:nth-child(4) .mndy-dash__bar { animation-delay: 260ms; }
+.product-demo__panel:not([hidden]) .mndy-dash__bar-wrap:nth-child(5) .mndy-dash__bar { animation-delay: 330ms; }
+
+@keyframes growBar {
+  0% {
+    transform: scaleY(0);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+.product-demo__panel:not([hidden]) .mini-tsm__kpi-value,
+.product-demo__panel:not([hidden]) .mndy-dash__widget-value {
+  opacity: 0;
+  animation: countUpFade 0.7s var(--ease-spring) forwards;
+}
+
+.product-demo__panel:not([hidden]) .mini-tsm__kpi:nth-child(1) .mini-tsm__kpi-value { animation-delay: 50ms; }
+.product-demo__panel:not([hidden]) .mini-tsm__kpi:nth-child(2) .mini-tsm__kpi-value { animation-delay: 120ms; }
+.product-demo__panel:not([hidden]) .mini-tsm__kpi:nth-child(3) .mini-tsm__kpi-value { animation-delay: 190ms; }
+
+.product-demo__panel:not([hidden]) .mndy-dash__widget:nth-child(1) .mndy-dash__widget-value { animation-delay: 50ms; }
+.product-demo__panel:not([hidden]) .mndy-dash__widget:nth-child(2) .mndy-dash__widget-value { animation-delay: 120ms; }
+.product-demo__panel:not([hidden]) .mndy-dash__widget:nth-child(3) .mndy-dash__widget-value { animation-delay: 190ms; }
+
+@keyframes countUpFade {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.92);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }

@@ -303,7 +303,7 @@ const t =
 }
 
 {
-  (logo === 'crm' || logo === 'solutions') && (
+  logo === 'crm' && (
     <>
       <div class="product-demo__tabs" role="tablist" aria-label="CRM Connections demo">
         {t.tabs.map((tab, i) => (
@@ -335,25 +335,178 @@ const t =
           </div>
           <div class="product-demo__body" data-crm-demo>
             <div class="product-demo__tabs product-demo__tabs--inner" role="tablist">
-              {t.channels.map((ch, i) => (
-                <button
-                  type="button"
-                  class="product-demo__tab"
-                  role="tab"
-                  data-crm-channel={ch}
-                  data-crm-thread-text={t.threads[ch as keyof typeof t.threads]}
-                  aria-selected={i === 0 ? 'true' : 'false'}
-                >
-                  {ch}
-                </button>
-              ))}
+              {t.channels.map((ch, i) => {
+                const messages = locale === 'he' ? (
+                  ch === 'WhatsApp' ? [
+                    { sender: 'תושב', text: 'שלום, רציתי לדווח על מפגע ברחוב הזית 9. יש מפגע בטיחותי.', incoming: true },
+                    { sender: 'Clicks CRM', text: 'הודעתך התקבלה בהצלחה! נוצרה משימה אוטומטית בלוח monday.', incoming: false }
+                  ] : ch === 'Messenger' ? [
+                    { sender: 'פונה', text: 'היי! ראיתי את הקמפיין שלכם. אשמח לקבל פרטים ולינק להרשמה.', incoming: true },
+                    { sender: 'Clicks CRM', text: 'היי! תודה על הפנייה. הפרטים שלך נקלטו ושלחנו לך לינק לפרופיל.', incoming: false }
+                  ] : [
+                    { sender: 'פונה', text: 'שלום, נשמח לקבל הצעת מחיר מותאמת עבור 50 משתמשים לשנה.', incoming: true },
+                    { sender: 'Clicks CRM', text: 'שלום רב! פנייתך הועברה למנהל תיק הלקוח. מספר פנייה #5904', incoming: false }
+                  ]
+                ) : (
+                  ch === 'WhatsApp' ? [
+                    { sender: 'Resident', text: 'Hi, I would like to report a hazard at 9 Hazait St. It is a safety issue.', incoming: true },
+                    { sender: 'Clicks CRM', text: 'Your request was received! A task was automatically created on monday.', incoming: false }
+                  ] : ch === 'Messenger' ? [
+                    { sender: 'Lead', text: 'Hey there! Saw your campaign. Would love to get more details and a signup link.', incoming: true },
+                    { sender: 'Clicks CRM', text: 'Hi! Thanks for reaching out. Your details are captured and we sent a registration link.', incoming: false }
+                  ] : [
+                    { sender: 'Sender', text: 'Hello, we would like a custom quote for 50 user seats for a year.', incoming: true },
+                    { sender: 'Clicks CRM', text: 'Hello! Your request has been routed to your account manager. Ticket #5904', incoming: false }
+                  ]
+                );
+
+                return (
+                  <button
+                    type="button"
+                    class="product-demo__tab"
+                    role="tab"
+                    data-crm-channel={ch}
+                    data-msg-incoming={messages[0].text}
+                    data-msg-outgoing={messages[1].text}
+                    data-sender-incoming={messages[0].sender}
+                    data-sender-outgoing={messages[1].sender}
+                    aria-selected={i === 0 ? 'true' : 'false'}
+                  >
+                    {ch}
+                  </button>
+                )
+              })}
             </div>
-            <p class="cms-mock__title" data-crm-thread>
-              {t.threads.WhatsApp}
-            </p>
-            <p class="cms-mock__sub">
-              {locale === 'he' ? 'סטטוס: בטיפול · מקושר ללוח' : 'Status: In progress · Linked to board'}
-            </p>
+
+            <div class="chat-thread-box">
+              <div class="chat-thread-messages" data-crm-thread-messages>
+                <div class="chat-bubble chat-bubble--incoming is-visible">
+                  <div class="chat-bubble__meta">{locale === 'he' ? 'תושב' : 'Resident'}</div>
+                  <div class="chat-bubble__text">{locale === 'he' ? 'שלום, רציתי לדווח על מפגע ברחוב הזית 9. יש מפגע בטיחותי.' : 'Hi, I would like to report a hazard at 9 Hazait St. It is a safety issue.'}</div>
+                </div>
+                <div class="chat-bubble chat-bubble--outgoing is-visible">
+                  <div class="chat-bubble__meta">Clicks CRM</div>
+                  <div class="chat-bubble__text">{locale === 'he' ? 'הודעתך התקבלה בהצלחה! נוצרה משימה אוטומטית בלוח monday.' : 'Your request was received! A task was automatically created on monday.'}</div>
+                </div>
+              </div>
+              <div class="chat-typing-indicator" data-crm-typing style="display: none;">
+                <span class="typing-dot"></span>
+                <span class="typing-dot"></span>
+                <span class="typing-dot"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="product-demo__caption">{t.inboxCaption}</p>
+      </div>
+
+      <div
+        class="product-demo__panel"
+        role="tabpanel"
+        data-demo-panel="board"
+        data-demo-caption={t.boardCaption}
+        hidden
+      >
+        <div class="product-demo__frame">
+          <div class="product-demo__chrome">
+            <span class="product-demo__dot product-demo__dot--a" />
+            <span class="product-demo__dot product-demo__dot--b" />
+            <span class="product-demo__dot product-demo__dot--c" />
+            <span class="product-demo__window-title">monday.com</span>
+          </div>
+          <div class="product-demo__body">
+            <p class="cms-mock__title">{t.boardTitle}</p>
+            {t.boardRows.map((row) => (
+              <div class="cms-mock__row">
+                <span class="cms-mock__row-label">{row.label}</span>
+                <span>{row.value}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <p class="product-demo__caption">{t.boardCaption}</p>
+      </div>
+    </>
+  )
+}
+
+{
+  logo === 'solutions' && (
+    <>
+      <div class="product-demo__tabs" role="tablist" aria-label="Solutions project stages">
+        {t.tabs.map((tab, i) => (
+          <button
+            type="button"
+            class="product-demo__tab"
+            role="tab"
+            data-demo-tab={tab.id}
+            aria-selected={i === 0 ? 'true' : 'false'}
+            tabindex={i === 0 ? 0 : -1}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
+      <div
+        class="product-demo__panel"
+        role="tabpanel"
+        data-demo-panel="spec"
+        data-demo-caption={t.inboxCaption}
+      >
+        <div class="product-demo__frame">
+          <div class="product-demo__chrome">
+            <span class="product-demo__dot product-demo__dot--a" />
+            <span class="product-demo__dot product-demo__dot--b" />
+            <span class="product-demo__dot product-demo__dot--c" />
+            <span class="product-demo__window-title">{t.window}</span>
+          </div>
+          <div class="product-demo__body" data-solutions-demo>
+            <div class="product-demo__tabs product-demo__tabs--inner" role="tablist">
+              {t.channels.map((ch, i) => {
+                const items = locale === 'he' ? (
+                  ch === 'גילוי' ? ['הגדרת יעדים עסקיים', 'מיפוי מגבלות טכנולוגיות', 'אפיון מערכות ליבה קיימות']
+                  : ch === 'אפיון' ? ['הגדרת זרימת תהליך (Workflows)', 'מיפוי שדות ועמודות נדרשות', 'תכנון חוקי אוטומציה']
+                  : ['הקמת הלוחות ב-monday', 'בניית אינטגרציות עם מערכות ERP', 'ביצוע בדיקות קבלה (UAT)']
+                ) : (
+                  ch === 'Discover' ? ['Define business goals', 'Map technological constraints', 'Analyze legacy core systems']
+                  : ch === 'Design' ? ['Define process workflows', 'Map fields and required columns', 'Design automation rules']
+                  : ['Set up boards in monday.com', 'Build integrations with ERP systems', 'Perform user acceptance tests']
+                );
+
+                return (
+                  <button
+                    type="button"
+                    class="product-demo__tab"
+                    role="tab"
+                    data-solutions-channel={ch}
+                    data-item-1={items[0]}
+                    data-item-2={items[1]}
+                    data-item-3={items[2]}
+                    aria-selected={i === 0 ? 'true' : 'false'}
+                  >
+                    {ch}
+                  </button>
+                )
+              })}
+            </div>
+
+            <div class="chat-thread-box">
+              <div class="chat-thread-messages" data-solutions-checklist>
+                <div class="solutions-milestone-item is-visible">
+                  <span style="color: #00ca72; font-weight: bold;">✓</span>
+                  <span>{locale === 'he' ? 'הגדרת יעדים עסקיים' : 'Define business goals'}</span>
+                </div>
+                <div class="solutions-milestone-item is-visible">
+                  <span style="color: #00ca72; font-weight: bold;">✓</span>
+                  <span>{locale === 'he' ? 'מיפוי מגבלות טכנולוגיות' : 'Map technological constraints'}</span>
+                </div>
+                <div class="solutions-milestone-item is-visible">
+                  <span style="color: #00ca72; font-weight: bold;">✓</span>
+                  <span>{locale === 'he' ? 'אפיון מערכות ליבה קיימות' : 'Analyze legacy core systems'}</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <p class="product-demo__caption">{t.inboxCaption}</p>

@@ -413,21 +413,71 @@ const caseDefault = findItem(c.cases.items, c.cases.defaultItemId);
         <div class="crm-board-mock__workspace">
           <div class="product-demo__tabs product-demo__tabs--inner" role="tablist">
             {
-              c.crm360.channels.map((ch, i) => (
-                <button
-                  type="button"
-                  class="product-demo__tab"
-                  role="tab"
-                  data-ready-crm-channel={ch}
-                  data-ready-crm-thread={c.crm360.threads[ch as keyof typeof c.crm360.threads]}
-                  aria-selected={i === 0 ? 'true' : 'false'}
-                >
-                  {ch}
-                </button>
-              ))
+              c.crm360.channels.map((ch, i) => {
+                const messages = locale === 'he' ? (
+                  ch === 'WhatsApp' ? [
+                    { sender: 'תושב', text: 'פניית תושב · רח׳ הזית 9 — התגלתה תקלת תאורה רצינית בשעות הערב.', incoming: true },
+                    { sender: 'CRM 360', text: 'הודעתך נקלטה! נוצר כרטיס בלוח CRM (מזהה #1) המשוייך למחלקת שירות.', incoming: false }
+                  ] : ch === 'Messenger' ? [
+                    { sender: 'פונה', text: 'היי, ראיתי את הקמפיין של העירייה לשיפור התאורה בשכונה ג׳. אשמח לעדכון.', incoming: true },
+                    { sender: 'CRM 360', text: 'שלום! תודה על פנייתך. פתחנו כרטיס בלוח המעקב. נציג יחזור אליך בהקדם.', incoming: false }
+                  ] : [
+                    { sender: 'פונה', text: 'פנייה בנושא מפגעים ברחוב הזית 9. נדרש טיפול דחוף.', incoming: true },
+                    { sender: 'CRM 360', text: 'שלום רב, פנייתך התקבלה ומספרה #2. הסטטוס מוגדר כעת בטיפול.', incoming: false }
+                  ]
+                ) : (
+                  ch === 'WhatsApp' ? [
+                    { sender: 'Resident', text: 'WhatsApp Resident Request · Hazait St. 9 — serious lighting issue.', incoming: true },
+                    { sender: 'CRM 360', text: 'Request received! A task was created on monday CRM board.', incoming: false }
+                  ] : ch === 'Messenger' ? [
+                    { sender: 'Lead', text: 'Hi! Saw the neighborhood campaign. I would love to report a request.', incoming: true },
+                    { sender: 'CRM 360', text: 'Hi! Your details are captured in our system. A rep will follow up shortly.', incoming: false }
+                  ] : [
+                    { sender: 'Sender', text: 'Email inquiry regarding licensing and permits on Hazait St.', incoming: true },
+                    { sender: 'CRM 360', text: 'Hello! Your email has been logged under ID #2. Status set to In Progress.', incoming: false }
+                  ]
+                );
+
+                return (
+                  <button
+                    type="button"
+                    class="product-demo__tab"
+                    role="tab"
+                    data-ready-crm-channel={ch}
+                    data-ready-msg-incoming={messages[0].text}
+                    data-ready-msg-outgoing={messages[1].text}
+                    data-ready-sender-incoming={messages[0].sender}
+                    data-ready-sender-outgoing={messages[1].sender}
+                    aria-selected={i === 0 ? 'true' : 'false'}
+                  >
+                    {ch}
+                  </button>
+                )
+              })
             }
           </div>
-          <p class="crm-board-mock__thread" data-ready-crm-thread>{crmDefaultThread}</p>
+
+          <div class="chat-thread-box" style="margin-block-end: var(--space-4); width: 100%;">
+            <div class="chat-thread-messages" data-ready-crm-thread-messages>
+              <div class="chat-bubble chat-bubble--incoming is-visible">
+                <div class="chat-bubble__meta">{locale === 'he' ? 'תושב' : 'Resident'}</div>
+                <div class="chat-bubble__text">
+                  {locale === 'he' ? 'פניית תושב · רח׳ הזית 9 — התגלתה תקלת תאורה רצינית בשעות הערב.' : 'WhatsApp Resident Request · Hazait St. 9 — serious lighting issue.'}
+                </div>
+              </div>
+              <div class="chat-bubble chat-bubble--outgoing is-visible">
+                <div class="chat-bubble__meta">CRM 360</div>
+                <div class="chat-bubble__text">
+                  {locale === 'he' ? 'הודעתך נקלטה! נוצר כרטיס בלוח CRM (מזהה #1) המשוייך למחלקת שירות.' : 'Request received! A task was created on monday CRM board.'}
+                </div>
+              </div>
+            </div>
+            <div class="chat-typing-indicator" data-ready-crm-typing style="display: none;">
+              <span class="typing-dot"></span>
+              <span class="typing-dot"></span>
+              <span class="typing-dot"></span>
+            </div>
+          </div>
           <p class="crm-board-mock__linked">
             <span class="crm-board-mock__sync-dot" aria-hidden="true" />
             {c.crm360.linked}
@@ -765,14 +815,76 @@ const caseDefault = findItem(c.cases.items, c.cases.defaultItemId);
     });
 
     root.querySelectorAll<HTMLElement>('[data-ready-crm-board]').forEach((box) => {
-      const thread = box.querySelector<HTMLElement>('[data-ready-crm-thread]');
+      const messagesContainer = box.querySelector<HTMLElement>('[data-ready-crm-thread-messages]');
+      const typingIndicator = box.querySelector<HTMLElement>('[data-ready-crm-typing]');
+      let activeTimers: number[] = [];
+
+      const clearAllTimers = () => {
+        activeTimers.forEach(timer => clearTimeout(timer));
+        activeTimers = [];
+      };
+
       box.querySelectorAll<HTMLButtonElement>('[data-ready-crm-channel]').forEach((btn) => {
         btn.addEventListener('click', () => {
           box.querySelectorAll('[data-ready-crm-channel]').forEach((b) => {
             b.setAttribute('aria-selected', 'false');
           });
           btn.setAttribute('aria-selected', 'true');
-          if (thread) thread.textContent = btn.dataset.readyCrmThread ?? '';
+
+          clearAllTimers();
+
+          if (!messagesContainer) return;
+
+          messagesContainer.innerHTML = '';
+          if (typingIndicator) {
+            typingIndicator.style.display = 'inline-flex';
+          }
+
+          const incomingText = btn.dataset.readyMsgIncoming ?? '';
+          const outgoingText = btn.dataset.readyMsgOutgoing ?? '';
+          const incomingSender = btn.dataset.readySenderIncoming ?? 'User';
+          const outgoingSender = btn.dataset.readySenderOutgoing ?? 'CRM 360';
+
+          const t1 = window.setTimeout(() => {
+            if (typingIndicator) typingIndicator.style.display = 'none';
+
+            const incomingBubble = document.createElement('div');
+            incomingBubble.className = 'chat-bubble chat-bubble--incoming';
+            incomingBubble.innerHTML = `
+              <div class="chat-bubble__meta">${incomingSender}</div>
+              <div class="chat-bubble__text">${incomingText}</div>
+            `;
+            messagesContainer.appendChild(incomingBubble);
+
+            requestAnimationFrame(() => {
+              incomingBubble.classList.add('is-visible');
+            });
+
+            const t2 = window.setTimeout(() => {
+              if (typingIndicator) typingIndicator.style.display = 'inline-flex';
+
+              const t3 = window.setTimeout(() => {
+                if (typingIndicator) typingIndicator.style.display = 'none';
+
+                const outgoingBubble = document.createElement('div');
+                outgoingBubble.className = 'chat-bubble chat-bubble--outgoing';
+                outgoingBubble.innerHTML = `
+                  <div class="chat-bubble__meta">${outgoingSender}</div>
+                  <div class="chat-bubble__text">${outgoingText}</div>
+                `;
+                messagesContainer.appendChild(outgoingBubble);
+
+                requestAnimationFrame(() => {
+                  outgoingBubble.classList.add('is-visible');
+                });
+              }, 900);
+              activeTimers.push(t3);
+
+            }, 400);
+            activeTimers.push(t2);
+
+          }, 700);
+          activeTimers.push(t1);
         });
       });
 
@@ -781,10 +893,18 @@ const caseDefault = findItem(c.cases.items, c.cases.defaultItemId);
       const owner = box.querySelector<HTMLElement>('[data-ready-crm-owner]');
       const source = box.querySelector<HTMLElement>('[data-ready-crm-source]');
       const sla = box.querySelector<HTMLElement>('[data-ready-crm-sla]');
+      const detailPanel = box.querySelector<HTMLElement>('.crm-board-mock__detail');
 
-      const selectRow = (btn: HTMLButtonElement) => {
+      const selectRow = (btn: HTMLButtonElement, animate = true) => {
         box.querySelectorAll('[data-ready-crm-row]').forEach((r) => r.classList.remove('is-selected'));
         btn.classList.add('is-selected');
+
+        if (animate && detailPanel) {
+          detailPanel.classList.remove('is-animating');
+          void detailPanel.offsetWidth; // force reflow
+          detailPanel.classList.add('is-animating');
+        }
+
         if (title) title.textContent = btn.dataset.task ?? '';
         if (detail) detail.textContent = btn.dataset.detail ?? '';
         if (owner) owner.textContent = btn.dataset.owner ?? '';
@@ -793,10 +913,10 @@ const caseDefault = findItem(c.cases.items, c.cases.defaultItemId);
       };
 
       box.querySelectorAll<HTMLButtonElement>('[data-ready-crm-row]').forEach((btn) => {
-        btn.addEventListener('click', () => selectRow(btn));
+        btn.addEventListener('click', () => selectRow(btn, true));
       });
       const selected = box.querySelector<HTMLButtonElement>('[data-ready-crm-row].is-selected');
-      if (selected) selectRow(selected);
+      if (selected) selectRow(selected, false);
     });
 
     root.querySelectorAll<HTMLElement>('[data-ready-monday]').forEach((box) => {
@@ -807,10 +927,18 @@ const caseDefault = findItem(c.cases.items, c.cases.defaultItemId);
       const sla = box.querySelector<HTMLElement>('[data-ready-monday-sla]');
       const docs = box.querySelector<HTMLElement>('[data-ready-monday-docs]');
       const files = box.querySelector<HTMLElement>('[data-ready-monday-files]');
+      const detailPanel = box.querySelector<HTMLElement>('.fg-monday-mock__detail');
 
-      const activate = (btn: HTMLButtonElement) => {
+      const activate = (btn: HTMLButtonElement, animate = true) => {
         box.querySelectorAll('[data-ready-monday-item]').forEach((b) => b.classList.remove('is-active'));
         btn.classList.add('is-active');
+
+        if (animate && detailPanel) {
+          detailPanel.classList.remove('is-animating');
+          void detailPanel.offsetWidth; // force reflow
+          detailPanel.classList.add('is-animating');
+        }
+
         if (title) title.textContent = btn.dataset.name ?? '';
         if (detail) detail.textContent = btn.dataset.detail ?? '';
         if (owner) owner.textContent = btn.dataset.owner ?? '';
@@ -821,10 +949,10 @@ const caseDefault = findItem(c.cases.items, c.cases.defaultItemId);
       };
 
       box.querySelectorAll<HTMLButtonElement>('[data-ready-monday-item]').forEach((btn) => {
-        btn.addEventListener('click', () => activate(btn));
+        btn.addEventListener('click', () => activate(btn, true));
       });
       const active = box.querySelector<HTMLButtonElement>('[data-ready-monday-item].is-active');
-      if (active) activate(active);
+      if (active) activate(active, false);
     });
 
     root.querySelectorAll<HTMLElement>('[data-ready-table]').forEach((box) => {

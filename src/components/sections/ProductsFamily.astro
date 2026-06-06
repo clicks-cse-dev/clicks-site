@@ -316,9 +316,9 @@ const serviceOrder: ServiceKey[] = ['flowgram', 'tsm', 'crm', 'solutions'];
     inline-size: 100%;
     color: var(--color-text);
     transition:
-      transform var(--transition),
-      box-shadow var(--transition),
-      border-color var(--transition);
+      transform var(--duration-spring) var(--ease-spring),
+      box-shadow var(--duration-spring) var(--ease-spring),
+      border-color var(--duration-normal) var(--ease-smooth);
   }
 
   .product-card:hover,
@@ -472,13 +472,15 @@ const serviceOrder: ServiceKey[] = ['flowgram', 'tsm', 'crm', 'solutions'];
   }
 
   [data-reveal] {
-    transform: translateY(16px);
-    transition: transform 0.5s var(--ease-out);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: transform 0.6s var(--ease-spring), opacity 0.6s var(--ease-smooth);
     transition-delay: var(--reveal-delay, 0ms);
   }
 
   [data-reveal].is-revealed {
-    transform: none;
+    opacity: 1;
+    transform: translateY(0);
   }
 
   @media (prefers-reduced-motion: reduce) {

@@ -1211,15 +1211,127 @@ const tGis = gis[locale];
       });
     });
 
-    /* CRM: channel threads */
+    /* CRM: channel threads with realistic typing indicators and staggered slide-ups */
     root.querySelectorAll<HTMLElement>('[data-crm-demo]').forEach((crmBox) => {
-      const thread = crmBox.querySelector<HTMLElement>('[data-crm-thread]');
+      const messagesContainer = crmBox.querySelector<HTMLElement>('[data-crm-thread-messages]');
+      const typingIndicator = crmBox.querySelector<HTMLElement>('[data-crm-typing]');
+      let activeTimers: number[] = [];
+
+      const clearAllTimers = () => {
+        activeTimers.forEach(timer => clearTimeout(timer));
+        activeTimers = [];
+      };
+
       crmBox.querySelectorAll<HTMLButtonElement>('[data-crm-channel]').forEach((btn) => {
         btn.addEventListener('click', () => {
           crmBox.querySelectorAll('[data-crm-channel]').forEach((b) => {
             b.setAttribute('aria-selected', b === btn ? 'true' : 'false');
           });
-          if (thread) thread.textContent = btn.dataset.crmThreadText ?? '';
+
+          // Cancel any running sequences
+          clearAllTimers();
+
+          if (!messagesContainer) return;
+
+          // Clear messages and show typing indicator
+          messagesContainer.innerHTML = '';
+          if (typingIndicator) {
+            typingIndicator.style.display = 'inline-flex';
+          }
+
+          const incomingText = btn.dataset.msgIncoming ?? '';
+          const outgoingText = btn.dataset.msgOutgoing ?? '';
+          const incomingSender = btn.dataset.senderIncoming ?? 'User';
+          const outgoingSender = btn.dataset.senderOutgoing ?? 'Clicks CRM';
+
+          // First bubble (incoming) after 700ms of typing
+          const t1 = window.setTimeout(() => {
+            if (typingIndicator) typingIndicator.style.display = 'none';
+
+            const incomingBubble = document.createElement('div');
+            incomingBubble.className = 'chat-bubble chat-bubble--incoming';
+            incomingBubble.innerHTML = `
+              <div class="chat-bubble__meta">${incomingSender}</div>
+              <div class="chat-bubble__text">${incomingText}</div>
+            `;
+            messagesContainer.appendChild(incomingBubble);
+
+            // Trigger slide up
+            requestAnimationFrame(() => {
+              incomingBubble.classList.add('is-visible');
+            });
+
+            // Show typing indicator again for the response
+            const t2 = window.setTimeout(() => {
+              if (typingIndicator) typingIndicator.style.display = 'inline-flex';
+
+              // Show response after 900ms
+              const t3 = window.setTimeout(() => {
+                if (typingIndicator) typingIndicator.style.display = 'none';
+
+                const outgoingBubble = document.createElement('div');
+                outgoingBubble.className = 'chat-bubble chat-bubble--outgoing';
+                outgoingBubble.innerHTML = `
+                  <div class="chat-bubble__meta">${outgoingSender}</div>
+                  <div class="chat-bubble__text">${outgoingText}</div>
+                `;
+                messagesContainer.appendChild(outgoingBubble);
+
+                requestAnimationFrame(() => {
+                  outgoingBubble.classList.add('is-visible');
+                });
+              }, 900);
+              activeTimers.push(t3);
+
+            }, 400);
+            activeTimers.push(t2);
+
+          }, 700);
+          activeTimers.push(t1);
+        });
+      });
+    });
+
+    /* Solutions: project milestones with staggered reveals */
+    root.querySelectorAll<HTMLElement>('[data-solutions-demo]').forEach((solBox) => {
+      const checklistContainer = solBox.querySelector<HTMLElement>('[data-solutions-checklist]');
+      let activeSolTimers: number[] = [];
+
+      solBox.querySelectorAll<HTMLButtonElement>('[data-solutions-channel]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          solBox.querySelectorAll('[data-solutions-channel]').forEach((b) => {
+            b.setAttribute('aria-selected', b === btn ? 'true' : 'false');
+          });
+
+          activeSolTimers.forEach(timer => clearTimeout(timer));
+          activeSolTimers = [];
+
+          if (!checklistContainer) return;
+
+          checklistContainer.innerHTML = '';
+
+          const items = [
+            btn.dataset.item1 ?? '',
+            btn.dataset.item2 ?? '',
+            btn.dataset.item3 ?? ''
+          ].filter(Boolean);
+
+          items.forEach((item, index) => {
+            const t = window.setTimeout(() => {
+              const el = document.createElement('div');
+              el.className = 'solutions-milestone-item';
+              el.innerHTML = `
+                <span style="color: #00ca72; font-weight: bold;">✓</span>
+                <span>${item}</span>
+              `;
+              checklistContainer.appendChild(el);
+
+              requestAnimationFrame(() => {
+                el.classList.add('is-visible');
+              });
+            }, index * 200); // 200ms stagger
+            activeSolTimers.push(t);
+          });
         });
       });
     });

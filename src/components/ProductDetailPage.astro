@@ -680,9 +680,9 @@ const homeHref = localizedPath('/#products-family-title', locale);
     min-block-size: 12rem;
     color: var(--color-text);
     transition:
-      transform var(--transition),
-      box-shadow var(--transition),
-      border-color var(--transition);
+      transform var(--duration-spring) var(--ease-spring),
+      box-shadow var(--duration-spring) var(--ease-spring),
+      border-color var(--duration-normal) var(--ease-smooth);
   }
 
   .product-related__card :global(.product-lockup) {

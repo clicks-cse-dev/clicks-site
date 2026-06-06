@@ -95,8 +95,11 @@
   /* ---- Motion ---- */
   --transition: 0.18s cubic-bezier(0.16, 1, 0.3, 1);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
   --duration-fast: 150ms;
   --duration-normal: 200ms;
+  --duration-spring: 380ms;
 
   /* ---- Focus ring ---- */
   --focus-ring: 0 0 0 3px rgba(82, 70, 217, 0.34);
@@ -338,7 +341,10 @@ button {
   padding-inline: var(--space-5);
   border: 1px solid transparent;
   border-radius: var(--radius-full);
-  transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+  transition: 
+    transform var(--duration-spring) var(--ease-spring), 
+    box-shadow var(--duration-spring) var(--ease-spring), 
+    background var(--duration-normal) var(--ease-smooth);
   white-space: nowrap;
 }
 
@@ -350,7 +356,13 @@ button {
 
 .btn-primary:hover {
   color: #fff;
-  transform: translateY(-1px);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 16px 36px rgba(67, 22, 224, 0.38);
+}
+
+.btn-primary:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: var(--shadow-accent);
 }
 
 .btn-secondary {
@@ -362,6 +374,13 @@ button {
 
 .btn-secondary:hover {
   background: var(--color-surface-muted);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-secondary:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: var(--shadow-sm);
 }
 
 /* Raised card surface (never nest cards — DESIGN.md ban) */

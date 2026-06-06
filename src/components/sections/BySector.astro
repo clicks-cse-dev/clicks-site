@@ -260,9 +260,9 @@ const t = content[locale];
     color: var(--color-text);
     text-align: start;
     transition:
-      transform var(--transition),
-      box-shadow var(--transition),
-      border-color var(--transition);
+      transform var(--duration-spring) var(--ease-spring),
+      box-shadow var(--duration-spring) var(--ease-spring),
+      border-color var(--duration-normal) var(--ease-smooth);
   }
 
   .sector-card:hover {
