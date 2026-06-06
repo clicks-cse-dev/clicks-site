@@ -14,7 +14,7 @@ const { locale } = Astro.props;
 
 const content = {
   he: {
-    title: 'בואו נבין את האתגר — ונראה איך monday.com יכול לרוץ אצלכם',
+    title: 'בואו נבין את האתגר ונראה איך monday.com יכול לעבוד אצלכם ביום־יום',
     lead: 'שיחת ייעוץ קצרה, ללא התחייבות. נבין יחד את התהליכים, נציג מערכת חיה ונמליץ על מסלול הטמעה.',
     primary: 'לקביעת שיחת ייעוץ',
     primaryAria: 'לקביעת שיחת ייעוץ ביומן Google',
@@ -106,5 +106,27 @@ const caseHref = localizedPath('/cases/crm-360-service-year', locale);
     block-size: 1px;
     background: var(--color-divider);
     margin-block: var(--space-7);
+  }
+
+  @media (max-width: 640px) {
+    .closing__panel {
+      padding: var(--space-7) var(--space-5);
+    }
+    .closing__lead {
+      font-size: var(--text-md);
+      margin-block-end: var(--space-6);
+    }
+    /* Full-width, evenly stacked buttons read tidier than ragged centered pills. */
+    .closing__actions {
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--space-3);
+    }
+    .closing__actions .btn {
+      inline-size: 100%;
+    }
+    .closing__divider {
+      margin-block: var(--space-6);
+    }
   }
 </style>

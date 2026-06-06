@@ -14,29 +14,29 @@ const { locale } = Astro.props;
 
 const content = {
   he: {
-    title: 'מסוגלים ללוות כל מגזר, ולהתאים את עצמנו למציאות המשתנה',
+    title: 'עובדים עם גופים ציבוריים, רשויות, מלכ״רים וארגונים תפעוליים',
     intro:
-      'חברת ייעוץ שעובדת עם כל סוג ארגון: ציבורי, אזרחי, תעשייה או הייטק. בונים מערכת שמתעדכנת יחד איתכם כשהצרכים, הרגולציה והטכנולוגיה משתנים.',
+      'אנחנו נכנסים לתהליכים שיש בהם אחריות, רגולציה והרבה בעלי עניין, ובונים לוחות monday.com שאפשר לראות, למדוד ולתחזק גם אחרי ההשקה.',
     logosLabel: 'בין לקוחותינו',
     statsLabel: 'התוצאות שלנו במספרים',
     stats: [
-      { value: '+120', label: 'תהליכים שעברו אוטומציה', sub: 'בלוחות monday.com חיים' },
-      { value: '+9,000', label: 'שעות עבודה שנחסכו בשנה', sub: 'ברחבי הארגונים שלנו' },
+      { value: '+120', label: 'תהליכים שעברו אוטומציה', sub: 'בלוחות monday.com פעילים' },
+      { value: '+9,000', label: 'שעות עבודה שנחסכו בשנה', sub: 'אצל לקוחות שעובדים במערכות שבנינו' },
       { value: '99.2%', label: 'עמידה ביעדי SLA', sub: 'לתמיכה ותחזוקה ב‑Clicks TSM' },
-      { value: '+750K', label: 'תושבים ומוטבים מקבלים שירות', sub: 'דרך המערכות שבנינו' },
+      { value: '+750K', label: 'תושבים ומוטבים מקבלים שירות', sub: 'דרך תהליכים שמנוהלים על הלוחות' },
     ],
   },
   en: {
-    title: 'Every sector. A reality that keeps shifting. We adapt.',
+    title: 'Working with public bodies, municipalities, nonprofits and operations teams',
     intro:
-      'A consulting firm that works with any organization: public, civic, manufacturing or high-tech. We build systems that evolve with you as needs, regulation and technology change.',
+      'We enter processes with accountability, regulation and many stakeholders, then build monday.com boards teams can see, measure and maintain after launch.',
     logosLabel: 'Among our clients',
     statsLabel: 'Our outcomes in numbers',
     stats: [
-      { value: '120+', label: 'Processes automated', sub: 'on live monday.com boards' },
-      { value: '9,000+', label: 'Staff hours saved per year', sub: 'across the organizations we serve' },
+      { value: '120+', label: 'Processes automated', sub: 'on active monday.com boards' },
+      { value: '9,000+', label: 'Staff hours saved per year', sub: 'for clients using systems we built' },
       { value: '99.2%', label: 'SLA targets met', sub: 'for support & maintenance via Clicks TSM' },
-      { value: '750K+', label: 'Residents & beneficiaries served', sub: 'through the systems we built' },
+      { value: '750K+', label: 'Residents & beneficiaries served', sub: 'through workflows managed on the boards' },
     ],
   },
 } as const;
@@ -198,6 +198,11 @@ const t = content[locale];
 
   @media (max-width: 599px) {
     .logowall__item--wide {
+      grid-column: 1 / -1;
+    }
+
+    /* A lone trailing logo (odd count) shouldn't leave an empty half-cell. */
+    .logowall__item:last-child:nth-child(odd) {
       grid-column: 1 / -1;
     }
   }
