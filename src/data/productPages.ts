@@ -38,6 +38,7 @@ export interface ProductPageData {
   relatedSlugs: string[];
   relatedHref: string;
   relatedLabel: Record<Locale, string>;
+  faq: Record<Locale, { question: string; answer: string }[]>;
 }
 
 export const PRODUCT_PAGE_DATA: ProductPageData[] = [
@@ -121,6 +122,18 @@ export const PRODUCT_PAGE_DATA: ProductPageData[] = [
     relatedSlugs: ['clicks-tsm', 'monday-cms'],
     relatedHref: '/services/clicks-tsm',
     relatedLabel: { he: 'Clicks TSM — תפעול ותחזוקה', en: 'Clicks TSM — operations & maintenance' },
+    faq: {
+      he: [
+        { question: 'מה זה FlowGram?', answer: 'FlowGram הוא שירות האפיון של קליקס — מיפוי תהליכים, אוטומציות וחיבורים לפני ובמהלך בנייה על monday.com. בסוף האפיון מקבלים מפת תהליך, כללי אוטומציה ומפרט חיבורים.' },
+        { question: 'מתי מתחילים עם FlowGram?', answer: 'FlowGram מתאים לפני פתיחת הלוח הראשון או כשרוצים לשפר מערכת קיימת. אנחנו ממפים יחד את התהליך לפני שבונים — כדי שלא לבזבז זמן על לוחות שלא משרתים את העבודה האמיתית.' },
+        { question: 'כמה זמן לוקח אפיון FlowGram?', answer: 'תלוי במורכבות התהליך. אפיון בסיסי לוקח 2-4 שבועות. תהליכים מורכבים עם חיבורים למערכות רבות יכולים לקחת 6-8 שבועות.' },
+      ],
+      en: [
+        { question: 'What is FlowGram?', answer: "FlowGram is Clicks' process-design service — mapping workflows, automations and integrations before and during monday.com builds. The deliverable is a process map, automation rules and an integration spec." },
+        { question: 'When should we use FlowGram?', answer: "FlowGram fits before opening the first board or when improving an existing system. We map the process together before building — so you don't waste time on boards that don't match real work." },
+        { question: 'How long does a FlowGram engagement take?', answer: 'Depends on process complexity. A basic discovery takes 2-4 weeks. Complex processes with many system integrations can take 6-8 weeks.' },
+      ],
+    },
   },
   {
     slug: 'clicks-tsm',
@@ -202,6 +215,18 @@ export const PRODUCT_PAGE_DATA: ProductPageData[] = [
     relatedSlugs: ['flowgram', 'crm-connections'],
     relatedHref: '/services/flowgram',
     relatedLabel: { he: 'FlowGram — תכנון תהליכים', en: 'FlowGram — process planning' },
+    faq: {
+      he: [
+        { question: 'מה זה Clicks TSM?', answer: 'Clicks TSM הוא שירות התחזוקה השוטפת של מערכות monday.com. כולל תמיכה שוטפת, SLA מוגדר, עדכונים ושינויים, ניטור תהליכים וממשל מערכת — כדי שהמערכת תמשיך לעבוד לאורך זמן.' },
+        { question: 'האם אפשר להשיג TSM בלי להקים את המערכת עם קליקס?', answer: 'כן. Clicks TSM מתאים גם למערכות שנבנו על ידי מישהו אחר. אנו עוברים על המערכת הקיימת, מבינים את הארכיטקטורה, ומספקים תחזוקה שוטפת.' },
+        { question: 'מה ה-SLA של Clicks TSM?', answer: 'ה-SLA תלוי בתוכנית שנבחרה — זמני תגובה של 4 שעות עד 2 ימי עסקים, תלוי בדחיפות וברמת השירות.' },
+      ],
+      en: [
+        { question: 'What is Clicks TSM?', answer: 'Clicks TSM is the ongoing maintenance service for monday.com systems. It includes support, a defined SLA, updates and changes, process monitoring and system governance — so your system keeps working long-term.' },
+        { question: 'Can we get TSM without building the system with Clicks?', answer: 'Yes. Clicks TSM works for systems built by other parties. We audit the existing system, understand the architecture, and provide ongoing maintenance.' },
+        { question: 'What SLA does Clicks TSM offer?', answer: 'SLA depends on the chosen plan — response times from 4 hours to 2 business days, depending on urgency and service tier.' },
+      ],
+    },
   },
   {
     slug: 'monday-cms',
@@ -283,6 +308,18 @@ export const PRODUCT_PAGE_DATA: ProductPageData[] = [
     relatedSlugs: ['monday-gis', 'flowgram'],
     relatedHref: '/products/monday-gis',
     relatedLabel: { he: 'monday-GIS — מפות ו-ArcGIS', en: 'monday-GIS — maps & ArcGIS' },
+    faq: {
+      he: [
+        { question: 'מה זה Clicks Monday CMS?', answer: 'Clicks Monday CMS הוא גשר בין monday.com לבין מערכות ניהול תוכן כמו WordPress ו-Webflow. הוא מסנכרן תוכן, קטלוג, משתמשים ודפים בין monday.com לבין האתר — ללא פיתוח ידני.' },
+        { question: 'האם Monday CMS מתאים לרשויות מקומיות?', answer: 'כן. רשויות מקומיות שמנהלות אתרים ומידע ציבורי יכולות לסנכרן עדכונים ישירות מ-monday.com לאתר — חיסכון בכפל עבודה ושגיאות.' },
+        { question: 'אילו מערכות תוכן נתמכות?', answer: 'כרגע WordPress ו-Webflow. תמיכה ב-Wix ומערכות נוספות בפיתוח.' },
+      ],
+      en: [
+        { question: 'What is Clicks Monday CMS?', answer: 'Clicks Monday CMS bridges monday.com and content management systems like WordPress and Webflow. It syncs content, catalogue entries, users and pages between monday.com and your website — without manual development.' },
+        { question: 'Is Monday CMS suitable for local authorities?', answer: 'Yes. Local authorities managing public websites and information can sync updates directly from monday.com to the website — eliminating duplicate work and errors.' },
+        { question: 'Which CMS platforms are supported?', answer: 'Currently WordPress and Webflow. Wix and additional platforms are in development.' },
+      ],
+    },
   },
   {
     slug: 'monday-gis',
@@ -364,6 +401,18 @@ export const PRODUCT_PAGE_DATA: ProductPageData[] = [
     relatedSlugs: ['monday-cms', 'flowgram'],
     relatedHref: '/products/monday-cms',
     relatedLabel: { he: 'monday-CMS — תוכן וקטלוג', en: 'monday-CMS — content & catalog' },
+    faq: {
+      he: [
+        { question: 'מה זה Clicks Monday GIS?', answer: 'Clicks Monday GIS מסנכרן בין מערכות GIS ומפות ArcGIS לבין לוחות monday.com. נתוני מיקום, שכבות GIS ורשומות גיאוגרפיות מתעדכנים אוטומטית.' },
+        { question: 'לאיזה סוגי גופים מתאים Monday GIS?', answer: 'רשויות מקומיות, מועצות אזוריות, גופי תשתיות ותיירות שמנהלים נכסים גיאוגרפיים — ורוצים שהמידע הגיאוגרפי יהיה זמין בתוך monday.com.' },
+        { question: 'האם צריך ידע ב-GIS כדי להשתמש?', answer: 'לא. מי שמנהל את monday.com יכול לעבוד עם נתוני ה-GIS ישירות בלוח, ללא צורך בכלי GIS נפרדים.' },
+      ],
+      en: [
+        { question: 'What is Clicks Monday GIS?', answer: 'Clicks Monday GIS syncs GIS systems and ArcGIS maps with monday.com boards. Location data, GIS layers and geographic records update automatically.' },
+        { question: 'Which organisations benefit from Monday GIS?', answer: 'Local authorities, regional councils, infrastructure and tourism bodies managing geographic assets — and wanting geographic data available inside monday.com.' },
+        { question: 'Do users need GIS expertise?', answer: 'No. Anyone managing monday.com can work with GIS data directly in the board, without separate GIS tools.' },
+      ],
+    },
   },
   {
     slug: 'clicks-deploy-ready',
@@ -445,6 +494,18 @@ export const PRODUCT_PAGE_DATA: ProductPageData[] = [
     relatedSlugs: ['crm-connections', 'flowgram'],
     relatedHref: '/services/crm-connections',
     relatedLabel: { he: 'CRM Connections — ערוצי לקוח', en: 'CRM Connections — customer channels' },
+    faq: {
+      he: [
+        { question: 'מה זה Clicks Deploy Ready?', answer: 'Clicks Deploy Ready הוא חבילת השקה מהירה ל-monday.com — אוסף לוחות, אוטומציות ותבניות שנבנו מראש לפי סוג הארגון, כדי להתחיל לעבוד בימים ולא בחודשים.' },
+        { question: 'כמה זמן לוקחת השקה עם Deploy Ready?', answer: 'בין 3 ל-10 ימי עסקים, תלוי בגודל הארגון ובמורכבות הצרכים. הרבה יותר מהיר מהטמעה מאפס.' },
+        { question: 'האם אפשר לשנות אחר כך?', answer: 'בהחלט. Deploy Ready הוא נקודת ההתחלה — ניתן להתאים, להרחיב ולשנות את הלוחות לאורך הזמן בשירות Clicks TSM.' },
+      ],
+      en: [
+        { question: 'What is Clicks Deploy Ready?', answer: 'Clicks Deploy Ready is a fast-launch monday.com package — a curated set of boards, automations and templates pre-built for specific organisation types, so you start working in days not months.' },
+        { question: 'How long does a Deploy Ready rollout take?', answer: 'Between 3 and 10 business days, depending on organisation size and needs. Much faster than a build from scratch.' },
+        { question: 'Can things be changed later?', answer: 'Absolutely. Deploy Ready is a starting point — boards can be tailored, extended and changed over time using the Clicks TSM service.' },
+      ],
+    },
   },
   {
     slug: 'crm-connections',
@@ -526,6 +587,18 @@ export const PRODUCT_PAGE_DATA: ProductPageData[] = [
     relatedSlugs: ['flowgram', 'clicks-tsm'],
     relatedHref: '/products/clicks-deploy-ready',
     relatedLabel: { he: 'Clicks deploy ready — CRM 360', en: 'Clicks deploy ready — CRM 360' },
+    faq: {
+      he: [
+        { question: 'מה זה Clicks CRM Connections?', answer: 'Clicks CRM Connections הוא שירות חיבור בין monday.com לבין כלי CRM וממשקים חיצוניים — כולל WhatsApp Business, Meta Messenger, ומערכות ישנות. הנתונים זורמים אוטומטית בין המערכות.' },
+        { question: 'האם זה מתאים לרשויות ומלכ"רים?', answer: 'כן. הרבה גופים ציבוריים ומלכ"רים עובדים עם מערכות ישנות שלא מדברות זו עם זו. Clicks CRM Connections יוצר גשרים בין המערכות הקיימות לבין monday.com.' },
+        { question: 'אילו מערכות אפשר לחבר?', answer: 'ניתן לחבר WhatsApp Business, Meta Messenger, מערכות ERP ישנות, Google Sheets, מסדי נתונים, ועוד — תלוי בצרכי הארגון.' },
+      ],
+      en: [
+        { question: 'What is Clicks CRM Connections?', answer: 'Clicks CRM Connections bridges monday.com with CRM tools and external interfaces — including WhatsApp Business, Meta Messenger, and legacy systems. Data flows automatically between systems.' },
+        { question: 'Is it suitable for public bodies and nonprofits?', answer: 'Yes. Many public bodies and nonprofits run legacy systems that don\'t talk to each other. Clicks CRM Connections creates bridges between existing systems and monday.com.' },
+        { question: 'Which systems can be connected?', answer: 'WhatsApp Business, Meta Messenger, legacy ERP systems, Google Sheets, databases and more — depending on organisational needs.' },
+      ],
+    },
   },
   {
     slug: 'clicks-solutions',
@@ -607,6 +680,18 @@ export const PRODUCT_PAGE_DATA: ProductPageData[] = [
     relatedSlugs: ['flowgram', 'clicks-tsm'],
     relatedHref: '/services/flowgram',
     relatedLabel: { he: 'FlowGram — אפיון תהליכים', en: 'FlowGram — process design' },
+    faq: {
+      he: [
+        { question: 'מה זה Clicks Solutions?', answer: 'Clicks Solutions הוא ה-umbrella של פתרונות הייעוץ המותאמים אישית של קליקס — כולל בנייה ממוקדת על monday.com, אוטומציות, חיבורים ותהליכי גיוס והטמעה לפי צרכי הארגון.' },
+        { question: 'מה ההבדל בין Clicks Solutions לבין המוצרים האחרים?', answer: 'Clicks Solutions הוא הגישה הגמישה — כשהצרכים לא בדיוק מתאימים לפתרון מוכן. אנו בונים פתרון מותאם לתהליכים הספציפיים של הארגון.' },
+        { question: 'לאיזה סוגי ארגונים מתאים?', answer: 'לכל ארגון עם תהליכים ייחודיים שלא מתאימים לתבנית — רשויות מקומיות עם צרכים מיוחדים, מפעלים עם תהליכי ייצור מורכבים, מלכ"רים עם פעילות רב-שנתית.' },
+      ],
+      en: [
+        { question: 'What is Clicks Solutions?', answer: "Clicks Solutions is the umbrella for Clicks' bespoke consulting solutions — targeted monday.com builds, automations, integrations and onboarding processes tailored to each organisation's needs." },
+        { question: 'How does Clicks Solutions differ from the other products?', answer: "Clicks Solutions is the flexible approach — for when needs don't fit a ready-made product. We build a solution matched to the organisation's specific processes." },
+        { question: 'Which types of organisations fit?', answer: "Any organisation with unique processes that don't fit a template — local authorities with special needs, manufacturers with complex production workflows, nonprofits with multi-year programmes." },
+      ],
+    },
   },
 ];
 

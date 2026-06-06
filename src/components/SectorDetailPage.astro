@@ -43,6 +43,16 @@ const description = sector.descriptions[locale];
 const solutionsHref = localizedPath('/solutions', locale);
 const casesHref = localizedPath('/cases', locale);
 const sectorsHubHref = localizedPath('/#by-sector-title', locale);
+
+const faqJsonLd = sector.faq[locale].length > 0 ? {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: sector.faq[locale].map(({ question, answer }) => ({
+    '@type': 'Question',
+    name: question,
+    acceptedAnswer: { '@type': 'Answer', text: answer },
+  })),
+} : null;
 ---
 
 <Layout locale={locale} title={title} description={description}>
@@ -142,6 +152,25 @@ const sectorsHubHref = localizedPath('/#by-sector-title', locale);
         <BlogCaseStudiesBlock locale={locale} posts={caseStudies} />
       </div>
     </section>
+
+    {faqJsonLd && <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />}
+    {sector.faq[locale].length > 0 && (
+      <section class="section sector-faq" aria-labelledby="sector-faq-title">
+        <div class="container">
+          <header>
+            <h2 id="sector-faq-title" class="sector-section-title">{locale === 'he' ? 'שאלות נפוצות' : 'Frequently Asked Questions'}</h2>
+          </header>
+          <dl class="sector-faq__list">
+            {sector.faq[locale].map(({ question, answer }) => (
+              <div class="sector-faq__item">
+                <dt class="sector-faq__q">{question}</dt>
+                <dd class="sector-faq__a">{answer}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+    )}
 
     <section class="section sector-cta" aria-labelledby="sector-cta-title">
       <div class="container">
@@ -492,4 +521,10 @@ const sectorsHubHref = localizedPath('/#by-sector-title', locale);
       transform: none;
     }
   }
+
+  /* ---- FAQ ---- */
+  .sector-faq__list { display: flex; flex-direction: column; gap: var(--space-5); max-width: var(--content-narrow); margin-inline: auto; margin-block: 0; padding: 0; }
+  .sector-faq__item { border-block-start: 1px solid var(--color-divider); padding-block-start: var(--space-5); }
+  .sector-faq__q { font-size: var(--text-md); font-weight: var(--font-weight-semibold); color: var(--color-text); margin-block-end: var(--space-3); }
+  .sector-faq__a { font-size: var(--text-base); line-height: var(--line-height-relaxed); color: var(--color-text-secondary); margin: 0; }
 </style>
