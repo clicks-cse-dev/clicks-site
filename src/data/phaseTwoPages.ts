@@ -101,7 +101,7 @@ export const SECTOR_PAGES: PhaseTwoEntry[] = [
   {
     slug: 'manufacturing',
     kind: 'sector',
-    titles: { he: 'מפעלים ותעשייה (low-tech)', en: 'Manufacturing & low-tech' },
+    titles: { he: 'מפעלים ותעשייה מסורתית', en: 'Manufacturing & traditional industry' },
     descriptions: {
       he: 'ייצור, מלאי ותחזוקה על monday — דף מגזר.',
       en: 'Production, inventory and maintenance on monday — sector page.',
@@ -121,7 +121,7 @@ export const SECTOR_PAGES: PhaseTwoEntry[] = [
 export const SOLUTION_MONDAY_ECOSYSTEMS: PhaseTwoEntry = {
   slug: 'monday-ecosystems',
   kind: 'solution',
-  titles: { he: 'אקוסיסטמים מוכנים על monday', en: 'Ready-to-deploy monday ecosystems' },
+  titles: { he: 'חבילות monday מוכנות להטמעה', en: 'Ready monday implementation packs' },
   descriptions: {
     he: 'CRM 360, ניהול תיקים, SLA ודשבורדים — דף פתרון מפורט בקרוב.',
     en: 'CRM 360, case management, SLAs and dashboards — full solution page coming soon.',

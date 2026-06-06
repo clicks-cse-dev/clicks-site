@@ -19,9 +19,9 @@ type CardItem = { name: string; oneLiner: string; href: string };
 
 const content = {
   he: {
-    title: 'מערכת אחת, אקוסיסטם שלם על monday.com',
+    title: 'מוצרים ופיתוחים מותאמים על monday.com',
     intro:
-      'מוצרים מוכנים לשוק (CMS, GIS, deploy ready) ופיתוחים מותאמים (FlowGram, TSM, CRM Connections, Solutions) — לציבורי, אזרחי, מפעלים, low-tech והייטק.',
+      'מוצרים מוכנים ופיתוח מותאם: ניהול תוכן, מפות, חבילות מוכנות להטמעה, תכנון תהליכים, תחזוקה וחיבורי CRM לארגונים ציבוריים, אזרחיים ותפעוליים.',
     productsLabel: 'מוצרים',
     servicesLabel: 'פיתוחים מותאמים',
     products: {
@@ -40,7 +40,7 @@ const content = {
       ready: {
         name: 'Clicks deploy ready',
         oneLiner:
-          'אקוסיסטמים מוכנים על monday — CRM 360, ניהול תיקים, אונבורדינג/SLA ודשבורדים — להטמעה מהירה.',
+          'חבילות monday מוכנות להטמעה: CRM 360, ניהול תיקים, קליטה, SLA ודשבורדים.',
         href: offerPagePath('clicks-deploy-ready'),
       },
     } satisfies Record<ProductKey, CardItem>,
@@ -48,13 +48,13 @@ const content = {
       flowgram: {
         name: 'FlowGram by Clicks',
         oneLiner:
-          'הנדסת תהליכים: תהליכי עבודה, אוטומציות ואינטגרציות עומק בין מערכות — בלוּפרינטים, ETL וניקוי נתונים.',
+          'תכנון תהליכים: מפת עבודה, אוטומציות וחיבורים בין מערכות לפני הבנייה על monday.',
         href: offerPagePath('flowgram'),
       },
       tsm: {
         name: 'Clicks TSM',
         oneLiner:
-          'ניהול טכנולוגיה ומערכות: תחזוקה, ITSM, בקרה וממשל, קיימוּת ומיצוי ROI טכנולוגי.',
+          'תחזוקה שוטפת למערכות monday: קריאות שירות, הרשאות, דוחות, SLA ושינויים.',
         href: offerPagePath('clicks-tsm'),
       },
       crm: {
@@ -72,16 +72,16 @@ const content = {
     } satisfies Record<ServiceKey, CardItem>,
     cardCta: 'גלו עוד',
     roadmap: {
-      chip: '2027 · ב-roadmap',
+      chip: 'מתוכנן ל-2027',
       name: 'Clicks WORK',
       oneLiner:
-        'ניהול שינוי, תהליכים ארגוניים ואיזון עבודה–בית / עבודה מהבית — בקרוב.',
+        'ניהול שינוי ותהליכי עבודה פנים-ארגוניים. מתוכנן ל-2027.',
     },
   },
   en: {
-    title: 'One system, a whole ecosystem on monday.com',
+    title: 'Products and custom builds on monday.com',
     intro:
-      'Shipped products (CMS, GIS, deploy ready) and custom developments (FlowGram, TSM, CRM Connections, Solutions) — one ecosystem for public, civic, manufacturing, low-tech and high-tech teams.',
+      'Ready products and custom development: content management, maps, ready implementation packs, process planning, maintenance and CRM connections for public, civic and operations-heavy organizations.',
     productsLabel: 'Products',
     servicesLabel: 'Custom developments',
     products: {
@@ -100,7 +100,7 @@ const content = {
       ready: {
         name: 'Clicks deploy ready',
         oneLiner:
-          'Ready monday ecosystems — CRM 360, case management, onboarding/SLA and dashboards for a fast rollout.',
+          'Ready monday implementation packs: CRM 360, case management, intake, SLA and dashboards.',
         href: offerPagePath('clicks-deploy-ready'),
       },
     } satisfies Record<ProductKey, CardItem>,
@@ -108,13 +108,13 @@ const content = {
       flowgram: {
         name: 'FlowGram by Clicks',
         oneLiner:
-          'Process engineering: workflows, automations and deep system integrations — blueprints, ETL and data hygiene.',
+          'Process planning: work map, automations and system connections before the monday build.',
         href: offerPagePath('flowgram'),
       },
       tsm: {
         name: 'Clicks TSM',
         oneLiner:
-          'Technology & systems management: maintenance, ITSM, control & governance, sustainability and tech ROI.',
+          'Ongoing care for monday systems: service tickets, permissions, reports, SLAs and changes.',
         href: offerPagePath('clicks-tsm'),
       },
       crm: {
@@ -135,7 +135,7 @@ const content = {
       chip: '2027 · on the roadmap',
       name: 'Clicks WORK',
       oneLiner:
-        'Change management, organizational processes and WLB / WFH enablement — coming soon.',
+        'Change management and internal work processes. Planned for 2027.',
     },
   },
 } as const;

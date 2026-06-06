@@ -5,7 +5,7 @@
  */
 
 export const COMPANY_NAME = 'Clicks Strategic Ecosystems';
-export const COMPANY_NAME_HE = 'קליקס — מערכות הפעלה אסטרטגיות';
+export const COMPANY_NAME_HE = 'קליקס — פתרונות monday.com לארגונים';
 
 export const PHONE = '054-694-5131';
 /** E.164 form for tel: links */

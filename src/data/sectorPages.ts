@@ -36,8 +36,8 @@ export const SECTOR_PAGE_DATA: SectorPageData[] = [
       en: 'Fragmented systems, manual bureaucracy and an unclear chain of accountability.',
     },
     proofs: {
-      he: 'מוכנות לרכש, נגישות לפי תקן, אסמכתאות בשם אמיתי ומוצר עובד — לא מצגת.',
-      en: 'Procurement-readiness, standards-compliant accessibility, named references and a working product — not slideware.',
+      he: 'מוכנות לרכש, נגישות לפי תקן, אסמכתאות בשם אמיתי ומערכת שאפשר לראות.',
+      en: 'Procurement-readiness, standards-compliant accessibility, named references and a system you can see.',
     },
     bullets: {
       he: [
@@ -69,16 +69,16 @@ export const SECTOR_PAGE_DATA: SectorPageData[] = [
     icon: 'municipality',
     titles: { he: 'רשויות מקומיות', en: 'Local authorities' },
     descriptions: {
-      he: 'שירות לתושב מהיר יותר — פחות נפילות בין מחלקות.',
-      en: 'Faster resident services — fewer things falling between departments.',
+      he: 'שירות לתושב עם סטטוס ברור, אחריות ומעקב עד סגירה.',
+      en: 'Resident services with clear status, ownership and tracking through closure.',
     },
     pains: {
       he: 'שירות לתושב שנתקע בתהליכים איטיים ובהעברות בין מחלקות.',
       en: 'Resident services stuck in slow processes and hand-offs between departments.',
     },
     proofs: {
-      he: 'תוצאות של "היומיום בקליק" עם מספרי ROI — בקשות שנסגרות מהר.',
-      en: '"Everyday in one click" outcomes with ROI numbers — requests that close faster.',
+      he: 'לוחות פניות, SLA ודוחות שמראים איפה בקשות עומדות ומה נופל בין מחלקות.',
+      en: 'Request boards, SLAs and reports that show where requests stand and what falls between departments.',
     },
     bullets: {
       he: [
@@ -156,20 +156,20 @@ export const SECTOR_PAGE_DATA: SectorPageData[] = [
     icon: 'nonprofit',
     titles: { he: 'מלכ"רים ועמותות', en: 'Nonprofits' },
     descriptions: {
-      he: 'CRM 360, קליטה וניהול תיקים — ליווי צמוד ומהיר להטמעה.',
+      he: 'קליטת פניות, ניהול תיקים ומעקב אחרי מוטבים בלי להעמיס על צוות קטן.',
       en: 'CRM 360, intake and case management — close consulting support and fast to deploy.',
     },
     pains: {
-      he: 'CRM 360, קליטה וניהול מקרים — עם תקציב מצומצם וצוות רזה.',
-      en: 'CRM 360, intake and case management — on a tight budget with a lean team.',
+      he: 'מעט אנשי צוות, הרבה פניות ותורמים, ויותר מדי מעקב ידני אחרי מוטבים ומתנדבים.',
+      en: 'Lean teams, many requests and donors, and too much manual tracking of beneficiaries and volunteers.',
     },
     proofs: {
-      he: 'ליווי צמוד, מערכות מוכנות-להטמעה וגישה ישירה למייסדים.',
-      en: 'Close consulting partnership, ready-to-deploy systems and direct founder access.',
+      he: 'חבילות מוכנות להטמעה, ליווי צמוד וגישה ישירה למייסדים בלי פרויקט כבד.',
+      en: 'Ready implementation packs, close guidance and direct founder access without a heavy project.',
     },
     bullets: {
       he: [
-        'רולאאוט מהיר בלי פרויקט ענק.',
+        'הטמעה מהירה בלי פרויקט ענק.',
         'ערוצי קליטה מרובים על monday.',
         'ניהול תיקים ו-SLA מוכנים.',
       ],
@@ -195,13 +195,13 @@ export const SECTOR_PAGE_DATA: SectorPageData[] = [
   {
     slug: 'manufacturing',
     icon: 'manufacturing',
-    titles: { he: 'מפעלים ותעשייה (low-tech)', en: 'Manufacturing & low-tech' },
+    titles: { he: 'מפעלים ותעשייה מסורתית', en: 'Manufacturing & traditional industry' },
     descriptions: {
-      he: 'ייצור, לוגיסטיקה ותפעול שטח — בלי ERP כבד, עם monday שמדבר עם המציאות.',
-      en: 'Production, logistics and shop-floor ops — without a heavy ERP, with monday wired to reality.',
+      he: 'ייצור, לוגיסטיקה ותפעול שטח בלי ERP כבד ובלי לנהל הכול באקסלים.',
+      en: 'Production, logistics and field operations without a heavy ERP and without running everything in spreadsheets.',
     },
     pains: {
-      he: 'אקסלים, וואטסאפ ומערכות ישנות שלא מדברות — הזמנות, מלאי ותחזוקה נופלים בין הכיסאות.',
+      he: 'אקסלים, וואטסאפ ומערכות ישנות שלא מדברות: הזמנות, מלאי ותחזוקה נופלים בין צוותים.',
       en: 'Spreadsheets, WhatsApp and legacy tools that don’t talk — orders, inventory and maintenance fall through the cracks.',
     },
     proofs: {
@@ -238,8 +238,8 @@ export const SECTOR_PAGE_DATA: SectorPageData[] = [
     icon: 'hitech',
     titles: { he: 'חברות הייטק', en: 'High-tech companies' },
     descriptions: {
-      he: 'גיילות, מוצר ותפעול — monday כשכבת תיאום בין צוותים וכלים.',
-      en: 'Agility, product and ops — monday as the coordination layer across teams and tools.',
+      he: 'מוצר, מכירות ותפעול על monday כשכבת תיאום בין צוותים וכלים.',
+      en: 'Product, sales and operations on monday as the coordination layer across teams and tools.',
     },
     pains: {
       he: 'Jira, CRM, כספים ושיווק בערימות נפרדות — בלי תמונת מצב אחת לניהול ולמדידה.',
@@ -252,8 +252,8 @@ export const SECTOR_PAGE_DATA: SectorPageData[] = [
     bullets: {
       he: [
         'חיבור כלי פיתוח, מכירות ותמיכה ל-monday.',
-        'FlowGram לתהליכי אונבורדינג, רכש פנימי ואישורים.',
-        'Clicks TSM לממשל, הרשאות ותחזוקה של האקוסיסטם.',
+        'FlowGram לתהליכי קליטה, רכש פנימי ואישורים.',
+        'Clicks TSM לממשל, הרשאות ותחזוקה שוטפת.',
       ],
       en: [
         'Wire dev, sales and support tools into monday.',

@@ -45,7 +45,7 @@ export const FOUNDERS: FounderData[] = [
     name: { he: 'עמית איזנקוט', en: 'Amit Aizenkot' },
     role: { he: 'מייסד ומנהל טכנולוגיות', en: 'Co-Founder & Head of Technology' },
     hero: {
-      he: 'יוצר טכנולוגי שמוביל פיתוח מקצה לקצה: ארכיטקטורה, קוד, אינטגרציות ופרויקטים מורכבים על monday.com ובמערכות סביבו. מפתח ומנהל פרויקטים טכנולוגיים מנוסה; בונה מוצרים, אוטומציות ומערכות שחייבות לעמוד בשטח, לא להיעצר ב-POC.',
+      he: 'מוביל פיתוח וארכיטקטורה מקצה לקצה: קוד, אינטגרציות ופרויקטים מורכבים על monday.com ובמערכות סביבו. מפתח ומנהל פרויקטים טכנולוגיים מנוסה; בונה מוצרים, אוטומציות ומערכות שצריכות לעבוד בשטח, לא להישאר בהוכחת היתכנות.',
       en: 'Technical creator who leads delivery end to end: architecture, code, integrations and complex builds on monday.com and the systems around it. An experienced developer and technology project manager; ships products, automation and platforms that have to hold up in production, not stop at a proof of concept.',
     },
     focus: {
@@ -63,43 +63,23 @@ export const FOUNDERS: FounderData[] = [
 export const FOUNDERS_STORY: Record<Locale, readonly string[]> = {
   he: [
     'בתחילת מלחמת חרבות ברזל התנדב ספיר לסייע לפיקוד העורף.',
-    'בתוך מציאות של לחץ מתמשך, אי־ודאות וקצב עבודה שלא עוצר לרגע, הוא פגש אנשים מסורים שפעלו סביב השעון למען מטרה משותפת.',
-    'לצד המחויבות והעשייה, הוא זיהה גם אתגרים שחזרו על עצמם: מידע מפוזר בין גורמים שונים, משימות שחופפות זו לזו וחוסר שקיפות שהקשה על קבלת החלטות בזמן אמת.',
-    'במקום לחפש אשמים או תירוצים, הוא חיפש פתרון.',
-    'לא עוד מערכת מורכבת, אלא דרך עבודה שתאפשר לכל המעורבים לראות את אותה תמונה, להבין מה מצב המשימות, ומי אחראי לכל שלב בתהליך.',
-    'כך הוטמעו לראשונה שיטות עבודה סדורות — לא כפרויקט טכנולוגי, אלא ככלי שמאפשר לאנשים לעבוד יחד בצורה טובה יותר.',
-    'התוצאות הגיעו מהר: תיאום טוב יותר בין גורמים, טיפול מהיר יותר בבקשות וסגירת מעגלים אפקטיבית גם בתנאי לחץ.',
-    'כשהמודל הוכיח את עצמו, התחדדה ההבנה שמדובר באתגר רחב הרבה יותר. ארגונים רבים יודעים מה הם רוצים להשיג, אך מתקשים להפוך כוונות לביצוע כאשר התהליכים, המידע והאנשים אינם מחוברים זה לזה.',
-    'ספיר ועמית נפגשו סביב אותה תפיסה. שניהם מאמינים שטכנולוגיה היא אמצעי — לא מטרה.',
-    'המטרה היא לגרום לארגונים לעבוד טוב יותר, לשרת טוב יותר ולהשיג יותר.',
+    'בתוך קצב עבודה מהיר, לחץ מתמשך והרבה גורמים מעורבים, הוא ראה שוב ושוב את אותה בעיה: מידע מפוזר, משימות כפולות וחוסר שקיפות שהקשה לקבל החלטות בזמן.',
+    'הפתרון לא היה עוד מערכת כבדה, אלא דרך עבודה שמראה לכולם אותה תמונה: מה פתוח, מי אחראי ומה צריך לקרות עכשיו.',
+    'כשהשיטה התחילה לעבוד, התברר שזה לא אתגר של חירום בלבד. גם רשויות, עמותות ומפעלים מתקשים להפוך כוונות לביצוע כשהתהליך, המידע והאנשים לא מחוברים.',
     'ספיר, שצמח במשרד הפנים, מביא עמו היכרות עמוקה עם המגזר הציבורי, עם תהליכי קבלת החלטות ועם המציאות היומיומית של הלקוחות.',
     'עמית, בוגר יחידת 8200 ובעל ניסיון עשיר בהייטק, מתמחה בבניית פתרונות טכנולוגיים ובהפיכת רעיונות מורכבים למערכות שעובדות בפועל.',
-    'למרות הרקע השונה, הם חולקים אמונה משותפת ופשוטה: אם הפתרון לא עובד בשטח עבור האנשים שמשתמשים בו מדי יום — הוא לא באמת פתרון.',
     'מתוך התפיסה הזו נולדה קליקס.',
-    'קליקס היא חברת ייעוץ והטמעת פתרונות שמסייעת לארגונים לחבר בין אנשים, תהליכים וטכנולוגיה.',
-    'אנחנו מלווים את הלקוח לכל אורך הדרך — משלב האפיון והחשיבה האסטרטגית, דרך בניית התהליך והמערכת, ועד להטמעה מלאה אצל המשתמשים בקצה.',
-    'אנחנו עובדים עם משרדי ממשלה, רשויות מקומיות, מלכ"רים, מפעלים וחברות הייטק — מתוך אותה מטרה: להפוך תהליכים מורכבים לעבודה ברורה, יעילה ומחוברת למציאות.',
-    'כי בסופו של דבר, מערכות לא משנות ארגונים. אנשים עושים זאת — והמערכות צריכות לעזור להם להצליח.',
+    'היום קליקס מלווה לקוחות משלב האפיון, דרך בניית הלוחות והאוטומציות, ועד תחזוקה והטמעה אצל האנשים שעובדים במערכת מדי יום.',
   ],
   en: [
     'At the beginning of the Iron Swords war, Sapir volunteered to support Home Front Command.',
-    'In a reality of sustained pressure, uncertainty and a pace of work that never paused, he met people who worked around the clock toward a shared goal.',
-    'Alongside that commitment, he saw challenges that kept repeating: information scattered across teams, overlapping tasks and a lack of visibility that made real-time decisions harder.',
-    'Instead of looking for blame or excuses, he looked for a solution.',
-    'Not another complex system, but a way of working that would let everyone involved see the same picture, understand the state of tasks and know who owns each step in the process.',
-    'That is when structured ways of working were introduced for the first time — not as a technology project, but as a tool that helps people work together more effectively.',
-    'Results came quickly: better coordination, faster handling of requests and effective closure of loops even under pressure.',
-    'When the model proved itself, a wider truth became clear: many organizations know what they want to achieve, but struggle to turn intent into execution when processes, information and people are not connected.',
-    'Sapir and Amit came together around the same view. Both believe technology is a means — not an end.',
-    'The goal is to help organizations work better, serve better and achieve more.',
+    'In a fast-moving environment with pressure and many stakeholders, he kept seeing the same problem: scattered information, duplicated tasks and limited visibility for timely decisions.',
+    'The answer was not another heavy system, but a way of working that showed everyone the same picture: what is open, who owns it and what needs to happen now.',
+    'When that method started working, it became clear this was not only an emergency problem. Municipalities, nonprofits and manufacturers face the same challenge when process, information and people are disconnected.',
     'Sapir, who grew up in Israel’s Ministry of Interior, brings deep familiarity with the public sector, decision-making processes and clients’ day-to-day reality.',
     'Amit, a graduate of Unit 8200 with extensive high-tech experience, specializes in building technology solutions and turning complex ideas into systems that work in practice.',
-    'Despite different backgrounds, they share one simple belief: if a solution does not work in the field for the people who use it every day — it is not really a solution.',
     'That is how Clicks was born.',
-    'Clicks is a consulting and implementation firm that helps organizations connect people, processes and technology.',
-    'We accompany clients end to end — from discovery and strategic thinking, through building the process and system, to full adoption with frontline users.',
-    'We work with government ministries, municipalities, nonprofits, manufacturers and high-tech companies — toward the same goal: turning complex processes into work that is clear, efficient and grounded in reality.',
-    'In the end, systems do not change organizations. People do — and systems should help them succeed.',
+    'Today Clicks supports clients from discovery, through boards and automations, to maintenance and adoption by the people who use the system every day.',
   ],
 };
 
@@ -113,7 +93,7 @@ export const FOUNDERS_SECTION = {
   he: {
     title: 'חברת ייעוץ עם מייסדים בחזית',
     storyTeaser:
-      'מתוך עבודה בשטח בתקופה מאתגרת — כשמידע, משימות ואחריות לא היו מחוברים — חיפשנו דרך עבודה שעובדת לאנשים, לא רק במצגת. משם גדלה קליקס: ייעוץ והטמעה שמחברים אנשים, תהליכים וטכנולוגיה.',
+      'מתוך עבודה בשטח בתקופה מאתגרת, כשמידע, משימות ואחריות לא היו מחוברים, חיפשנו דרך עבודה שאנשים באמת יכולים להשתמש בה. משם גדלה קליקס: ייעוץ, בנייה ותחזוקה של תהליכים על monday.com.',
     storyMore: 'לסיפור ההקמה המלא',
     foundersLead: 'על המייסדים',
     aboutCta: 'עוד על קליקס',
@@ -121,7 +101,7 @@ export const FOUNDERS_SECTION = {
   en: {
     title: 'A consulting firm with founders at the front',
     storyTeaser:
-      'From work in the field during a demanding period — when information, tasks and ownership were disconnected — we looked for a way of working that helps people, not just slides. That is how Clicks grew: consulting and implementation that connects people, processes and technology.',
+      'From field work during a demanding period, when information, tasks and ownership were disconnected, we looked for a way of working people could actually use. That is how Clicks grew: consulting, build and maintenance for monday.com workflows.',
     storyMore: 'Read our full founding story',
     foundersLead: 'About the founders',
     aboutCta: 'More about Clicks',

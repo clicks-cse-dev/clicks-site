@@ -22,11 +22,11 @@ const t = {
     tabs: [
       { id: 'crm360', label: 'CRM 360' },
       { id: 'cases', label: 'ניהול תיקים' },
-      { id: 'onboarding', label: 'אונבורדינג + SLA' },
+      { id: 'onboarding', label: 'קליטה + SLA' },
       { id: 'dashboard', label: 'דשבורד מנהלים' },
     ],
     crm360: {
-      caption: 'מסע לקוח/תושב מקצה לקצה — ערוצים, לוח CRM ומדידה במקום אחד.',
+      caption: 'פניות לקוח או תושב: ערוצים, לוח CRM ומדידה במקום אחד.',
       window: 'CRM Connections',
       board: 'פניות תושבים · CRM 360',
       badge: 'לוח CRM',
@@ -165,7 +165,7 @@ const t = {
     dashboard: {
       caption: 'תמונת מצב שבועית: פתוחות, חריגות ועמידה ביעדים.',
       board: 'דשבורד מנהלים · שירות',
-      badge: 'Dashboard',
+      badge: 'דשבורד',
       widgets: [
         { value: '128', label: 'פתוחות', color: '#579bfc' },
         { value: '11', label: 'חריגות SLA', color: '#e85d4c' },
@@ -374,7 +374,7 @@ const caseDefault = findItem(c.cases.items, c.cases.defaultItemId);
     {c.livePrefix} {c.crm360.caption}
   </p>
 
-  <div class="product-demo__tabs" role="tablist" aria-label={locale === 'he' ? 'חבילות Ready-to-deploy' : 'Ready-to-deploy packs'}>
+  <div class="product-demo__tabs" role="tablist" aria-label={locale === 'he' ? 'חבילות מוכנות להטמעה' : 'Ready-to-deploy packs'}>
     {
       c.tabs.map((tab, i) => (
         <button

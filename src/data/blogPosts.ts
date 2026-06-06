@@ -27,7 +27,7 @@ export const BLOG_POSTS: BlogPost[] = [
         },
         {
           label: {
-            he: 'CRM ליבה: טפסים, workflows ואוטומציות בלוחות',
+            he: 'CRM ליבה: טפסים, תהליכי עבודה ואוטומציות בלוחות',
             en: 'Core CRM: forms, workflows and board automations',
           },
           productSlug: 'clicks-solutions',
@@ -87,24 +87,24 @@ export const BLOG_POSTS: BlogPost[] = [
       en: 'CRM 360 for the service year',
     },
     title: {
-      he: 'CRM 360 לשנת שירות — מערכת הפעלה אחת על monday.com',
-      en: 'CRM 360 for the service year — one operating system on monday.com',
+      he: 'CRM 360 לשנת שירות — גיוס, שיבוץ ומעקב על monday.com',
+      en: 'CRM 360 for the service year — recruitment, placement and tracking on monday.com',
     },
     description: {
-      he: 'איך בנינו מערכת הפעלה אחת לגיוס, מיון, שיבוץ ומעקב חניכה — עם FlowGram, CRM Connections ופתרונות monday מוכנים.',
-      en: 'How we built one operating system for recruitment, placement and mentorship tracking — with FlowGram, CRM Connections and ready monday ecosystems.',
+      he: 'איך בנינו תהליך אחד לגיוס, מיון, שיבוץ ומעקב חניכה עם FlowGram, CRM Connections וחבילות monday מוכנות.',
+      en: 'How we built one process for recruitment, placement and mentorship tracking with FlowGram, CRM Connections and ready monday packs.',
     },
     h1: {
-      he: 'מ-CRM 360 אחד — שנת שירות שלמה רצה בקליק',
-      en: 'One CRM 360 — a whole service year, running in a click',
+      he: 'גיוס, שיבוץ ומעקב חניכה בלוח CRM 360 אחד',
+      en: 'Recruitment, placement and mentorship tracking on one CRM 360 board',
     },
     lead: {
-      he: 'ארגון חינוכי גדול ניהל שנת שירות על גיליונות, טפסים מפוזרים ומעקב ידני בין צוותים. בנינו מערכת הפעלה אחת על monday.com: קליטת מועמדים, שיבוץ, מעקב חניכה ודיווח — עם אפיון תהליך לפני הבנייה וערוצי תקשורת מחוברים ללוח.',
-      en: 'A large education org ran its service year on spreadsheets, scattered forms and manual handoffs between teams. We built one operating ecosystem on monday.com: candidate intake, placement, mentorship tracking and reporting — with process design before build and communication channels wired to the board.',
+      he: 'ארגון חינוכי גדול ניהל שנת שירות על גיליונות, טפסים מפוזרים ומעקב ידני בין צוותים. בנינו על monday.com תהליך אחד לקליטת מועמדים, שיבוץ, מעקב חניכה ודיווח, עם אפיון לפני הבנייה וערוצי תקשורת שמחוברים ללוח.',
+      en: 'A large education org ran its service year on spreadsheets, scattered forms and manual handoffs between teams. We built one monday.com process for candidate intake, placement, mentorship tracking and reporting, with process design before build and communication channels wired to the board.',
     },
     metrics: [
       {
-        label: { he: 'Workflows בלוחות הליבה', en: 'Core board workflows' },
+        label: { he: 'תהליכי עבודה בלוחות הליבה', en: 'Core board workflows' },
         value: { he: '25–35', en: '25–35' },
         delta: { he: 'מסע מועמד מלא', en: 'Full candidate journey' },
       },
@@ -134,7 +134,7 @@ export const BLOG_POSTS: BlogPost[] = [
         en: 'Recruitment and sorting for the service year were split across campaigns, events, questionnaires and spreadsheets. Each team held a different status picture, and Meta leads did not land consistently on one board. Leadership lacked a single view of conversion, placement and data quality.',
       },
       approach: {
-        he: 'עבדנו במודל Discover → Architect → Build → Operate: מיפוי מסע המועמד ותרשימי זרימה משותפים, יישום CRM ליבה לפי best practice, שכבת דשבורדים ו-ETL, ואז חיבור ערוצי תקשורת רב-ערוציים — לפני QA, הדרכה ועלייה מסודרת לאוויר.',
+        he: 'עבדנו בשלבים ברורים: מיפוי מסע המועמד ותרשימי זרימה משותפים, יישום CRM ליבה לפי תבנית מוסכמת, דשבורדים וניקוי נתונים, ואז חיבור ערוצי תקשורת לפני בדיקות, הדרכה ועלייה מסודרת לאוויר.',
         en: 'We followed Discover → Architect → Build → Operate: mapped the candidate journey and shared flow blueprints, implemented core CRM to best practice, added dashboards and ETL, then wired multi-channel comms — before QA, training and a controlled go-live.',
       },
       built: {
@@ -143,7 +143,7 @@ export const BLOG_POSTS: BlogPost[] = [
           'CRM ליבה: טפסי הרשמה, אינטייק, שאלוני העדפות, צ\'ק-ליסטים ותצוגות לצוותים.',
           'קשרים בין לידים, מועמדים, יישובים, מסלולים, קומונות ורשויות.',
           'Clicks CRM Connections: WhatsApp Business, Messenger, בוט פניות, סנכרון לשדות וסטטוסים.',
-          'דשבורדים: מדדי התקדמות, מקורות לידים, ROI בסיסי וסימולציות לשיבוץ.',
+          'דשבורדים: מדדי התקדמות, מקורות לידים, עלות מול תוצאה וסימולציות לשיבוץ.',
         ],
         en: [
           'Detailed mapping: lead sources, statuses, board structures, candidate/alumni cards and sensitive fields.',
@@ -277,7 +277,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         label: { he: 'מודולי שירות', en: 'Service modules' },
         value: { he: 'ליווי + הכשרות + SLA', en: 'Coaching + training + SLA' },
-        delta: { he: 'Ready-to-deploy', en: 'Ready-to-deploy' },
+        delta: { he: 'חבילה מוכנה', en: 'Ready-to-deploy' },
       },
     ],
     sections: {
@@ -295,7 +295,7 @@ export const BLOG_POSTS: BlogPost[] = [
       },
       built: {
         he: [
-          'קטלוג עסקים: טופס איסוף, לוח נכסים ו-workflows לעריכה לפני פרסום.',
+          'קטלוג עסקים: טופס איסוף, לוח נכסים ותהליכי אישור לפני פרסום.',
           'monday-CMS: שידור ועדכון עמודי עסקים באתר מתוך הלוח.',
           'זרימות WhatsApp: זיהוי לפי טלפון/ח.פ., תפריטים, יצירת לידים ועדכון סטטוסים.',
           'מענה טלפוני (IVR): ניתוב לבוט או לשיחה חוזרת עם רישום בלוח שיחות נכנסות.',

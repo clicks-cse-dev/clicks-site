@@ -21,8 +21,8 @@ const { locale } = Astro.props;
 
 const content = {
   he: {
-    title: 'בנינו מערכות הפעלה למי שדומה לכם',
-    lead: 'מגזר ציבורי ואזרחי — וגם מפעלים, ארגוני low-tech והייטק. בחרו את התחום שלכם ותראו איך אנחנו פותרים אותו על monday.com, מהאפיון ועד התחזוקה.',
+    title: 'פתרונות monday לפי סוג הארגון',
+    lead: 'רשויות, גופים ציבוריים, עמותות, מפעלים וחברות הייטק עובדים אחרת. בחרו את התחום שלכם ותראו אילו תהליכים אנחנו בונים ומתחזקים על monday.com.',
     findYours: 'מצאו את המגזר שלכם',
     cta: 'לפתרון למגזר',
     sectors: [
@@ -31,7 +31,7 @@ const content = {
         icon: 'gov',
         name: 'גופים ממשלתיים',
         pain: 'מערכות מפוצלות, בירוקרטיה ידנית ושרשרת אחריות לא ברורה.',
-        proof: 'מוכנות לרכש, נגישות לפי תקן, אסמכתאות בשם אמיתי ומוצר עובד — לא מצגת.',
+        proof: 'מוכנות לרכש, נגישות לפי תקן, אסמכתאות בשם אמיתי ומערכת שאפשר לראות.',
         href: '/sectors/public-sector',
       },
       {
@@ -39,7 +39,7 @@ const content = {
         icon: 'municipality',
         name: 'רשויות מקומיות ועיריות',
         pain: 'שירות לתושב שנתקע בתהליכים איטיים ובהעברות בין מחלקות.',
-        proof: 'תוצאות של "היומיום בקליק" עם מספרי ROI — בקשות שנסגרות מהר, פחות נפילות בין הכיסאות.',
+        proof: 'לוחות פניות, SLA ודוחות שמראים איפה בקשות עומדות ומה נופל בין מחלקות.',
         href: '/sectors/local-authorities',
       },
       {
@@ -54,14 +54,14 @@ const content = {
         key: 'nonprofits',
         icon: 'nonprofit',
         name: 'עמותות וארגונים חברתיים',
-        pain: 'CRM 360, קליטה וניהול מקרים — עם תקציב מצומצם וצוות רזה.',
-        proof: 'ליווי צמוד, מערכות מוכנות-להטמעה וגישה ישירה למייסדים — רולאאוט מהיר בלי פרויקט ענק.',
+        pain: 'מעט אנשי צוות, הרבה פניות ותורמים, ויותר מדי מעקב ידני אחרי מוטבים ומתנדבים.',
+        proof: 'חבילות מוכנות להטמעה, ליווי צמוד וגישה ישירה למייסדים בלי פרויקט כבד.',
         href: '/sectors/nonprofits',
       },
       {
         key: 'manufacturing',
         icon: 'manufacturing',
-        name: 'מפעלים ותעשייה (low-tech)',
+        name: 'מפעלים ותעשייה מסורתית',
         pain: 'אקסלים, וואטסאפ ומערכות ישנות — הזמנות, מלאי ותחזוקה בלי שרשרת אחת.',
         proof: 'תהליכי ייצור ב-FlowGram, חיבור ל-ERP/MES קיים, ותחזוקה ב-Clicks TSM — בלי פרויקט ERP ענק.',
         href: '/sectors/manufacturing',
@@ -77,8 +77,8 @@ const content = {
     ],
   },
   en: {
-    title: 'We have built operating systems for organizations like yours',
-    lead: 'Public and civic sectors — plus factories, low-tech industry and high-tech. Pick your field and see how we solve it on monday.com, from design through maintenance.',
+    title: 'monday.com solutions by organization type',
+    lead: 'Municipalities, public bodies, nonprofits, factories and high-tech companies work differently. Pick your field and see which processes we build and maintain on monday.com.',
     findYours: 'Find your sector',
     cta: 'See the sector solution',
     sectors: [
@@ -87,7 +87,7 @@ const content = {
         icon: 'gov',
         name: 'Government bodies',
         pain: 'Fragmented systems, manual bureaucracy and an unclear chain of accountability.',
-        proof: 'Procurement-readiness, standards-compliant accessibility, named references and a real working product — not slideware.',
+        proof: 'Procurement-readiness, standards-compliant accessibility, named references and a system you can see.',
         href: '/sectors/public-sector',
       },
       {
@@ -95,7 +95,7 @@ const content = {
         icon: 'municipality',
         name: 'Local authorities & municipalities',
         pain: 'Resident services stuck in slow processes and hand-offs between departments.',
-        proof: '"Everyday in one click" outcomes with ROI numbers — requests that close faster, fewer things falling between the chairs.',
+        proof: 'Request boards, SLAs and reports that show where requests stand and what falls between departments.',
         href: '/sectors/local-authorities',
       },
       {
@@ -110,14 +110,14 @@ const content = {
         key: 'nonprofits',
         icon: 'nonprofit',
         name: 'Nonprofits & civic organizations',
-        pain: 'CRM 360, intake and case management — on a tight budget with a lean team.',
-        proof: 'Close consulting partnership, ready-to-deploy systems and direct founder access — a fast rollout without a giant project.',
+        pain: 'Lean teams, many requests and donors, and too much manual tracking of beneficiaries and volunteers.',
+        proof: 'Ready implementation packs, close guidance and direct founder access without a heavy project.',
         href: '/sectors/nonprofits',
       },
       {
         key: 'manufacturing',
         icon: 'manufacturing',
-        name: 'Manufacturing & low-tech',
+        name: 'Manufacturing & traditional industry',
         pain: 'Spreadsheets, WhatsApp and legacy systems — orders, inventory and maintenance with no single chain.',
         proof: 'Production flows in FlowGram, hooks to existing ERP/MES, and maintenance in Clicks TSM — without a giant ERP project.',
         href: '/sectors/manufacturing',

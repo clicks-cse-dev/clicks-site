@@ -371,16 +371,16 @@ export const PRODUCT_PAGE_DATA: ProductPageData[] = [
     logo: 'ready',
     titles: { he: 'Clicks deploy ready', en: 'Clicks deploy ready' },
     descriptions: {
-      he: 'אקוסיסטמים מוכנים על monday — CRM 360, ניהול תיקים, SLA ודשבורדים.',
-      en: 'Ready monday ecosystems — CRM 360, case management, SLA and dashboards.',
+      he: 'חבילות monday מוכנות להטמעה: CRM 360, ניהול תיקים, SLA ודשבורדים.',
+      en: 'Ready monday implementation packs: CRM 360, case management, SLA and dashboards.',
     },
     leads: {
-      he: 'תבניות ואקוסיסטמים שכבר עברו שטח — מותאמים לפי סוג הארגון. לא מתחילים מדף ריק, עם אפשרות להרחיב ב-FlowGram, CRM Connections ו-TSM.',
-      en: 'Field-proven templates tailored to your organization — not a blank board, with room to extend via FlowGram, CRM Connections and TSM.',
+      he: 'תבניות עבודה שכבר עברו שטח, מותאמות לפי סוג הארגון. לא מתחילים מלוח ריק, ואפשר להרחיב עם FlowGram, CRM Connections ו-TSM.',
+      en: 'Field-tested work templates tailored to your organization. You do not start from a blank board, and can extend with FlowGram, CRM Connections and TSM.',
     },
     audience: {
-      he: 'ארגונים שצריכים רולאאוט מהיר על monday — CRM, תיקים, קליטה ו-SLA.',
-      en: 'Teams that need a fast monday rollout — CRM, cases, intake and SLA.',
+      he: 'ארגונים שצריכים הטמעה מהירה על monday: CRM, תיקים, קליטה ו-SLA.',
+      en: 'Teams that need a fast monday implementation: CRM, cases, intake and SLA.',
     },
     facts: {
       he: [
@@ -408,9 +408,9 @@ export const PRODUCT_PAGE_DATA: ProductPageData[] = [
     },
     features: {
       he: [
-        { title: 'CRM 360', body: 'מסע לקוח/תושב מקצה לקצה עם מדידה ודוחות.' },
+        { title: 'CRM 360', body: 'קליטת פניות, טיפול, מדידה ודוחות בלוח אחד.' },
         { title: 'ניהול תיקים', body: 'תיק עם SLA, מסמכים והרשאות.' },
-        { title: 'אונבורדינג + SLA', body: 'קליטה, מדדי שירות ודשבורד עומסים.' },
+        { title: 'קליטה + SLA', body: 'תבניות קליטה, מדדי שירות ודשבורד עומסים.' },
         { title: 'דשבורד מנהלים', body: 'תמונת מצב שבועית וחריגות.' },
       ],
       en: [
@@ -434,7 +434,7 @@ export const PRODUCT_PAGE_DATA: ProductPageData[] = [
       he: [
         { title: 'בחירת חבילה', body: 'CRM, תיקים, SLA או שילוב.' },
         { title: 'התאמה', body: 'שמות, מחלקות וערוצים.' },
-        { title: 'הטמעה', body: 'הדרכה, go-live ותחזוקה ב-TSM.' },
+        { title: 'הטמעה', body: 'הדרכה, עלייה לאוויר ותחזוקה ב-TSM.' },
       ],
       en: [
         { title: 'Pick a pack', body: 'CRM, cases, SLA or a blend.' },
@@ -467,7 +467,7 @@ export const PRODUCT_PAGE_DATA: ProductPageData[] = [
       he: [
         { term: 'שלב בפרויקט', detail: 'בנייה — לצד CRM 360 או לוח פניות' },
         { term: 'מה מקבלים', detail: 'חיבור ערוצים, ניתוב ותיעוד שיחות' },
-        { term: 'עובד יחד עם', detail: 'פתרונות Ready-to-deploy ו-Clicks TSM' },
+        { term: 'עובד יחד עם', detail: 'חבילות מוכנות להטמעה ו-Clicks TSM' },
       ],
       en: [
         { term: 'Project phase', detail: 'Build — alongside CRM 360 or a requests board' },

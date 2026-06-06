@@ -25,15 +25,15 @@ const { locale } = Astro.props;
 const content = {
   he: {
     eyebrow: 'מראים את המוצר',
-    title: 'לא מצגת. מערכות חיות, שעובדות עכשיו.',
-    lead: 'הצצה ללוח monday.com, מפת FlowGram ולוח Clicks TSM. רוב שותפי monday בישראל מספרים על הטמעה; אנחנו מראים את המערכת.',
+    title: 'כך נראית מערכת שבנינו על monday.com',
+    lead: 'הצצה ללוח monday.com, מפת FlowGram ולוח Clicks TSM: פניות, תהליך, אחריות, מדדים ותחזוקה באותו רצף עבודה.',
     tabs: [
       { id: 'board', label: 'לוח monday.com' },
       { id: 'flowgram', label: 'מפת תהליך — FlowGram' },
       { id: 'tsm', label: 'לוח בקרה — Clicks TSM' },
     ],
     board: {
-      caption: 'CRM 360 — מסע פנייה מקצה לקצה, מקליטה ועד טיפול, על לוח אחד.',
+      caption: 'CRM 360: פנייה נכנסת, עוברת לאחראי ונשארת במעקב עד סגירה על לוח אחד.',
       window: 'CRM 360 · פניות תושבים',
       groups: [
         {
@@ -55,8 +55,8 @@ const content = {
       legend: { done: 'הושלם', progress: 'בטיפול', pending: 'ממתין' },
     },
     flowgram: {
-      caption: 'FlowGram — תהליך אישור בקשה משורטט כבלופרינט לפני בנייה.',
-      window: 'FlowGram · בלופרינט תהליך',
+      caption: 'FlowGram: מפת תהליך אישור לפני שמתחילים לבנות את הלוחות.',
+      window: 'FlowGram · מפת תהליך',
       nodes: [
         { label: 'קליטת בקשה' },
         { label: 'בדיקת זכאות' },
@@ -86,15 +86,15 @@ const content = {
   },
   en: {
     eyebrow: 'Show the product',
-    title: 'Not slideware. Living systems, running right now.',
-    lead: 'A look inside a monday.com board, a FlowGram map and a Clicks TSM dashboard. Most Israel monday partners sell implementation; we show the live system.',
+    title: 'What a Clicks monday.com system looks like',
+    lead: 'A look inside a monday.com board, a FlowGram map and a Clicks TSM dashboard: requests, process, ownership, metrics and maintenance in one work path.',
     tabs: [
       { id: 'board', label: 'monday.com board' },
       { id: 'flowgram', label: 'FlowGram process map' },
       { id: 'tsm', label: 'Clicks TSM dashboard' },
     ],
     board: {
-      caption: 'CRM 360 — the full request journey, from intake to resolution, on one board.',
+      caption: 'CRM 360: a request enters, moves to an owner and stays tracked through resolution on one board.',
       window: 'CRM 360 · Resident requests',
       groups: [
         {
@@ -116,7 +116,7 @@ const content = {
       legend: { done: 'Done', progress: 'Working on it', pending: 'Pending' },
     },
     flowgram: {
-      caption: 'FlowGram — a request-approval process drawn as a blueprint before we build.',
+      caption: 'FlowGram: the approval process mapped before the boards are built.',
       window: 'FlowGram · Process blueprint',
       nodes: [
         { label: 'Intake request' },
