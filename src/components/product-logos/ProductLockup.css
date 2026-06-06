@@ -26,6 +26,7 @@
 
 .product-lockup--hero .product-lockup__mark {
   height: 1.35em;
+  max-inline-size: 2.2em;
 }
 
 .product-lockup--card {
@@ -37,6 +38,7 @@
 .product-lockup--card .product-lockup__mark {
   height: 1.4em;
   width: auto;
+  max-inline-size: 1.8em;
 }
 
 .product-lockup--card .product-lockup__badge--wide {
@@ -55,6 +57,7 @@
 .product-lockup--hub .product-lockup__mark {
   height: 1.35em;
   width: auto;
+  max-inline-size: 1.5em;
   flex-shrink: 0;
 }
 
@@ -85,7 +88,8 @@
 
 .product-lockup--sector .product-lockup__mark {
   height: 1.28em;
-  width: 1.28em;
+  width: auto;
+  max-inline-size: 1.5em;
   flex-shrink: 0;
 }
 
@@ -114,6 +118,7 @@
   flex-shrink: 0;
   height: 1em;
   width: auto;
+  max-inline-size: 1.6em;
   display: block;
 }
 
@@ -229,4 +234,31 @@
   --product-brand-pale: #ddd6fe;
   --product-brand-spark: #d97706;
   --product-accent-soft: rgba(82, 70, 217, 0.1);
+}
+
+/* ---- Change F: narrow the CRM "Connections" badge in compact contexts ---- */
+.product-lockup--hub .product-lockup__badge--wide,
+.product-lockup--sector .product-lockup__badge--wide {
+  font-size: 0.42em;
+  letter-spacing: 0;
+  padding-inline: 0.36em;
+}
+
+/* ---- Change C: mobile-explicit floors (vw clamps don't account for context) ---- */
+@media (max-width: 640px) {
+  .product-lockup--hub {
+    --logo-scale: clamp(0.9rem, 3.6vw, 1.0625rem);
+  }
+
+  .product-lockup--card {
+    --logo-scale: clamp(1.0625rem, 4.2vw, 1.35rem);
+  }
+
+  .product-lockup--hero {
+    --logo-scale: clamp(1.75rem, 8vw, 2.25rem);
+  }
+
+  .product-lockup--hero .product-lockup__mark {
+    height: 1.5em;
+  }
 }

@@ -505,7 +505,7 @@
   min-block-size: 7.25rem;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   width: 100%;
 }
 
@@ -521,6 +521,7 @@
 .solutions-hub__offer-logo :global(.product-lockup__mark) {
   height: 1.65em;
   width: auto;
+  max-inline-size: 2.2em;
 }
 
 .solutions-hub__offer-logo :global(.product-lockup__badge) {

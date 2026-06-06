@@ -9,7 +9,7 @@ interface Props {
 }
 const { variant = 'full', class: className = '', decorative = false } = Astro.props;
 const showWordmark = variant !== 'mark';
-const label = 'FlowGram by Clicks';
+const label = 'Clicks FlowGram';
 const lockupClass = [
   'product-lockup',
   'product-brand--flowgram',
@@ -31,8 +31,8 @@ const lockupClass = [
   <FlowGramMark class="product-lockup__mark" />
   {showWordmark && (
     <>
+      <span class="product-lockup__clicks">Clicks</span>
       <span class="product-lockup__name">FlowGram</span>
-      <span class="product-lockup__badge product-lockup__badge--wide">by Clicks</span>
     </>
   )}
 </div>

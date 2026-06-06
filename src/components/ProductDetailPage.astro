@@ -341,6 +341,15 @@ const homeHref = localizedPath('/#products-family-title', locale);
     box-shadow: var(--shadow-sm);
   }
 
+  @media (max-width: 639px) {
+    .product-hero__mark {
+      padding: var(--space-6) var(--space-7);
+    }
+    .product-hero__mark :global(.product-lockup) {
+      --logo-scale: clamp(1.75rem, 10vw, 2.25rem);
+    }
+  }
+
   .product-hero__tag {
     margin: 0 0 var(--space-2);
     font-size: var(--text-sm);
