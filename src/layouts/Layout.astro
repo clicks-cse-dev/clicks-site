@@ -28,6 +28,28 @@ const hreflangLinks = LOCALES.map((loc) => ({
   locale: loc,
   href: new URL(localizedPath(canonicalPath, loc), SITE_URL).href,
 }));
+
+// Organization structured data (JSON-LD) for search engine rich results
+const orgJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Clicks Strategic Ecosystems",
+  "url": "https://clickcse.com",
+  "logo": "https://clickcse.com/og.png",
+  "description": "ייעוץ, אפיון ובנייה של מערכות הפעלה על monday.com לגופים ציבוריים, רשויות, מלכ\"רים וחברות טכנולוגיה בישראל.",
+  "areaServed": "IL",
+  "foundingDate": "2024",
+  "serviceType": ["monday.com consulting", "process automation", "CRM implementation", "GIS integration"],
+  "knowsLanguage": ["he", "en"],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer service",
+    "availableLanguage": ["Hebrew", "English"]
+  },
+  "sameAs": [
+    "https://monday.com/gotopartners/directory/"
+  ]
+};
 ---
 
 <!doctype html>
@@ -54,6 +76,12 @@ const hreflangLinks = LOCALES.map((loc) => ({
     <meta property="og:image" content={ogImage} />
     <meta property="og:site_name" content={COMPANY_NAME} />
 
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    {description && <meta name="twitter:description" content={description} />}
+    <meta name="twitter:image" content={ogImage} />
+
     <!-- Fonts: Figtree (UI + display) + Noto Sans Hebrew (RTL fallback) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -61,6 +89,12 @@ const hreflangLinks = LOCALES.map((loc) => ({
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Noto+Sans+Hebrew:wght@400;500;600;700;800&display=swap"
     />
+
+    <!-- LCP preload: hint browser to fetch OG/hero image early (Core Web Vitals) -->
+    <link rel="preload" as="image" href={ogImage} fetchpriority="high" />
+
+    <!-- Organization structured data for search engine rich results -->
+    <script type="application/ld+json" set:html={JSON.stringify(orgJsonLd)} />
   </head>
   <body>
     <a class="skip-link" href="#main">{locale === 'he' ? 'דלג לתוכן' : 'Skip to content'}</a>
