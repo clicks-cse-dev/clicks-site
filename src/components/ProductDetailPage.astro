@@ -7,6 +7,11 @@ import { localizedPath, type Locale } from '../i18n';
 import { BOOKING_URL } from '../config';
 import { getRelatedProducts, offerPagePath, type ProductPageData } from '../data/productPages';
 import { getPostsForProduct } from '../data/blogPostRefs';
+import {
+  buildFaqJsonLd,
+  buildOfferBreadcrumbJsonLd,
+  buildProductServiceJsonLd,
+} from '../lib/structuredData';
 import BlogCaseStudiesBlock from './blog/BlogCaseStudiesBlock.astro';
 import ProductDemo from './product-demos/ProductDemo.astro';
 import ReadyDeployDemo from './product-demos/ReadyDeployDemo.astro';
@@ -76,18 +81,14 @@ const kindHubHref = localizedPath(
 const casesHref = localizedPath('/cases', locale);
 const homeHref = localizedPath('/#products-family-title', locale);
 
-const faqJsonLd = product.faq[locale].length > 0 ? {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: product.faq[locale].map(({ question, answer }) => ({
-    '@type': 'Question',
-    name: question,
-    acceptedAnswer: { '@type': 'Answer', text: answer },
-  })),
-} : null;
+const pageJsonLd = [
+  buildProductServiceJsonLd(product, locale),
+  buildOfferBreadcrumbJsonLd(product, locale),
+  buildFaqJsonLd(product.faq[locale]),
+].filter((schema): schema is Record<string, unknown> => schema !== null);
 ---
 
-<Layout locale={locale} title={title} description={description}>
+<Layout locale={locale} title={title} description={description} jsonLd={pageJsonLd}>
   <article class:list={['product-page', `product-brand--${product.logo}`]}>
     <header class="product-hero section">
       <div class="container product-hero__inner">
@@ -239,6 +240,7 @@ const faqJsonLd = product.faq[locale].length > 0 ? {
                     href={localizedPath(offerPagePath(rel.slug), locale)}
                   >
                     <ProductCardLogo product={rel.logo} label={rel.titles[locale]} />
+                    <p class="product-related__desc">{rel.descriptions[locale]}</p>
                     <span class="product-related__explore">
                       {t.explore}
                       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -255,7 +257,6 @@ const faqJsonLd = product.faq[locale].length > 0 ? {
       )
     }
 
-    {faqJsonLd && <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />}
     {product.faq[locale].length > 0 && (
       <section class="section product-faq" aria-labelledby="faq-title">
         <div class="container">
@@ -368,6 +369,8 @@ const faqJsonLd = product.faq[locale].length > 0 ? {
     background: var(--color-surface-raised);
     border: 1px solid var(--color-border);
     box-shadow: var(--shadow-sm);
+    min-block-size: 8.5rem;
+    min-inline-size: 8.5rem;
   }
 
   @media (max-width: 639px) {
@@ -394,6 +397,7 @@ const faqJsonLd = product.faq[locale].length > 0 ? {
     letter-spacing: -0.03em;
     line-height: 1.12;
     text-wrap: balance;
+    min-block-size: 2.5em;
   }
 
   .product-hero__deck {
@@ -424,6 +428,7 @@ const faqJsonLd = product.faq[locale].length > 0 ? {
     padding: var(--space-5) var(--space-6);
     border-color: color-mix(in srgb, var(--product-accent, var(--color-accent)) 22%, var(--color-border));
     background: var(--color-surface-raised);
+    min-block-size: 12rem;
   }
 
   .product-facts__title {
@@ -732,6 +737,14 @@ const faqJsonLd = product.faq[locale].length > 0 ? {
 
   .product-related__card :global(.product-lockup__mark) {
     height: 1.5em;
+  }
+
+  .product-related__desc {
+    margin: 0;
+    font-size: var(--text-sm);
+    line-height: var(--line-height-relaxed);
+    color: var(--color-text-secondary);
+    text-align: start;
   }
 
   .product-related__card:hover {

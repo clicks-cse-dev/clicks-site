@@ -1,0 +1,17 @@
+---
+/**
+ * Renders one or more JSON-LD script blocks. Place in <head> via Layout.
+ */
+type JsonLdValue = Record<string, unknown>;
+
+interface Props {
+  schemas: JsonLdValue | JsonLdValue[];
+}
+
+const { schemas } = Astro.props;
+const items = Array.isArray(schemas) ? schemas : [schemas];
+---
+
+{items.map((schema) => (
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+))}
