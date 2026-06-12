@@ -11,10 +11,7 @@ import Footer from '../components/Footer.astro';
 import Mixpanel from '../components/analytics/Mixpanel.astro';
 import JsonLd from '../components/JsonLd.astro';
 import { dir, canonicalPathFromUrl, localizedPath, LOCALES, type Locale } from '../i18n';
-import { COMPANY_NAME, SITE_URL } from '../config';
-import { buildOrganizationJsonLd } from '../lib/structuredData';
-
-type JsonLdSchema = Record<string, unknown>;
+import { COMPANY_NAME, GOOGLE_SITE_VERIFICATION, SITE_URL } from '../config';
 
 interface Props {
   locale: Locale;
@@ -55,6 +52,9 @@ const structuredData = [
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <title>{fullTitle}</title>
     {description && <meta name="description" content={description} />}
+    {GOOGLE_SITE_VERIFICATION && (
+      <meta name="google-site-verification" content={GOOGLE_SITE_VERIFICATION} />
+    )}
 
     <!-- SEO / OpenGraph -->
     <meta property="og:title" content={fullTitle} />
