@@ -5,10 +5,30 @@
  * PRD §5. Used sparingly (~12-18% of chrome). No gradient text, no nested cards,
  * no side-stripe alerts, no purple-hero cliche (DESIGN.md bans).
  */
+
+/* Metric-adjusted fallbacks reduce CLS when web fonts swap in (Core Web Vitals). */
+@font-face {
+  font-family: 'Figtree Fallback';
+  src: local('Segoe UI'), local('Roboto'), local('Helvetica Neue'), local('Arial');
+  size-adjust: 101%;
+  ascent-override: 92%;
+  descent-override: 22%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Noto Sans Hebrew Fallback';
+  src: local('Arial Hebrew'), local('David'), local('Segoe UI');
+  size-adjust: 100%;
+  ascent-override: 90%;
+  descent-override: 24%;
+  line-gap-override: 0%;
+}
+
 :root {
   /* ---- Type families (PRD §5: Figtree everywhere + Noto Sans Hebrew RTL fallback) ---- */
-  --font-sans: 'Figtree', 'Noto Sans Hebrew', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-display: 'Figtree', 'Noto Sans Hebrew', var(--font-sans);
+  --font-sans: 'Figtree', 'Figtree Fallback', 'Noto Sans Hebrew', 'Noto Sans Hebrew Fallback', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Figtree', 'Figtree Fallback', 'Noto Sans Hebrew', 'Noto Sans Hebrew Fallback', var(--font-sans);
 
   /* ---- Violet-tinted neutral surfaces ---- */
   --color-bg: #f2f0f8;

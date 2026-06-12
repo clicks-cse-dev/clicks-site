@@ -14,14 +14,17 @@ import CaseStudy from '../../components/sections/CaseStudy.astro';
 import FoundersTeaser from '../../components/sections/FoundersTeaser.astro';
 import ProcurementBand from '../../components/sections/ProcurementBand.astro';
 import ClosingCTA from '../../components/sections/ClosingCTA.astro';
+import { buildHomepageServiceCatalogJsonLd } from '../../lib/structuredData';
 
 const locale = 'en' as const;
+const homepageJsonLd = buildHomepageServiceCatalogJsonLd(locale);
 ---
 
 <Layout
   locale={locale}
   title="monday.com Partner for Israeli Public Sector, Municipalities and Nonprofits"
   description="Clicks Strategic Ecosystems — certified monday.com partner in Israel. We design, build and maintain operating systems on monday.com for municipalities, public-sector bodies, nonprofits and manufacturing teams: process design, CRM, GIS integration and ongoing support."
+  jsonLd={homepageJsonLd}
 >
   <Hero locale={locale} />
   <TrustBand locale={locale} />

@@ -14,14 +14,17 @@ import CaseStudy from '../components/sections/CaseStudy.astro';
 import FoundersTeaser from '../components/sections/FoundersTeaser.astro';
 import ProcurementBand from '../components/sections/ProcurementBand.astro';
 import ClosingCTA from '../components/sections/ClosingCTA.astro';
+import { buildHomepageServiceCatalogJsonLd } from '../lib/structuredData';
 
 const locale = 'he' as const;
+const homepageJsonLd = buildHomepageServiceCatalogJsonLd(locale);
 ---
 
 <Layout
   locale={locale}
   title='שותף monday.com לרשויות, מלכ"רים וגופים ציבוריים — ייעוץ, אפיון והטמעה'
   description='קליקס מלווה רשויות מקומיות, גופים ציבוריים, מלכ"רים וארגונים תפעוליים בהטמעת monday.com — אפיון תהליכים, בנייה על monday.com, אוטומציות, חיבורי CRM ו-GIS, ותחזוקה שוטפת. שותף monday.com מוסמך בישראל.'
+  jsonLd={homepageJsonLd}
 >
   <Hero locale={locale} />
   <TrustBand locale={locale} />

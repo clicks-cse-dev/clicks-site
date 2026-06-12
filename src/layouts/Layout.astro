@@ -4,21 +4,33 @@
  * Sets <html lang dir> from locale (rtl for he), loads fonts + global tokens,
  * renders Header + <slot/> + Footer. (PRD §1, §9, §10.)
  */
+import { getImage } from 'astro:assets';
 import '../styles/design-system.css';
 import '../styles/inner-pages.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Mixpanel from '../components/analytics/Mixpanel.astro';
+import JsonLd from '../components/JsonLd.astro';
+import logo from '../assets/clicks-logo.png';
 import { dir, canonicalPathFromUrl, localizedPath, LOCALES, type Locale } from '../i18n';
-import { COMPANY_NAME, GOOGLE_SITE_VERIFICATION, SITE_URL } from '../config';
+import { COMPANY_NAME, SITE_URL } from '../config';
+import { buildOrganizationJsonLd } from '../lib/structuredData';
+
+const FONTS_URL =
+  'https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Noto+Sans+Hebrew:wght@400;500;600;700;800&display=swap';
+
+const headerLogo = await getImage({ src: logo, width: 420, format: 'webp' });
+
+type JsonLdSchema = Record<string, unknown>;
 
 interface Props {
   locale: Locale;
   title: string;
   description?: string;
+  jsonLd?: JsonLdSchema | JsonLdSchema[];
 }
 
-const { locale, title, description = '' } = Astro.props;
+const { locale, title, description = '', jsonLd } = Astro.props;
 const htmlDir = dir(locale);
 const fullTitle = title ? `${title} · ${COMPANY_NAME}` : COMPANY_NAME;
 const canonical = new URL(Astro.url.pathname, SITE_URL).href;
@@ -29,27 +41,10 @@ const hreflangLinks = LOCALES.map((loc) => ({
   href: new URL(localizedPath(canonicalPath, loc), SITE_URL).href,
 }));
 
-// Organization structured data (JSON-LD) for search engine rich results
-const orgJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  "name": "Clicks Strategic Ecosystems",
-  "url": "https://clickcse.com",
-  "logo": "https://clickcse.com/og.png",
-  "description": "ייעוץ, אפיון ובנייה של מערכות הפעלה על monday.com לגופים ציבוריים, רשויות, מלכ\"רים וחברות טכנולוגיה בישראל.",
-  "areaServed": "IL",
-  "foundingDate": "2024",
-  "serviceType": ["monday.com consulting", "process automation", "CRM implementation", "GIS integration"],
-  "knowsLanguage": ["he", "en"],
-  "contactPoint": {
-    "@type": "ContactPoint",
-    "contactType": "customer service",
-    "availableLanguage": ["Hebrew", "English"]
-  },
-  "sameAs": [
-    "https://monday.com/gotopartners/directory/"
-  ]
-};
+const structuredData = [
+  buildOrganizationJsonLd(locale),
+  ...(jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : []),
+];
 ---
 
 <!doctype html>
@@ -85,19 +80,17 @@ const orgJsonLd = {
     {description && <meta name="twitter:description" content={description} />}
     <meta name="twitter:image" content={ogImage} />
 
-    <!-- Fonts: Figtree (UI + display) + Noto Sans Hebrew (RTL fallback) -->
+    <!-- Fonts: non-render-blocking load (LCP); metric-adjusted fallbacks in design-system.css (CLS) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Noto+Sans+Hebrew:wght@400;500;600;700;800&display=swap"
-    />
+    <link rel="preload" as="style" href={FONTS_URL} />
+    <link rel="stylesheet" href={FONTS_URL} media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href={FONTS_URL} /></noscript>
 
-    <!-- LCP preload: hint browser to fetch OG/hero image early (Core Web Vitals) -->
-    <link rel="preload" as="image" href={ogImage} fetchpriority="high" />
+    <!-- LCP preload: header logo is the above-fold image on homepage and product pages -->
+    <link rel="preload" as="image" href={headerLogo.src} type="image/webp" fetchpriority="high" />
 
-    <!-- Organization structured data for search engine rich results -->
-    <script type="application/ld+json" set:html={JSON.stringify(orgJsonLd)} />
+    <JsonLd schemas={structuredData} />
   </head>
   <body>
     <a class="skip-link" href="#main">{locale === 'he' ? 'דלג לתוכן' : 'Skip to content'}</a>
