@@ -10,7 +10,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Mixpanel from '../components/analytics/Mixpanel.astro';
 import { dir, canonicalPathFromUrl, localizedPath, LOCALES, type Locale } from '../i18n';
-import { COMPANY_NAME, SITE_URL } from '../config';
+import { COMPANY_NAME, GOOGLE_SITE_VERIFICATION, SITE_URL } from '../config';
 
 interface Props {
   locale: Locale;
@@ -67,6 +67,9 @@ const orgJsonLd = {
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <title>{fullTitle}</title>
     {description && <meta name="description" content={description} />}
+    {GOOGLE_SITE_VERIFICATION && (
+      <meta name="google-site-verification" content={GOOGLE_SITE_VERIFICATION} />
+    )}
 
     <!-- SEO / OpenGraph -->
     <meta property="og:title" content={fullTitle} />

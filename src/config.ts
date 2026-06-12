@@ -23,6 +23,9 @@ export const VAT = '211698568';
 export const DOMAIN = 'clickcse.com';
 export const SITE_URL = 'https://clickcse.com';
 
+/** Google Search Console HTML tag verification (set PUBLIC_GOOGLE_SITE_VERIFICATION in env). */
+export const GOOGLE_SITE_VERIFICATION = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION ?? '';
+
 /** Company LinkedIn (optional); individual founder URLs live in src/data/founders.ts */
 export const LINKEDIN_URL = '';
 
