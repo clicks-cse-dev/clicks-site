@@ -76,18 +76,14 @@ const kindHubHref = localizedPath(
 const casesHref = localizedPath('/cases', locale);
 const homeHref = localizedPath('/#products-family-title', locale);
 
-const faqJsonLd = product.faq[locale].length > 0 ? {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: product.faq[locale].map(({ question, answer }) => ({
-    '@type': 'Question',
-    name: question,
-    acceptedAnswer: { '@type': 'Answer', text: answer },
-  })),
-} : null;
+const pageJsonLd = [
+  buildProductServiceJsonLd(product, locale),
+  buildOfferBreadcrumbJsonLd(product, locale),
+  buildFaqJsonLd(product.faq[locale]),
+].filter((schema): schema is Record<string, unknown> => schema !== null);
 ---
 
-<Layout locale={locale} title={title} description={description}>
+<Layout locale={locale} title={title} description={description} jsonLd={pageJsonLd}>
   <article class:list={['product-page', `product-brand--${product.logo}`]}>
     <header class="product-hero section">
       <div class="container product-hero__inner">
@@ -239,6 +235,7 @@ const faqJsonLd = product.faq[locale].length > 0 ? {
                     href={localizedPath(offerPagePath(rel.slug), locale)}
                   >
                     <ProductCardLogo product={rel.logo} label={rel.titles[locale]} />
+                    <p class="product-related__desc">{rel.descriptions[locale]}</p>
                     <span class="product-related__explore">
                       {t.explore}
                       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -255,7 +252,6 @@ const faqJsonLd = product.faq[locale].length > 0 ? {
       )
     }
 
-    {faqJsonLd && <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />}
     {product.faq[locale].length > 0 && (
       <section class="section product-faq" aria-labelledby="faq-title">
         <div class="container">
@@ -732,6 +728,14 @@ const faqJsonLd = product.faq[locale].length > 0 ? {
 
   .product-related__card :global(.product-lockup__mark) {
     height: 1.5em;
+  }
+
+  .product-related__desc {
+    margin: 0;
+    font-size: var(--text-sm);
+    line-height: var(--line-height-relaxed);
+    color: var(--color-text-secondary);
+    text-align: start;
   }
 
   .product-related__card:hover {
