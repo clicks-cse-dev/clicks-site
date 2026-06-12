@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "serve dist -l tcp://0.0.0.0:${PORT:-4321}",
-    "build": "astro build",
+    "build": "astro build && cp dist/sitemap-0.xml dist/sitemap.xml",
     "preview": "astro preview",
     "astro": "astro"
   },

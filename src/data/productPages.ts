@@ -1,6 +1,7 @@
 /**
  * Product detail pages — content + logo keys (marks from MondayCMS / MondayGIS).
  */
+import { validateProductInternalLinks } from '../lib/productInternalLinks';
 import type { Locale } from '../i18n';
 
 export type ProductLogoKey =
@@ -35,9 +36,8 @@ export interface ProductPageData {
   features: Record<Locale, { title: string; body: string }[]>;
   scenarios: Record<Locale, { title: string; body: string }[]>;
   steps: Record<Locale, { title: string; body: string }[]>;
+  /** At least two slugs from PRODUCT_PAGE_DATA — rendered in the "Works well with" section. */
   relatedSlugs: string[];
-  relatedHref: string;
-  relatedLabel: Record<Locale, string>;
   faq: Record<Locale, { question: string; answer: string }[]>;
 }
 
@@ -119,9 +119,7 @@ export const PRODUCT_PAGE_DATA: ProductPageData[] = [
         { title: 'Hand off', body: 'Spec ready for your monday team or ours.' },
       ],
     },
-    relatedSlugs: ['clicks-tsm', 'monday-cms'],
-    relatedHref: '/services/clicks-tsm',
-    relatedLabel: { he: 'Clicks TSM — תפעול ותחזוקה', en: 'Clicks TSM — operations & maintenance' },
+    relatedSlugs: ['clicks-tsm', 'monday-cms', 'clicks-solutions'],
     faq: {
       he: [
         { question: 'מה זה FlowGram?', answer: 'FlowGram הוא שירות האפיון של קליקס — מיפוי תהליכים, אוטומציות וחיבורים לפני ובמהלך בנייה על monday.com. בסוף האפיון מקבלים מפת תהליך, כללי אוטומציה ומפרט חיבורים.' },
@@ -212,9 +210,7 @@ export const PRODUCT_PAGE_DATA: ProductPageData[] = [
         { title: 'Improve', body: 'Monitoring, reports and planned enhancements.' },
       ],
     },
-    relatedSlugs: ['flowgram', 'crm-connections'],
-    relatedHref: '/services/flowgram',
-    relatedLabel: { he: 'FlowGram — תכנון תהליכים', en: 'FlowGram — process planning' },
+    relatedSlugs: ['flowgram', 'crm-connections', 'clicks-solutions'],
     faq: {
       he: [
         { question: 'מה זה Clicks TSM?', answer: 'Clicks TSM הוא שירות התחזוקה השוטפת של מערכות monday.com. כולל תמיכה שוטפת, SLA מוגדר, עדכונים ושינויים, ניטור תהליכים וממשל מערכת — כדי שהמערכת תמשיך לעבוד לאורך זמן.' },
@@ -305,9 +301,7 @@ export const PRODUCT_PAGE_DATA: ProductPageData[] = [
         { title: 'Go live', body: 'Train content teams and monitor sync.' },
       ],
     },
-    relatedSlugs: ['monday-gis', 'flowgram'],
-    relatedHref: '/products/monday-gis',
-    relatedLabel: { he: 'monday-GIS — מפות ו-ArcGIS', en: 'monday-GIS — maps & ArcGIS' },
+    relatedSlugs: ['monday-gis', 'flowgram', 'clicks-solutions'],
     faq: {
       he: [
         { question: 'מה זה Clicks Monday CMS?', answer: 'Clicks Monday CMS הוא גשר בין monday.com לבין מערכות ניהול תוכן כמו WordPress ו-Webflow. הוא מסנכרן תוכן, קטלוג, משתמשים ודפים בין monday.com לבין האתר — ללא פיתוח ידני.' },
@@ -398,9 +392,7 @@ export const PRODUCT_PAGE_DATA: ProductPageData[] = [
         { title: 'Train teams', body: 'Planning and field staff share one source.' },
       ],
     },
-    relatedSlugs: ['monday-cms', 'flowgram'],
-    relatedHref: '/products/monday-cms',
-    relatedLabel: { he: 'monday-CMS — תוכן וקטלוג', en: 'monday-CMS — content & catalog' },
+    relatedSlugs: ['monday-cms', 'flowgram', 'clicks-deploy-ready'],
     faq: {
       he: [
         { question: 'מה זה Clicks Monday GIS?', answer: 'Clicks Monday GIS מסנכרן בין מערכות GIS ומפות ArcGIS לבין לוחות monday.com. נתוני מיקום, שכבות GIS ורשומות גיאוגרפיות מתעדכנים אוטומטית.' },
@@ -491,9 +483,7 @@ export const PRODUCT_PAGE_DATA: ProductPageData[] = [
         { title: 'Roll out', body: 'Training, go-live and TSM care.' },
       ],
     },
-    relatedSlugs: ['crm-connections', 'flowgram'],
-    relatedHref: '/services/crm-connections',
-    relatedLabel: { he: 'CRM Connections — ערוצי לקוח', en: 'CRM Connections — customer channels' },
+    relatedSlugs: ['crm-connections', 'flowgram', 'monday-gis'],
     faq: {
       he: [
         { question: 'מה זה Clicks Deploy Ready?', answer: 'Clicks Deploy Ready הוא חבילת השקה מהירה ל-monday.com — אוסף לוחות, אוטומציות ותבניות שנבנו מראש לפי סוג הארגון, כדי להתחיל לעבוד בימים ולא בחודשים.' },
@@ -584,9 +574,7 @@ export const PRODUCT_PAGE_DATA: ProductPageData[] = [
         { title: 'Team training', body: 'Staff respond from monday.' },
       ],
     },
-    relatedSlugs: ['flowgram', 'clicks-tsm'],
-    relatedHref: '/products/clicks-deploy-ready',
-    relatedLabel: { he: 'Clicks deploy ready — CRM 360', en: 'Clicks deploy ready — CRM 360' },
+    relatedSlugs: ['flowgram', 'clicks-tsm', 'clicks-deploy-ready'],
     faq: {
       he: [
         { question: 'מה זה Clicks CRM Connections?', answer: 'Clicks CRM Connections הוא שירות חיבור בין monday.com לבין כלי CRM וממשקים חיצוניים — כולל WhatsApp Business, Meta Messenger, ומערכות ישנות. הנתונים זורמים אוטומטית בין המערכות.' },
@@ -677,9 +665,7 @@ export const PRODUCT_PAGE_DATA: ProductPageData[] = [
         { title: 'Build & roll out', body: 'Development, tests, training and TSM handover.' },
       ],
     },
-    relatedSlugs: ['flowgram', 'clicks-tsm'],
-    relatedHref: '/services/flowgram',
-    relatedLabel: { he: 'FlowGram — אפיון תהליכים', en: 'FlowGram — process design' },
+    relatedSlugs: ['flowgram', 'clicks-tsm', 'monday-cms'],
     faq: {
       he: [
         { question: 'מה זה Clicks Solutions?', answer: 'Clicks Solutions הוא ה-umbrella של פתרונות הייעוץ המותאמים אישית של קליקס — כולל בנייה ממוקדת על monday.com, אוטומציות, חיבורים ותהליכי גיוס והטמעה לפי צרכי הארגון.' },
@@ -719,3 +705,5 @@ export function getProductOffers(): ProductPageData[] {
 export function getServiceOffers(): ProductPageData[] {
   return PRODUCT_PAGE_DATA.filter((p) => p.kind === 'service');
 }
+
+validateProductInternalLinks(PRODUCT_PAGE_DATA);

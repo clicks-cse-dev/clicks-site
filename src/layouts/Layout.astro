@@ -62,6 +62,9 @@ const structuredData = [
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <title>{fullTitle}</title>
     {description && <meta name="description" content={description} />}
+    {GOOGLE_SITE_VERIFICATION && (
+      <meta name="google-site-verification" content={GOOGLE_SITE_VERIFICATION} />
+    )}
 
     <!-- SEO / OpenGraph -->
     <meta property="og:title" content={fullTitle} />

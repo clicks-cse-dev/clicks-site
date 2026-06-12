@@ -1,11 +1,24 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
+import { shouldIncludeInSitemap } from './src/lib/sitemap.ts';
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://clickcse.com',
-  integrations: [react(), sitemap()],
+  integrations: [
+    react(),
+    sitemap({
+      filter: shouldIncludeInSitemap,
+      i18n: {
+        defaultLocale: 'he',
+        locales: {
+          he: 'he-IL',
+          en: 'en',
+        },
+      },
+    }),
+  ],
   vite: {
     preview: {
       // Railway custom domains send Host: www.clickcse.com — without this, preview returns 403.
