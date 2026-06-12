@@ -9,6 +9,7 @@ import '../styles/inner-pages.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Mixpanel from '../components/analytics/Mixpanel.astro';
+import JsonLd from '../components/JsonLd.astro';
 import { dir, canonicalPathFromUrl, localizedPath, LOCALES, type Locale } from '../i18n';
 import { COMPANY_NAME, GOOGLE_SITE_VERIFICATION, SITE_URL } from '../config';
 
@@ -16,9 +17,10 @@ interface Props {
   locale: Locale;
   title: string;
   description?: string;
+  jsonLd?: JsonLdSchema | JsonLdSchema[];
 }
 
-const { locale, title, description = '' } = Astro.props;
+const { locale, title, description = '', jsonLd } = Astro.props;
 const htmlDir = dir(locale);
 const fullTitle = title ? `${title} · ${COMPANY_NAME}` : COMPANY_NAME;
 const canonical = new URL(Astro.url.pathname, SITE_URL).href;
@@ -29,27 +31,10 @@ const hreflangLinks = LOCALES.map((loc) => ({
   href: new URL(localizedPath(canonicalPath, loc), SITE_URL).href,
 }));
 
-// Organization structured data (JSON-LD) for search engine rich results
-const orgJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  "name": "Clicks Strategic Ecosystems",
-  "url": "https://clickcse.com",
-  "logo": "https://clickcse.com/og.png",
-  "description": "ייעוץ, אפיון ובנייה של מערכות הפעלה על monday.com לגופים ציבוריים, רשויות, מלכ\"רים וחברות טכנולוגיה בישראל.",
-  "areaServed": "IL",
-  "foundingDate": "2024",
-  "serviceType": ["monday.com consulting", "process automation", "CRM implementation", "GIS integration"],
-  "knowsLanguage": ["he", "en"],
-  "contactPoint": {
-    "@type": "ContactPoint",
-    "contactType": "customer service",
-    "availableLanguage": ["Hebrew", "English"]
-  },
-  "sameAs": [
-    "https://monday.com/gotopartners/directory/"
-  ]
-};
+const structuredData = [
+  buildOrganizationJsonLd(locale),
+  ...(jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : []),
+];
 ---
 
 <!doctype html>
@@ -96,8 +81,7 @@ const orgJsonLd = {
     <!-- LCP preload: hint browser to fetch OG/hero image early (Core Web Vitals) -->
     <link rel="preload" as="image" href={ogImage} fetchpriority="high" />
 
-    <!-- Organization structured data for search engine rich results -->
-    <script type="application/ld+json" set:html={JSON.stringify(orgJsonLd)} />
+    <JsonLd schemas={structuredData} />
   </head>
   <body>
     <a class="skip-link" href="#main">{locale === 'he' ? 'דלג לתוכן' : 'Skip to content'}</a>
