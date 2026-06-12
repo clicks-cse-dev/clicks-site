@@ -234,8 +234,8 @@ export const PRODUCT_PAGE_DATA: ProductPageData[] = [
     logo: 'cms',
     titles: { he: 'Clicks Monday CMS', en: 'Clicks Monday CMS' },
     descriptions: {
-      he: 'ניהול תוכן וקטלוג מלוחות monday — לאתרים ואפליקציות.',
-      en: 'Content and catalog management from monday boards — for sites and apps.',
+      he: 'מוצר Clicks Monday CMS מחבר לוחות monday.com ל-WordPress, Webflow ו-CMS נוספים — סנכרון דו-כיווני של תוכן וקטלוג בלי העתקה ידנית. בשימוש אצל לקוחות קליקס.',
+      en: 'Clicks Monday CMS syncs monday.com with WordPress and Webflow — two-way content and catalog sync without manual copy-paste. Used by Clicks clients today.',
     },
     leads: {
       he: 'מוצר חי מבית קליקס: מחבר בין לוחות monday ל-WordPress, Webflow וספקי CMS נוספים. צוותי תוכן עובדים בלוח מוכר; האתר מתעדכן בלי להעתיק ידנית.',
@@ -327,8 +327,8 @@ export const PRODUCT_PAGE_DATA: ProductPageData[] = [
     logo: 'gis',
     titles: { he: 'Clicks Monday GIS', en: 'Clicks Monday GIS' },
     descriptions: {
-      he: 'מפות ו-ArcGIS מחוברים ללוחות monday — לתכנון אזורי ושטח.',
-      en: 'Maps and ArcGIS connected to monday boards — for regional and field work.',
+      he: 'Clicks Monday GIS מסנכרן ArcGIS ושכבות GIS עם לוחות monday.com — מפות, נכסים ופרויקטים בשטח על לוח אחד. לרשויות, אשכולות אזוריים וגופי תשתיות.',
+      en: 'Clicks Monday GIS syncs ArcGIS with monday.com — embedded maps, regional dashboards and field assets on one board. For authorities and utilities.',
     },
     leads: {
       he: 'כשצריך מפה אחת של אמת בין GIS לתפעול: סנכרון עם ArcGIS, תצוגות מפה בלוח ובפריט, ודשבורדים לתכנון אזורי — בלי לקפוץ בין מערכות.',
@@ -418,10 +418,10 @@ export const PRODUCT_PAGE_DATA: ProductPageData[] = [
     slug: 'clicks-deploy-ready',
     kind: 'product',
     logo: 'ready',
-    titles: { he: 'Clicks deploy ready', en: 'Clicks deploy ready' },
+    titles: { he: 'Clicks Deploy Ready', en: 'Clicks Deploy Ready' },
     descriptions: {
-      he: 'חבילות monday מוכנות להטמעה: CRM 360, ניהול תיקים, SLA ודשבורדים.',
-      en: 'Ready monday implementation packs: CRM 360, case management, SLA and dashboards.',
+      he: 'Clicks Deploy Ready: חבילות monday.com מוכנות להטמעה — CRM 360, ניהול תיקים, SLA ודשבורדים. התחילו לעבוד ב-3–10 ימי עסקים, לא בחודשים.',
+      en: 'Clicks Deploy Ready: ready-made monday.com packs — CRM 360, case management, SLA and dashboards. Go live in 3–10 business days, not months.',
     },
     leads: {
       he: 'תבניות עבודה שכבר עברו שטח, מותאמות לפי סוג הארגון. לא מתחילים מלוח ריק, ואפשר להרחיב עם FlowGram, CRM Connections ו-TSM.',
