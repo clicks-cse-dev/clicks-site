@@ -56,7 +56,8 @@ const home = localizedPath('/', locale);
         height={241}
         widths={[280, 420, 560]}
         loading="eager"
-        decoding="async"
+        fetchpriority="high"
+        decoding="sync"
       />
     </a>
 
@@ -122,6 +123,7 @@ const home = localizedPath('/', locale);
     height: 2.65rem;
     width: auto;
     max-width: 11.5rem;
+    aspect-ratio: 652 / 241;
     object-fit: contain;
     object-position: start center;
   }

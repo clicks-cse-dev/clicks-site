@@ -121,7 +121,7 @@ const t = content[locale];
             width={299}
             height={324}
             widths={[180, 260, 340]}
-            loading="lazy"
+            loading="eager"
             decoding="async"
           />
         </span>
@@ -346,6 +346,7 @@ const t = content[locale];
     line-height: 1.12;
     letter-spacing: -0.03em;
     color: var(--color-text);
+    min-block-size: 2.2em;
   }
 
   /* Accent line: solid ink; underline only under monday.com (DESIGN.md: no gradient text). */
@@ -492,6 +493,7 @@ const t = content[locale];
     display: block;
     height: 5rem;
     width: auto;
+    aspect-ratio: 299 / 324;
     object-fit: contain;
     object-position: center;
     image-rendering: -webkit-optimize-contrast;
